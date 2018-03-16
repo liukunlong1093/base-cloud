@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.sleuth.zipkin.stream.EnableZipkinStreamServer;
 
 /**
- * 一句话描述这个类的作用
+ * 分布式跟踪应用
  *
  * @author liukl
  * @date 2018/3/14

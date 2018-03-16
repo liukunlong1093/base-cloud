@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByOperateType()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByOperateType()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByOperateType()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByOperateType()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonOperateType()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="operateTypeComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isOperateTypeFieldData" value="name" onitemclick="onComboboxFieldChanged"
+                    />
+                    <input id="operateTypeSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByOperateType" onfocus="clearQuickSearchByOperateType"
+                    />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByOperateType()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="height:100px;">
+        <div id="operateTypeDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true"  idField="id"
+        sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="code" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">编号</div>
+                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+                <div field="comment" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">说明</div>
+                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>
+                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="operateTypeAddOrEditWindow" class="mini-window" title="维护系统操作类型" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="operateTypeAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="id" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">编号<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="code" name="code" class="mini-textbox" emptyText="请输入编号" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入名称" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">说明<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="comment" name="comment" class="mini-textarea"  style="width:100%" />
+                     </td>
+                 </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="operateTypeAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="operateTypeAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="operateTypeSearchWindow" class="mini-window" title="系统操作类型查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="operateTypeSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">编号：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="operateTypeSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="operateTypeSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="operateTypeViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyOperateTypeViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:150px;" align="right">编号：</td>
+                    <td style="width:270px;">
+                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">排序：</td>
+                    <td  colspan="3">
+                        <input id="view_sort" name="sort" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">说明：</td>
+                    <td colspan="3">
+                        <input id="view_comment" name="comment" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isOperateTypeFieldData = [
+        {
+            id: 'code'
+            , text: '编号'
+        }, {
+            id: 'name'
+            , text: '名称'
+        }, {
+            id: 'comment'
+            , text: '说明'
+        }, {
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    mini.parse();
+    var operateTypeDataGrid = mini.get("operateTypeDataGrid");
+    operateTypeDataGrid.setUrl(infoDomain+"/operateType/getOperateTypeList");
+    operateTypeDataGrid.load();
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByOperateType() {
+            _add_function('operateTypeAddOrEditWindow', 'operateTypeAddOrEidthForm', '新增系统操作类型');
+        }
+        //编辑相关方法
+    function clickEditButtonByOperateType() {
+            var ajaxurl = infoDomain+"/operateType/getOperateTypeById";
+            _edit_function('operateTypeDataGrid', 'operateTypeAddOrEditWindow', 'operateTypeAddOrEidthForm', '编辑系统操作类型', ajaxurl, null, null);
+        }
+        //删除相关方法
+    function clickRemoveButtonByOperateType() {
+        var ajaxurl = infoDomain+"/operateType/deleteOperateTypeById";
+        _delete_function('operateTypeDataGrid', ajaxurl, backFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonOperateType() {
+        _refresh_function('operateTypeDataGrid', null);
+    }
+
+    //确定相关方法
+    function operateTypeAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/operateType/" + (_add_action('id') ? 'saveOperateType' : 'updateOperateType');
+        _save_function('operateTypeAddOrEidthForm', ajaxurl, backFunction, null, null);
+    }
+
+    //取消相关方法
+    function operateTypeAddOrEditOnCancel() {
+            _cancel_function('operateTypeAddOrEditWindow');
+        }
+        //执行完毕调用的方法   
+    function backFunction() {
+            operateTypeAddOrEditOnCancel();
+            clickRefreshButtonOperateType();
+        }
+        //查询相关方法begin
+    function clickSearchButtonByOperateType() {
+        _search_function('operateTypeSearchWindow', 'operateTypeSearchForm', '系统操作类型查询');
+    }
+
+    function operateTypeSerchOnOk() {
+        operateTypeSearch();
+    }
+
+    function operateTypeSerchOnCancel() {
+        _cancel_function('operateTypeSearchWindow');
+    }
+
+    function operateTypeSearch() {
+        var form = new mini.Form("#operateTypeSearchForm");
+        var o = form.getData();
+        o.code = encodeURIComponent(o.code);
+        o.name = encodeURIComponent(o.name);
+        o.comment = encodeURIComponent(o.comment);
+        operateTypeDataGrid.load(o, operateTypeSearchSuccse, _search_Fail);
+    }
+
+    function operateTypeSearchSuccse() {
+        _cancel_function('operateTypeSearchWindow');
+    }
+
+    
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+       editRowInfo('operateTypeDataGrid','operateTypeViewForm','readOnlyOperateTypeViewForm',infoDomain+'/operateType/getOperateTypeById',row_uid);
+    }
+    operateTypeDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("operateTypeComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByOperateType();
+        }
+    }
+
+    function clickQuickSearchByOperateType() {
+        var __fieldName = mini.get("operateTypeComboboxField")
+            .getValue();
+        var __fieldValue = mini.get("operateTypeSearchKeyWord")
+            .getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            operateTypeDataGrid.load(filterJsonObj);
+        } else {
+            operateTypeDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByOperateType(e) {
+        mini.get("operateTypeSearchKeyWord")
+            .setValue();
+    }
+    </script>
+</body>
+
+</html>

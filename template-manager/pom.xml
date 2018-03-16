@@ -16,6 +16,7 @@
     <modules>
         <module>template-app</module>
         <module>template-gateway</module>
+        <module>template-web</module>
     </modules>
 
     <properties>

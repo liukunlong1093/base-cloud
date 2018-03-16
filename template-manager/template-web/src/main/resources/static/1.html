@@ -1,0 +1,96 @@
+<html>
+	<head></head>
+	<script src="js/jquery-2.2.3.min.js"></script>
+	<body>
+	<b>sdfsdfsd</b>
+	</body>
+		<script type="text/javascript">
+		    $(function(){
+		        var data={"name":"test","status":"0"};  
+		    	$.ajax({
+		               url:"http://127.0.0.1:8090/system/saveUser",
+		               type:"POST",
+		               crossDomain:true,
+		               timeout:30000,
+		               dataType:"json",
+		               contentType:"application/json",
+		               data:JSON.stringify(data),
+		               success:function(rs,textStatus){
+		                  if(rs.success){
+		                   		console.log(rs.code);
+		                  }else{
+		                   		console.log(rs.msg);
+		                  }
+		               },
+		               error:function(XMLHttpRequest,textStatus,errorThrown){
+		                   console.log("发生异常:"+errorThrown+Date.now());
+		               },
+		               global:true
+		        })
+		        
+		        
+		         var saveDataAry=[];  
+	             var data1={"name":"test1","status":"0"};  
+	             var data2={"name":"test2","status":"0"};  
+	             saveDataAry.push(data1);  
+	             saveDataAry.push(data2);  
+	             $.ajax({ 
+	                 	type:"POST", 
+	                	url:"http://127.0.0.1:8090/system/batchSaveUser", 
+	                 	dataType:"json",      
+	                 	contentType:"application/json",               
+	                 	data:JSON.stringify(saveDataAry), 
+	                 	success:function(rs){ 
+	                       if(rs.success){
+		                   		console.log(rs.code);
+		                   }else{
+		                   		console.log(rs.msg);
+		                   }         
+	                 	} 
+                 }); 
+                 
+                 
+                var updateData={"id":1000042,"name":"test","status":"1"};  
+		    	$.ajax({
+		               url:"http://127.0.0.1:8090/system/updateUser",
+		               type:"POST",
+		               crossDomain:true,
+		               timeout:30000,
+		               dataType:"json",
+		               contentType:"application/json",
+		               data:JSON.stringify(updateData),
+		               success:function(rs,textStatus){
+		                   if(rs.success){
+		                   		console.log(rs.code);
+		                   }else{
+		                   		console.log(rs.msg);
+		                   }
+		               },
+		               error:function(XMLHttpRequest,textStatus,errorThrown){
+		                   console.log("发生异常:"+errorThrown+Date.now());
+		               },
+		               global:true
+		        })   
+		        
+		        $.ajax({
+		               url:"http://127.0.0.1:8090/system/deleteUserById?id=1000046",
+		               type:"POST",
+		               crossDomain:true,
+		               timeout:30000,
+		               dataType:"json",
+		               contentType:"application/json",
+		               success:function(rs,textStatus){
+		                   if(rs.success){
+		                   		console.log(rs.code);
+		                   }else{
+		                   		console.log(rs.msg);
+		                   }
+		               },
+		               error:function(XMLHttpRequest,textStatus,errorThrown){
+		                   console.log("发生异常:"+errorThrown+Date.now());
+		               },
+		               global:true
+		        })      
+			});
+		</script>
+</html>

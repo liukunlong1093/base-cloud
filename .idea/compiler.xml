@@ -12,6 +12,7 @@
         <module name="registry" />
         <module name="template-app" />
         <module name="template-gateway" />
+        <module name="template-web" />
         <module name="zipkin" />
       </profile>
     </annotationProcessing>
@@ -25,6 +26,7 @@
       <module name="template-app" target="1.8" />
       <module name="template-gateway" target="1.8" />
       <module name="template-manager" target="1.8" />
+      <module name="template-web" target="1.8" />
       <module name="zipkin" target="1.8" />
     </bytecodeTargetLevel>
   </component>

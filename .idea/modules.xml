@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/template-manager/template-app/template-app.iml" filepath="$PROJECT_DIR$/template-manager/template-app/template-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/template-manager/template-gateway/template-gateway.iml" filepath="$PROJECT_DIR$/template-manager/template-gateway/template-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/template-manager/template-manager.iml" filepath="$PROJECT_DIR$/template-manager/template-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/template-manager/template-web/template-web.iml" filepath="$PROJECT_DIR$/template-manager/template-web/template-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/zipkin/zipkin.iml" filepath="$PROJECT_DIR$/zipkin/zipkin.iml" />
     </modules>
   </component>

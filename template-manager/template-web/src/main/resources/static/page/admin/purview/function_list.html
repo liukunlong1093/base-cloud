@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByFunction()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByFunction()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByFunction()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByFunction()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonFunction()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="functionComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isFunctionFieldData" value="name" onitemclick="onComboboxFieldChanged"
+                    />
+                    <input id="functionSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByFunction" onfocus="clearQuickSearchByFunction"
+                    />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByFunction()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="height:100px;">
+        <div id="functionDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" idField="id" sizeList="[5,10,20,50]"
+        pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="code" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">功能编号</div>
+                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">功能名称</div>
+                <div field="comment" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">功能说明</div>
+                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">功能排序</div>
+                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="functionAddOrEditWindow" class="mini-window" title="维护系统功能" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="functionAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="id" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">功能编号<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="code" name="code" class="mini-textbox" emptyText="请输入功能编号" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">功能名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入功能名称" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">操作类型<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                    	<input id="operationTypeId" name="operationTypeId" class="mini-combobox" emptyText="请输入操作类型" style="width:100%;" textField="name" valueField="id" url=infoDomain+"/operateType/getOperateTypeList" required="true" allowInput="true" showNullItem="true" nullItemText="请选择..." />
+                    </td>
+                    <td style="width:150px;" align="right">资源名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="menuId" name="menuId" class="mini-treeselect" emptyText="输入资源名称" url=infoDomain+"/menu/getMenuList" multiSelect="false"  valueFromSelect="false" textField="name" idField="id" parentField="parentId"   allowInput="true" style="width:100%"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">功能说明<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="comment" name="comment" class="mini-textbox" emptyText="请输入功能说明" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">功能排序<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="sort" name="sort" class="mini-spinner" emptyText="请输入功能排序" required="true" style="width:100%" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="functionAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="functionAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="functionSearchWindow" class="mini-window" title="系统功能查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="functionSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">功能编号：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">功能名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+                <tr>
+                   
+                    <td width="20%;" align="right">操作类型：</td>
+                    <td width="30%;">
+                        <input name="operationTypeId" class="mini-combobox" emptyText="请输入操作类型" style="width:160px;" textField="name" valueField="id" url=infoDomain+"/operateType/getOperateTypeList" required="true" allowInput="true" showNullItem="true" nullItemText="请选择..." />
+                    </td>
+                    <td width="20%;" align="right">资源名称：</td>
+                    <td width="30%;">
+                        <input name="menuId" class="mini-treeselect" emptyText="输入资源名称" url=infoDomain+"/menu/getMenuList" multiSelect="false"  valueFromSelect="false" textField="name" idField="id" parentField="parentId"   allowInput="true" style="width:160px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%;" align="right">功能说明：</td>
+                    <td width="30%;">
+                        <input name="comment" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">功能排序：</td>
+                    <td width="30%;">
+                        <input name="sort" class="mini-spinner" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="functionSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="functionSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="functionViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyFunctionViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:150px;" align="right">功能编号：</td>
+                    <td style="width:270px;">
+                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">功能名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">操作类型：</td>
+                    <td style="width:270px;">
+                        <input id="view_operationTypeId" name="operationTypeId" class="mini-combobox"  style="width:80%;" textField="name" valueField="id" url=infoDomain+"/operateType/getOperateTypeList" required="true" allowInput="true" showNullItem="true"  />
+                    </td>
+                    <td style="width:150px;" align="right">资源名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_menuId" name="menuId" class="mini-treeselect"  url=infoDomain+"/menu/getMenuList" multiSelect="false"  valueFromSelect="false" textField="name" idField="id" parentField="parentId"   allowInput="true" style="width:80%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">功能说明：</td>
+                    <td style="width:270px;">
+                        <input id="view_comment" name="comment" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">功能排序：</td>
+                    <td style="width:270px;">
+                        <input id="view_sort" name="sort" class="mini-spinner" style="width:80%" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isFunctionFieldData = [
+        {
+            id: 'code'
+            , text: '功能编号'
+        }, {
+            id: 'name'
+            , text: '功能名称'
+        }, {
+            id: 'comment'
+            , text: '功能说明'
+        }, {
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    mini.parse();
+    var functionDataGrid = mini.get("functionDataGrid");
+    functionDataGrid.setUrl(infoDomain+"/function/getFunctionList");
+    functionDataGrid.load();
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByFunction() {
+            _add_function('functionAddOrEditWindow', 'functionAddOrEidthForm', '新增系统功能');
+        }
+        //编辑相关方法
+    function clickEditButtonByFunction() {
+            var ajaxurl = infoDomain+"/function/getFunctionById";
+            _edit_function('functionDataGrid', 'functionAddOrEditWindow', 'functionAddOrEidthForm', '编辑系统功能', ajaxurl, null, null);
+        }
+        //删除相关方法
+    function clickRemoveButtonByFunction() {
+        var ajaxurl = infoDomain+"/function/deleteFunctionById";
+        _delete_function('functionDataGrid', ajaxurl, backFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonFunction() {
+        _refresh_function('functionDataGrid', null);
+    }
+
+    //确定相关方法
+    function functionAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/function/" + (_add_action('id') ? 'saveFunction' : 'updateFunction');
+        _save_function('functionAddOrEidthForm', ajaxurl, backFunction, null, null);
+    }
+
+    //取消相关方法
+    function functionAddOrEditOnCancel() {
+            _cancel_function('functionAddOrEditWindow');
+        }
+        //执行完毕调用的方法   
+    function backFunction() {
+            functionAddOrEditOnCancel();
+            clickRefreshButtonFunction();
+        }
+        //查询相关方法begin
+    function clickSearchButtonByFunction() {
+        _search_function('functionSearchWindow', 'functionSearchForm', '系统功能查询');
+    }
+
+    function functionSerchOnOk() {
+        functionSearch();
+    }
+
+    function functionSerchOnCancel() {
+        _cancel_function('functionSearchWindow');
+    }
+
+    function functionSearch() {
+        var form = new mini.Form("#functionSearchForm");
+        var o = form.getData();
+        o.code = encodeURIComponent(o.code);
+        o.name = encodeURIComponent(o.name);
+        o.comment = encodeURIComponent(o.comment);
+        functionDataGrid.load(o, functionSearchSuccse, _search_Fail);
+    }
+
+    function functionSearchSuccse() {
+        _cancel_function('functionSearchWindow');
+    }
+
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+        editRowInfo('functionDataGrid','functionViewForm','readOnlyFunctionViewForm',infoDomain+'/function/getFunctionById',row_uid);
+    }
+    functionDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("functionComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByFunction();
+        }
+    }
+
+    function clickQuickSearchByFunction() {
+        var __fieldName = mini.get("functionComboboxField")
+            .getValue();
+        var __fieldValue = mini.get("functionSearchKeyWord")
+            .getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            functionDataGrid.load(filterJsonObj);
+        } else {
+            functionDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByFunction(e) {
+        mini.get("functionSearchKeyWord")
+            .setValue();
+    }
+    </script>
+</body>
+
+</html>

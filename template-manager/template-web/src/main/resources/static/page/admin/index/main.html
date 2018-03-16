@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>信息管理系统界面</title>
+		<script src="../../global/global.js?aa" type="text/javascript"></script>
+		<style>
+		.nav li a.selected {
+		  background: url(../../../images/navbg.png) no-repeat;
+		}
+		</style>
+		<script type="text/javascript">
+		document.write('<link href="'+staticDomain+'/css/style.css" rel="stylesheet" type="text/css" />');
+			$(function(){	
+				//顶部导航切换
+				$(".nav li a").click(function(){
+					$(".nav li a.selected").removeClass("selected");
+					$(this).addClass("selected");
+				});
+				//导航切换
+				$(".menuson li").click(function(){
+					$(".menuson li.active").removeClass("active");
+					$(this).addClass("active");
+				});
+			
+				$('.title').click(function(){
+					var $ul = $(this).next('ul');
+					$('dd').find('ul').slideUp();
+					if($ul.is(':visible')){
+						$(this).next('ul').slideUp();
+					}else{
+						$(this).next('ul').slideDown();
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="layout1" class="mini-layout" style="width:100%;height:100%;">
+		    <div class="header" region="north" height="89px;" showSplit="false" showHeader="false"  style="background:url(../../../images/topbg.gif) repeat-x;">
+		        <div class="topleft">
+		    	<a href="" target="_parent"><img src="../../../images/logo.png" title="系统首页" /></a>
+			    </div>
+			    <ul id="__nav" class="nav" style="background:url(../../../images/topbg.gif) repeat-x;">
+			    </ul>
+			    <div class="topright">    
+				    <ul>
+					    <li><span><img src="../../../images/help.png" title="帮助"  class="helpimg"/></span><a href="#">帮助</a></li>
+					    <li><a href="#">关于</a></li>
+					    <li><a href="javascript:;" onclick="onClickLogout();">退出</a></li>
+				    </ul>
+			    	<div class="user"><span id="fullname">管理员</span><i>消息</i><b>0</b></div>    
+			    </div>
+		    </div>
+		    <div title="center" region="center" style="border:0;" bodyStyle="overflow:hidden;">
+		        <!--Splitter-->
+		        <div class="mini-splitter" style="width:100%;height:100%;" borderStyle="border:0;">
+		            <div size="180" maxSize="250" minSize="100" height="188px" showCollapseButton="true" style="border:0;background:#f0f9fd;">
+		                <div class="lefttop"><span></span><div id="__selectTopMenuName"></div></div>
+					    <dl class="leftmenu" id="__leftmenu"></dl>
+		            </div>
+		            <div showCollapseButton="false" style="border:0;">
+		                <!--Tabs-->
+		                <div id="mainTabs" class="mini-tabs" activeIndex="0" style="width:100%;height:100%;"  plain="false"  contextMenu="#tabsMenu">
+		                    <div name="work" title="工作台" url="default.html" ></div>
+		                </div>
+		            </div>        
+		        </div>
+		    </div>
+		</div>
+		<ul id="tabsMenu" class="mini-contextmenu" onbeforeopen="onBeforeOpen">        
+		    <li id="closeotherli" onclick="closeAllButFirst">关闭其他标签页</li>
+		</ul>
+		<script type="text/javascript">
+		    var su;
+	        mini.parse();
+	        var currentTab = null;
+			var tabs = mini.get("mainTabs");
+	        function showTab(menuId,menuName,url) {
+	            var id = "tab$"+menuId;
+	            var tab = tabs.getTab(id);
+	            if (!tab) {
+	                tab = {};
+	                tab._nodeid =menuId;
+	                tab.name =id;
+	                tab.title =menuName;
+	                tab.showCloseButton = true;
+	
+	                //这里拼接了url，实际项目，应该从后台直接获得完整的url地址
+	                tab.url =wwwDomain+url;
+	
+	                tabs.addTab(tab);
+	            }
+	            tabs.activeTab(tab);
+	        }
+	        
+	        function onBeforeOpen(e) {
+	            currentTab = tabs.getTabByEvent(e.htmlEvent);
+	            if (!currentTab) {
+	                e.cancel = true;                
+	            }
+	            if(currentTab.name == "work") {
+	            	jQuery("#closecurrentli").attr("disabled","disabled");
+	            }else if(currentTab.name.indexOf("tab_fixed")==0){
+	            }else{
+	            	jQuery("#closecurrentli").removeAttr("disabled");
+	            }
+	        }
+	        
+	       function onTabsActiveChanged(e) {
+	            var tabs = e.sender;
+	            var tab = tabs.getActiveTab();
+	            if (tab && tab._nodeid) {
+	                var node = tree.getNode(tab._nodeid);
+	                if (node && !tree.isSelectedNode(node)) {
+	                    tree.selectNode(node);
+	                }
+	            }
+	        }
+	        function initTop(){
+	                var data={};
+	                data.userId=999999;
+	        		$.ajax({
+                     url: infoDomain+"/menu/getMainTopMenuList",
+                     type:"get",
+					 dataType:"json",
+	   		         contentType:"application/json",
+	   		         data:data,
+                     success: function(o) {
+                        if(o.success){
+                            var artData={};
+                            artData.menus=o.data;
+                            artData.staticDomain=staticDomain;
+                            var renderHtml = template('renderNav', artData);
+							$("#__nav").html(renderHtml);
+							$(".nav li a.selected").click();
+							//顶部导航切换
+							$(".nav li a").click(function(){
+								$(".nav li a.selected").removeClass("selected");
+								$(this).addClass("selected");
+							});
+                        }
+                     },error: function(jqXHR, textStatus, errorThrown) {
+                         alert(jqXHR.responseText);
+                     }
+                   });
+
+	        }
+	        function refreshLeftMenu(id,name,link) {
+	              
+	              var data={};
+	              data.userId=999999;
+	              data.parentId=id;
+	        	 $("#__selectTopMenuName").text(name);
+	        	 $.ajax({
+                     url: infoDomain+"/menu/getMainLeftMenuTree",
+                     type:"get",
+					 dataType:"json",
+	   		         contentType:"application/json",
+                     data: data,
+                     success: function(o) {
+                        if(o.success){
+	                     	var menus=o.data;
+	                     	var menuStr="";
+	                     	for (var i=0;i<menus.length;i++){
+	                   			var parentId=menus[i].parentId;
+	                   		    if(i!=0){
+	                   		    	if(parentId==id){
+	                   		    		menuStr=menuStr+'</ul></dd> ';
+	                   		    	}
+	                   		    }
+	                     		if(parentId==id){
+	                    			menuStr=menuStr+'<dd>';	
+	                    			menuStr=menuStr+'<div class="title" onclick="switchMenu(this);"><span><img src="<%=path%>/res/images/'+menus[i].iconName+'" /></span>'+menus[i].name+'</div>';
+		                     		menuStr=menuStr+'<ul class="menuson">';
+	                     		}else{
+	                     			menuStr=menuStr+'<li><cite></cite><a href="#"  onclick=\'showTab('+menus[i].id+',"'+menus[i].name+'","'+menus[i].link+'")\' >'+menus[i].name+'</a><i></i></li>';
+	                     		}
+	                     		if(i==o.length-1){
+		                     		menuStr=menuStr+'</ul></dd> ';
+	                     		}
+	                     	}
+	                     	$("#__leftmenu").html("");
+	                     	$("#__leftmenu").html(menuStr);
+                        
+                        }
+                     },error: function(jqXHR, textStatus, errorThrown) {
+                         alert(jqXHR.responseText);
+                     }
+                 });
+			}
+	        function switchMenu(obj){
+	        	var $ul = $(obj).next('ul');
+				$('dd').find('ul').slideUp();
+				if($ul.is(':visible')){
+					$(obj).next('ul').slideUp();
+				}else{
+					$(obj).next('ul').slideDown();
+				}
+			}
+	        
+	        function onClickLogout() {
+				mini.confirm("确定退出系统?", "确定?",
+		            function (action) {            
+		                if (action == "ok") {
+		                	window.location.href="<%=basePath%>logout";
+		                }
+		            }
+		        );
+			}
+	        function isEmpty(v, allowBlank){
+	   			return v === null || v === undefined || (!allowBlank ? v === '' : false);
+	   	    } 
+
+			$(function() {
+				 initHtml();
+			     initTop();
+				 run(); //加载页面时启动定时器  
+				var interval;
+				function run() {
+					interval = setInterval(chat, "2000");
+				}
+				function chat() {
+				    if(su="\"\"" && isEmpty(su,false)){
+				    	clearTimeout(interval); //关闭定时器  
+				    	confirmClick();
+				    }
+				}
+				function confirmClick() {
+				        mini.confirm("cookie已过期是否返回登录页面？", "提示",
+				            function (action) {            
+				                if (action == "ok") {
+				                	window.location.href=infoDomain+"/page/login.html";
+				                }else{
+				                	mini.alert("cookie已过期请尽快注销重新登录!");
+				                } 
+				            }
+				        );
+				 }
+			});
+			function closeAllButFirst() {
+	        	var but = [currentTab];            
+	            but.push(tabs.getTab("work"));
+	            tabs.removeAll(but);
+	        }
+	        function initHtml(){
+	        	var __su=getSessionUser();
+	        	if(!isEmpty(__su,false)){
+	        	    su=__su;
+	        		$("#fullname").html(su.fullname);
+	        	}
+	        }
+	   </script>
+	   <script id="renderNav" type="text/html">
+			{{each menus as menu i}}
+				<li><a href="#" onclick="refreshLeftMenu({{menu.id}},'{{menu.name}}',{{menu.link}})" {{if i==0}}class="selected"{{/if}}><img src="{{staticDomain}}/images/{{menu.iconName}}" title="{{menu.name}}"><h2>{{menu.name}}</h2></a></li>
+		    {{/each}}
+	   </script
+	</body>
+</html>

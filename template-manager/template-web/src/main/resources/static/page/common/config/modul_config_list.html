@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script src="../../global/global.js?aa" type="text/javascript"></script>
+	</head>
+	<body>
+
+
+	<div id="config_tabs" class="mini-tabs" activeIndex="0" style="width: 100% px; height: 100%;" >
+	</div>
+	<script type="text/javascript">
+	mini.parse();
+    function initConfigTab(){
+        var data={};
+        data.parentCode='sys_config_type';
+		$.ajax({
+         url: infoDomain+"/dataDictionary/getDataDictionaryList",
+         type:"get",
+		 dataType:"json",
+         contentType:"application/json",
+         data:data,
+         success: function(o) {
+            var tabs = mini.get("config_tabs");
+            if(o.success){
+                var datas=o.data;
+        		for (var i=0;i<datas.length;i++){
+          			var data=datas[i];
+	                tab = {};
+	                tab.title =data.name;
+	                tab.url=wwwDomain+'/common/config/config_list.html?type='+data.code;
+	                tabs.addTab(tab);
+	                if(i==0){
+	                 tabs.activeTab(tab);
+	                }
+                }
+            }
+         },error: function(jqXHR, textStatus, errorThrown) {
+             alert(jqXHR.responseText);
+         }
+       });
+	}
+	$(function() {
+		initConfigTab();
+	});
+	</script>
+	<script id="renderHidden" type="text/html">
+	{{each tabs as tab i}}
+		<input type="hidden" id="config_tabs_dataCode_{{i}}" value="{{tab.code}}" attr="false" />
+	{{/each}}
+    </script>
+    <script id="renderTab" type="text/html">
+    	{{each tabs as tab i}}
+		 	<div title="{{tab.name}}>" url="" maskOnLoad="true"></div>
+		{{/each}}
+    </script>
+	</body>
+</html>

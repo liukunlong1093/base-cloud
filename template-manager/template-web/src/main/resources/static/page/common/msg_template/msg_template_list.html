@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByMsgTemplate()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByMsgTemplate()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByMsgTemplate()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByMsgTemplate()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonMsgTemplate()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="msgTemplateComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isMsgTemplateFieldData" value="name" onitemclick="onComboboxFieldChanged"/>
+                    <input id="msgTemplateSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByMsgTemplate" onfocus="clearQuickSearchByMsgTemplate"/>
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByMsgTemplate()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="background:red;height:100px;">
+        <div id="msgTemplateDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/msgTemplate/getMsgTemplateList" idField="id"
+        sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="code" width="50" headerCls="fontweight" headerAlign="left" allowSort="true">模板编码</div>
+                <div field="type" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onTypeRenderer">模板类型</div>
+                <div field="title" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">标题</div>
+                <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onStatusRenderer">模板状态</div>
+                <div field="createTime" width="50" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="msgTemplateAddOrEditWindow" class="mini-window" title="维护信息模版" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="msgTemplateAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="msgTemplateId" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">模板编码<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="code" name="code" class="mini-textbox" emptyText="请输入模板编码" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">模板类型<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="type" name="type" class="mini-combobox" emptyText="请输入模版类型" data="isTypeData" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">模板状态<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="status" name="status" class="mini-combobox" emptyText="请输入模版状态" data="isStatusData" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">排序数字<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">模版标题<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="title" name="title" class="mini-textbox" emptyText="请输入标题" required="true" style="width:100%" />
+                     </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">模板内容<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="content" name="content" class="mini-textarea" emptyText="请输入模板内容" required="true" style="width:100%" />
+                     </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="msgTemplateAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="msgTemplateAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="msgTemplateSearchWindow" class="mini-window" title="信息模版查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="msgTemplateSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">模板编码：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                     <td width="20%;" align="right">模板类型：</td>
+                    <td width="30%;">
+                        <input id="type" name="type" class="mini-combobox"  data="isTypeData" style="width:160px" />
+                    </td>
+                </tr>
+                <tr>
+                     <td width="20%;" align="right">模版标题：</td>
+                    <td width="30%;">
+                        <input name="title" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">模板状态：</td>
+                    <td width="30%;">
+                        <input id="status" name="status" class="mini-combobox" data="isStatusData"  style="width:160px" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="msgTemplateSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="msgTemplateSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="msgTemplateViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyMsgTemplateViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;" class="myGrid">
+                <tr>
+                    <td style="width:150px;" align="right">模板编码：</td>
+                    <td style="width:270px;">
+                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">模板类型：</td>
+                    <td style="width:270px;">
+                         <input id="view_type" name="type" class="mini-combobox"  data="isTypeData" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">模板状态：</td>
+                    <td style="width:270px;">
+                        <input id="view_status" name="status" class="mini-combobox" data="isStatusData" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">排序数字：</td>
+                    <td style="width:270px;">
+                         <input id="view_sort" name="sort" class="mini-spinner" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">模版标题：</td>
+                    <td style="width:270px;">
+                        <input id="view_title" name="title" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">模板内容：</td>
+                    <td style="width:270px;">
+                        <input id="view_content" name="content" class="mini-textarea" style="width:80%" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isMsgTemplateFieldData = [
+       {
+           id: 'code'
+           , text: '模板编码'
+       }, {
+           id: 'title'
+           , text: '模版标题'
+       }, {
+           id: 'content'
+           , text: '模板内容'
+       }, {
+           id: 'moreFilter'
+           , text: '更多筛选'
+    }];
+    var isStatusData = [{ id: '0', text: '启用' }, { id:'1', text: '禁用'}];
+    var isTypeData = [{ id: 1, text: '邮件' },{ id: 2, text: '短信' },{ id: 1, text: '微信' }];
+    mini.parse();
+    var msgTemplateDataGrid = mini.get("msgTemplateDataGrid");
+    msgTemplateDataGrid.load();
+    var msgTemplateViewForm = document.getElementById("msgTemplateViewForm");
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByMsgTemplate() {
+        _add_function('msgTemplateAddOrEditWindow', 'msgTemplateAddOrEidthForm', '新增消息模版');
+    }
+    //编辑相关方法
+    function clickEditButtonByMsgTemplate() {
+        var ajaxurl = infoDomain+"/msgTemplate/getMsgTemplateById";
+        _edit_function('msgTemplateDataGrid', 'msgTemplateAddOrEditWindow', 'msgTemplateAddOrEidthForm', '编辑消息模版', ajaxurl, null, null);
+    }
+    //删除相关方法
+    function clickRemoveButtonByMsgTemplate() {
+        var ajaxurl = infoDomain+"/msgTemplate/deleteMsgTemplateById";
+        _delete_function('msgTemplateDataGrid', ajaxurl, msgTemplateBackFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonMsgTemplate() {
+        _refresh_function('msgTemplateDataGrid', null);
+    }
+
+    //确定相关方法
+    function msgTemplateAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/msgTemplate/" + (_add_action('msgTemplateId') ? 'saveMsgTemplate' : 'updateMsgTemplate');
+        _save_function('msgTemplateAddOrEidthForm', ajaxurl, msgTemplateBackFunction, null, null);
+    }
+
+    //取消相关方法
+    function msgTemplateAddOrEditOnCancel() {
+        _cancel_function('msgTemplateAddOrEditWindow');
+    }
+    //执行完毕调用的方法   
+    function msgTemplateBackFunction() {
+        msgTemplateAddOrEditOnCancel();
+        clickRefreshButtonMsgTemplate();
+    }
+    //查询相关方法begin
+    function clickSearchButtonByMsgTemplate() {
+        _search_function('msgTemplateSearchWindow', 'msgTemplateSearchForm', '消息模版查询');
+    }
+
+    function msgTemplateSerchOnOk() {
+        msgTemplateSearch();
+    }
+
+    function msgTemplateSerchOnCancel() {
+        _cancel_function('msgTemplateSearchWindow');
+    }
+
+    function msgTemplateSearch() {
+        var form = new mini.Form("#msgTemplateSearchForm");
+        var o = form.getData();
+        o.code = encodeURIComponent(o.code);
+        o.title = encodeURIComponent(o.title);
+        o.content = encodeURIComponent(o.content);
+        o.createName = encodeURIComponent(o.createName);
+        o.updateName = encodeURIComponent(o.updateName);
+        msgTemplateDataGrid.load(o, msgTemplateSearchSuccse, _search_Fail);
+    }
+
+    function msgTemplateSearchSuccse() {
+        _cancel_function('msgTemplateSearchWindow');
+    }
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+   		editRowInfo('msgTemplateDataGrid','msgTemplateViewForm','readOnlyMsgTemplateViewForm',infoDomain+'/msgTemplate/getMsgTemplateById',row_uid);
+    }
+    msgTemplateDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("msgTemplateComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByMsgTemplate();
+        }
+    }
+
+    function clickQuickSearchByMsgTemplate() {
+        var __fieldName = mini.get("msgTemplateComboboxField")
+            .getValue();
+        var __fieldValue = mini.get("msgTemplateSearchKeyWord")
+            .getValue();
+        __fieldValue = encodeURIComponent(__fieldValue);
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            msgTemplateDataGrid.load(filterJsonObj);
+        } else {
+            msgTemplateDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByMsgTemplate(e) {
+        mini.get("msgTemplateSearchKeyWord")
+            .setValue();
+    }
+  //模版状态
+    function onStatusRenderer(e) {
+     	  var statusName="";
+         var grid=e.sender;
+         var record=e.record;
+         var status=record.status
+         if("0"==status){
+         	statusName="启用";
+         }else if("1"==status){
+         	statusName="<font color='red'>禁用</font>";
+         }
+         return statusName;
+     }
+    //消息模版类型
+    function onTypeRenderer(e) {
+     	 var typeName="";
+         var record=e.record;
+         var type=record.type;
+         if("1"==type){
+        	 typeName="邮件";
+         }else if("2"==type){
+        	 typeName="短信";
+         }else if("3"==type){
+        	 typeName="微信";
+         }
+         return typeName;
+     } 
+    </script>
+</body>
+
+</html>

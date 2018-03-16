@@ -1,0 +1,676 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByDomain()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByDomain()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByDomain()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByDomain()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonDomain()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="domainComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isDomainFieldData" value="name" onitemclick="onComboboxFieldChanged"
+                    />
+                    <input id="domainSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByDomain" onfocus="clearQuickSearchByDomain" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByDomain()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="height:100px;">
+        <div id="domainDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/domain/getDomainList" idField="id" sizeList="[5,10,20,50]"
+        pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="code" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">群组编号</div>
+                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">群组名称</div>
+                <div field="type" width="100" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onTypeRenderer">群组类型</div>
+                <div field="comment" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">群组说明</div>
+                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>
+                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+<!--                 <div field="createBy" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">创建人</div> -->
+<!--                 <div field="updateTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">更新时间</div> -->
+<!--                 <div field="updateBy" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">更新人</div> -->
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="domainAddOrEditWindow" class="mini-window" title="维护群组" style="width:750px;" showModal="true" allowResize="true" allowDrag="true">
+      <div id="domainTabs" class="mini-tabs" activeIndex="0" style="width:710px;" contextMenu="#tabsMenu" >
+		    <div name="first" title="群组基本信息">
+		    	<div id="domainAddOrEidthForm" class="form">
+		            <input class="mini-hidden" name="id" id="id" />
+		            <input class="mini-hidden" name="createBy" value="" />
+		            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+		                <tr>
+		                    <td style="width:150px;" align="right">群组编号<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="code" name="code" class="mini-textbox" emptyText="请输入群组编号" required="true" style="width:100%" />
+		                    </td>
+		                    <td style="width:150px;" align="right">群组名称<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="name" name="name" class="mini-textbox" emptyText="请输入群组名称" required="true" style="width:100%" />
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td style="width:150px;" align="right">群组类型<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="type" name="type" class="mini-combobox" emptyText="请输入群组类型" data="isTypeData" required="true" style="width:100%" />
+		                    </td>
+		                    <td style="width:150px;" align="right">排序序号<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+		                    </td>
+		                </tr>
+		                <tr>
+		                     <td style="width:150px;" align="right">群组说明<font color="red">*</font>：</td>
+		                     <td colspan="3">
+		                         <input id="comment" name="comment" class="mini-textarea"  style="width:100%" />
+		                     </td>
+		                </tr>
+		            </table>
+		            <div property="footer" align="center">
+		                <a class="mini-button" onclick="domainAddOrEditOnOk();" style="width:60px;">确定</a>
+		                <a class="mini-button" onclick="domainAddOrEditOnCancel();" style="width:60px;">取消</a>
+		            </div>
+		        </div>
+		    </div>
+		    <div title="群组用户信息">
+		        <div class="mini-toolbar" style="border:0;">
+			        <table style="width:100%;">
+			            <tr>
+			                <td style="width:100%;">
+			                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="openUserSearchWin()" />
+			                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByDomainUserRel()"/>
+			                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonDomainUserRel()"/>
+			                </td>
+			                <td style="white-space:nowrap;">
+			                   <input id="domainUserRelComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isUserFieldData" value="name" onitemclick="onDomainUserRelComboboxFieldChanged"/>         
+							   <input id="domainUserRelSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByDomainUserRel" onfocus="clearQuickSearchByDomainUserRel"/>
+			                   <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByDomainUserRel()">搜索</a>
+			                </td>
+			            </tr>
+			        </table>
+			    </div>
+			    <div class="mini-fit" style="height:260px;">
+			        <div id="domainUserRelDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/domain/getDomainUserRelList" idField="id" sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+			            <div property="columns">
+			                <div type="indexcolumn"></div>
+			                <div type="checkcolumn"></div>
+			                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">帐号</div>
+			                <div field="fullname" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+			                <div field="sex" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserSexRenderer">性别</div>
+			                <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserStatusRenderer">状态</div>
+			                <div field="birthday" width="50" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd">生日</div>
+			            </div>
+			        </div>
+			    </div>
+		    </div>
+       </div>
+   </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="domainSearchWindow" class="mini-window" title="群组查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="domainSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">群组编号：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">群组名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%;" align="right">群组类型：</td>
+                    <td width="30%;">
+                        <input name="type" class="mini-combobox" data="isTypeData" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">群组说明：</td>
+                    <td width="30%;">
+                        <input name="comment" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="domainSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="domainSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="domainViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyDomainViewForm" class="form">
+            <fieldset  style="width:97%;">
+                <legend><span><font style='font-weight:bold;'>群组信息</font></span></legend>
+                <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+	                <tr>
+	                    <td style="width:150px;" align="right">群组编号：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+	                    </td>
+	                    <td style="width:150px;" align="right">群组名称：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td style="width:150px;" align="right">群组类型：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_type" name="type" class="mini-combobox" data="isTypeData" style="width:80%" />
+	                    </td>
+	                    <td style="width:150px;" align="right">排序序号：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_sort" name="sort" class="mini-textbox" style="width:80%" />
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td style="width:150px;" align="right">群组说明：</td>
+	                     <td colspan="3">
+	                        <input id="view_comment" name="comment" class="mini-textbox" style="width:80%" />
+	                    </td>
+	                   
+	                </tr>
+            	</table>
+            </fieldset>
+             <fieldset  style="width:97%;">
+                <legend><span><font style='font-weight:bold;'>用户成员</font></span></legend>
+	            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;" >
+	                <tr>
+	                     <td style="width:197px;" align="right">成员名称：</td>
+	                     <td colspan="3" id="__showDomainUser">小名,张三,张三,张三,张三</td>
+	                </tr>
+	            </table>
+            </fieldset>
+        </div>
+    </div>
+    
+    <!--弹出选择用户界面begin-->
+    <div id="userSearchWindow" class="mini-window" title="请选择用户" style="width:722px;" showModal="true" allowResize="true" allowDrag="true">
+    	<div class="mini-toolbar" style="border:0;">
+	        <table style="width:100%;">
+	            <tr>
+	                <td style="width:100%;">
+	                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByUser()" />
+	                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByUser()" />
+	                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByUser()" />
+	                    <a class="mini-button" iconCls="icon-ok" style="font-weight: bold;" plain="true" text="确定" onclick="clickSubmitDomainUserRel()" />
+	                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonUser()" />
+	                </td>
+	                <td style="white-space:nowrap;">
+	                    <input id="userComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isUserFieldData" value="name" onitemclick="onComboboxFieldChanged" />
+	                    <input id="userSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByUser" onfocus="clearQuickSearchByUser" />
+	                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByUser()">搜索</a>
+	                </td>
+	            </tr>
+	        </table>
+       </div>
+       <div class="mini-fit" style="height:300px;">
+         <div id="userDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true"  url=infoDomain+"/user/getUserList" idField="id" sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+             <div property="columns">
+                 <div type="indexcolumn"></div>
+                 <div type="checkcolumn"></div>
+                 <div field="name" width="80" headerCls="fontweight" headerAlign="left" allowSort="true">帐号</div>
+                 <div field="fullname" width="80" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+                 <div field="sex" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserSexRenderer">性别</div>
+                 <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserStatusRenderer">状态</div>
+                 <div field="birthday" width="50" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd">生日</div>
+                 <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+             </div>
+         </div>
+       </div>
+    </div>
+    <!--弹出新增及编辑用户界面begin-->
+     <div id="userAddOrEditWindow" class="mini-window" title="维护用户" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+         <div id="userAddOrEidthForm" class="form">
+             <input class="mini-hidden" name="id" id="userId" />
+             <input class="mini-hidden" name="createBy" value="" />
+             <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                 <tr>
+                     <td style="width:150px;" align="right">帐号<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userName" name="name" class="mini-textbox" emptyText="请输入帐号" required="true" style="width:100%" />
+                     </td>
+                     <td style="width:150px;" align="right">密码<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userPwd" name="pwd" class="mini-password" emptyText="请输入密码" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">名称<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userFullname" name="fullname" class="mini-textbox" emptyText="请输入名称" required="true" style="width:100%" />
+                     </td>
+                     <td style="width:150px;" align="right">状态<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userStatus" name="status" class="mini-combobox" emptyText="请输入状态" data="isUserStatusData" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">性别<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userSex" name="sex" class="mini-combobox" emptyText="请输入性别" data="isUserSexData"  required="true" style="width:100%" />
+                     </td>
+                     <td style="width:150px;" align="right">生日<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userBirthday" name="birthday" class="mini-datepicker" emptyText="请输入生日" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="userSort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                  <tr>
+                     <td style="width:150px;" align="right">说明<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="userComment" name="comment" class="mini-textarea"  style="width:100%" />
+                     </td>
+                 </tr>
+             </table>
+             <div property="footer" align="center">
+                 <a class="mini-button" onclick="userAddOrEditOnOk();" style="width:60px;">确定</a>
+                 <a class="mini-button" onclick="userAddOrEditOnCancel();" style="width:60px;">取消</a>
+             </div>
+         </div>
+     </div>
+     <!--弹出用户新增及编辑用户界面end-->
+    
+    
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var __domainId="-1";//用户新增成功后或编辑成功后的时候的组织ID
+    var isDomainFieldData = [{id: 'code', text: '群组编号'}, {id: 'name', text: '群组名称'}, {id: 'comment', text: '群组说明'}, {id: 'moreFilter', text: '更多筛选'}];
+    var isDomainUserRelFieldData=[{id:'moreFilter', text: '更多筛选'}];
+    var isTypeData = [{ id: 0, text: '系统类型' }];
+    var isUserFieldData = [{id: 'name', text: '帐号'}, {id: 'fullname', text: '名称'}];
+    var isUserSexData = [{ id: '', text: '请选择'},{ id: 0, text: '男' }, { id:1, text: '女'}];
+    var isUserStatusData = [{ id: '0', text: '启用' }, { id:'1', text: '停用'}];
+    mini.parse();
+    var domainDataGrid = mini.get("domainDataGrid");
+    domainDataGrid.load();
+    var domainViewForm = document.getElementById("domainViewForm");
+    
+    var domainUserRelDataGrid = mini.get("domainUserRelDataGrid");
+    domainUserRelDataGrid.load();
+    
+    var userDataGrid = mini.get("userDataGrid");
+    userDataGrid.load();
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByDomain() {
+            _add_function('domainAddOrEditWindow', 'domainAddOrEidthForm', '新增群组');
+            var windowdiv = mini.get("domainAddOrEditWindow");
+            windowdiv.showAtPos("center","top");
+            mini.get("domainTabs").getTab(0).enabled=false;
+            mini.get("domainTabs").getTab(1).enabled=false;
+        }
+        //编辑相关方法
+    function clickEditButtonByDomain() {
+            var ajaxurl = infoDomain+"/domain/getDomainById";
+            _edit_function('domainDataGrid', 'domainAddOrEditWindow', 'domainAddOrEidthForm', '编辑群组', ajaxurl,"clickEditButtonByDomainCallBack", null, null);
+            var windowdiv = mini.get("domainAddOrEditWindow");
+	        windowdiv.showAtPos("center","top");
+	        mini.get("domainTabs").getTab(0).enabled=true;
+            mini.get("domainTabs").getTab(1).enabled=true;
+    }
+    function clickEditButtonByDomainCallBack(obj){
+    	var data=obj.data;
+        __domainId=data.id;
+        //加载当前群组下面的用户
+        domainUserRelDataGrid.load({domainId:__domainId});
+    } 
+        
+        //删除相关方法
+    function clickRemoveButtonByDomain() {
+        var ajaxurl = infoDomain+"/domain/deleteDomainById";
+        _delete_function('domainDataGrid', ajaxurl,"clickRefreshButtonDomain", null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonDomain() {
+        _refresh_function('domainDataGrid', null);
+    }
+
+    //确定相关方法
+    function domainAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/domain/" + (_add_action('id') ? 'saveDomain' : 'updateDomain');
+        _save_function('domainAddOrEidthForm', ajaxurl, "domainAddOrEditOnOkCallBack", null, null);
+    }
+    
+    function domainAddOrEditOnOkCallBack(obj){
+    	 var data=obj.data;
+         __domainId=data.id;
+         //加载当前群组下面的用户
+         domainUserRelDataGrid.load({domainId:__domainId});
+         mini.get("domainTabs").getTab(0).enabled=true;
+         mini.get("domainTabs").getTab(1).enabled=true;
+    }
+
+    //取消相关方法
+    function domainAddOrEditOnCancel() {
+            _cancel_function('domainAddOrEditWindow');
+        }
+        //执行完毕调用的方法   
+    function backFunction() {
+            domainAddOrEditOnCancel();
+            clickRefreshButtonDomain();
+    }
+        //查询相关方法begin
+    function clickSearchButtonByDomain() {
+        _search_function('domainSearchWindow', 'domainSearchForm', '群组查询');
+    }
+
+    function domainSerchOnOk() {
+        domainSearch();
+    }
+
+    function domainSerchOnCancel() {
+        _cancel_function('domainSearchWindow');
+    }
+
+    function domainSearch() {
+        var form = new mini.Form("#domainSearchForm");
+        var o = form.getData();
+        o.code = encodeURIComponent(o.code);
+        o.name = encodeURIComponent(o.name);
+        o.comment = encodeURIComponent(o.comment);
+        domainDataGrid.load(o, domainSearchSuccse, _search_Fail);
+    }
+
+    function domainSearchSuccse() {
+        _cancel_function('domainSearchWindow');
+    }
+
+  
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+        var shrink = mini.get("Shrink_row");
+        _currentRow = row_uid;
+        if (isEmpty(shrink.getValue(), false)) {
+            shrink.setValue(row_uid);
+            var row = domainDataGrid.getRowByUID(row_uid);
+            if (row) {
+                //显示行详细
+                domainDataGrid.hideAllRowDetail();
+                domainDataGrid.showRowDetail(row);
+                //将editForm元素，加入行详细单元格内
+                var td = domainDataGrid.getRowDetailCellEl(row);
+                td.appendChild(domainViewForm);
+                domainViewForm.style.display = "";
+                var id = row.id;
+                if (!isEmpty(id, false)) {
+                    var form = new mini.Form("#readOnlyDomainViewForm");
+                    form.clear();
+                    form.loading();
+                    $.ajax({
+                        url: infoDomain+"/domain/getDomainById?id=" + id,
+                        dataType:"json",
+	    				contentType:"application/json",
+                        success: function (obj) {
+                            form.unmask();
+                            var o = mini.decode(obj.data);
+                            form.setData(o);
+                            labelModel("readOnlyDomainViewForm");
+                        }
+                        , error: function () {
+                            mini.alert("表单加载错误");
+                            form.unmask();
+                        }
+                    });
+                    
+                    $.ajax({
+                        url: infoDomain+"/domain/getDomainUserRelList?domainId="+id,
+                        dataType:"json",
+	    				contentType:"application/json",
+                        success: function (obj) {
+                        	var o = mini.decode(obj);
+                        	var columns=o.data;
+                        	var text="";
+                        	for(var i=0;i<columns.length;i++){
+             	           		var column=columns[i];
+             	           	    text=text+column.name;
+             	           	    if(i<columns.length-1){
+             	           	    	text=text+",";
+             	           	    }
+             	           		
+                        	}
+                            $("#__showDomainUser").html(text);
+                        }, error: function () {
+                            mini.alert("表单加载错误");
+                            form.unmask();
+                        }
+                    });
+
+                }
+                domainDataGrid.doLayout();
+            }
+        } else {
+            domainDataGrid.hideAllRowDetail();
+            mini.get("Shrink_row")
+                .setValue("");
+        }
+
+    }
+    domainDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("domainComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByDomain();
+        }
+    }
+
+    function clickQuickSearchByDomain() {
+        var __fieldName = mini.get("domainComboboxField")
+            .getValue();
+        var __fieldValue = mini.get("domainSearchKeyWord")
+            .getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            domainDataGrid.load(filterJsonObj);
+        } else {
+            domainDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByDomain(e) {
+        mini.get("domainSearchKeyWord").setValue();
+    }
+    //组织类型渲染
+    function onTypeRenderer(e) {
+     	 var typeName="";
+         var record=e.record;
+         var type=record.type;
+         if("0"==type){
+        	 typeName="系统类型";
+         }
+         return typeName;
+     } 
+     //群组用户相关方法开始
+    function openUserSearchWin(){
+  	  _show_window_function("userSearchWindow","用户查询");
+  	   clickRefreshButtonUser();
+    }
+  //删除相关方法
+    function clickRemoveButtonByDomainUserRel() {
+    	var ajaxurl = infoDomain+"/domain/deleteDomainUserRelById";
+    	_delete_function('domainUserRelDataGrid', ajaxurl,"clickRefreshButtonDomainUserRel", null, null, null, null);
+    	clickRefreshButtonUser();
+    }
+    
+	//刷新相关方法
+	function clickRefreshButtonDomainUserRel() {
+		_refresh_function('domainUserRelDataGrid',infoDomain+"/domain/getDomainUserRelList?domainId="+__domainId);
+    }
+	function onDomainUserRelComboboxFieldChanged(e){
+  	  var filed = mini.get("domainUserRelComboboxField").getValue();
+  	  if("moreFilter"==filed){
+  		  clickSearchButtonByDomainUserRel();
+  	  }
+   }
+   function clickQuickSearchByDomainUserRel() {
+	domainUserRelDataGrid.setUrl(infoDomain+"/domain/getDomainUserRelList?domainId="+__domainId);
+   	var __fieldName = mini.get("domainUserRelComboboxField").getValue();
+   	var __fieldValue = mini.get("domainUserRelSearchKeyWord").getValue();
+   	__fieldValue=encodeURIComponent(__fieldValue);
+		if(!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+       	var filterJsonStr="{'"+__fieldName+"':'"+__fieldValue+"'}";
+       	var filterJsonObj=mini.decode(filterJsonStr,true);
+			domainUserRelDataGrid.load(filterJsonObj);
+		}else{
+			domainUserRelDataGrid.load();
+		}
+   }
+   function clearQuickSearchByDomainUserRel(e){
+  	 mini.get("domainUserRelSearchKeyWord").setValue();
+   }
+    //群组用户相关方法结束
+    
+    //群组用户弹出查询相关方法开始
+     //新增相关方法
+     function clickAddButtonByUser() {
+             _add_function('userAddOrEditWindow', 'userAddOrEidthForm', '新增用户');
+         }
+         //编辑相关方法
+     function clickEditButtonByUser() {
+             var ajaxurl = infoDomain+"/user/getUserById";
+             _edit_function('userDataGrid', 'userAddOrEditWindow', 'userAddOrEidthForm', '编辑用户', ajaxurl, null, null);
+         }
+         //删除相关方法
+     function clickRemoveButtonByUser() {
+         var ajaxurl = infoDomain+"/user/deleteUserById";
+         _delete_function('userDataGrid', ajaxurl, backFunction, null, null, null, null);
+     }
+
+     //刷新相关方法
+     function clickRefreshButtonUser() {
+         _refresh_function('userDataGrid', null);
+     }
+
+     //确定相关方法
+     function userAddOrEditOnOk() {
+         var ajaxurl = infoDomain+"/user/" + (_add_action('userId') ? 'saveUser' : 'updateUser');
+         _save_function('userAddOrEidthForm', ajaxurl, backFunction, null, null);
+     }
+
+     //取消相关方法
+     function userAddOrEditOnCancel() {
+             _cancel_function('userAddOrEditWindow');
+         }
+         //执行完毕调用的方法   
+     function backFunction() {
+             userAddOrEditOnCancel();
+             clickRefreshButtonUser();
+    }
+     function clickQuickSearchByUser() {
+         var __fieldName = mini.get("userComboboxField").getValue();
+         var __fieldValue = mini.get("userSearchKeyWord").getValue();
+         __fieldValue=encodeURIComponent(__fieldValue);
+         if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+             var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+             var filterJsonObj = mini.decode(filterJsonStr, true);
+             userDataGrid.load(filterJsonObj);
+         } else {
+             userDataGrid.load();
+         }
+     }
+
+     function clearQuickSearchByUser(e) {
+         mini.get("userSearchKeyWord").setValue();
+     }
+     //渲染性别
+     function onUserSexRenderer(e) {
+     	 var sexName="女";
+         var record = e.record;
+         var sex = record.sex;
+         if("0"==sex){
+         	sexName="男";
+         }else if("1"==sex){
+         	sexName="女";
+         }
+         return sexName;
+     }
+   //状态渲染
+     function onUserStatusRenderer(e) {
+      	  var statusName="";
+          var record=e.record;
+          var status=record.status;
+          if("0"==status){
+          	statusName="启用";
+          }else if("1"==status){
+          	statusName="<font color='red'>停用</font>";
+          }
+          return statusName;
+      }
+   
+      function openUserSearchWin(){
+    	  _show_window_function("userSearchWindow","用户查询");
+      }
+      
+      
+    //添加组织用户成员
+     function clickSubmitDomainUserRel() {
+      	var rows = userDataGrid.getSelecteds();
+          if (rows.length > 0) {
+          		mini.confirm("确认添加用户到该群组下？", "确定？",
+                function (action) {            
+                     if (action == "ok") {
+                  	   var userId = [];
+                       for (var i = 0, l = rows.length; i < l; i++) {
+                             var r = rows[i];
+                             userId.push(r.id);
+                        }
+                         var userIds = userId.join(',');
+                         userDataGrid.loading("操作中，请稍后......");
+                         $.ajax({
+                             url: infoDomain+"/domain/batchSaveDomainUserRel",
+                             type:"POST",
+                             data:{domainId:__domainId,userIds:userIds},
+                             success: function (text) {
+                            	 _hide_window_function("userSearchWindow");
+                            	 //加载当前群组下面的用户
+                                 domainUserRelDataGrid.load({domainId:__domainId});
+                                 userDataGrid.load();
+                             },
+                             error: function () {}
+                         });
+                     }
+                 }
+              );
+          } else {
+              mini.alert("请选中需要添加的用户");
+          }
+      }
+    //群组用户弹出查询相关方法结束
+    </script>
+</body>
+</html>

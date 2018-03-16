@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+     <style>
+    .function-item{
+        margin-left:5px;
+        margin-right:5px;
+    }
+    .function-item input{
+        vertical-align:bottom;
+    }
+    </style>
+</head>
+<body style="visibility:hidden;">
+    <div id="toolbar1" class="mini-toolbar" style="padding:2px;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-addfolder" plain="true" onclick="batchAddPurview()">增加</a>
+                    <a id="__select" class="mini-button" iconCls="icon-addfolder" plain="true" onclick="checkAll()">全选</a>
+                    <span class="separator"></span>
+                    <a class="mini-button" iconCls="icon-reload" plain="true">刷新</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-splitter" style="width:100%;height:464px;">
+        <div size="240" showCollapseButton="true">
+            <div class="mini-toolbar" style="padding:2px;border-top:0;border-left:0;border-right:0;">
+                <span style="padding-left:5px;">名称：</span>
+                <input id="secTreeKey" class="mini-textbox" style="width:100px;" onenter="searchSecTree" />
+                <a class="mini-button" iconCls="icon-search" plain="true" onclick="searchSecTree()">查找</a>
+            </div>
+            <div class="mini-fit">
+                <div id="secTree" class="mini-tree"  style="width:238px;padding:5px;" showTreeIcon="true" textField="secName" idField="secId" parentField="parentSecId"
+                resultAsTree="false" checkRecursive="true" expandOnLoad="0"></div>
+            </div>
+        </div>
+        <div showCollapseButton="true">
+        	<div showCollapseButton="true">
+                <div class="mini-splitter" style="width:100%;height:464px;">
+                    <div showCollapseButton="true">
+                     	<div id="prviewFucntionTree" class="mini-treegrid" style="width:100%;height:460px;"treeColumn="menuName" idField="menuId" parentField="parentMenuId"
+			            resultAsTree="false" allowResize="true" expandOnLoad="true" showTreeIcon="true" allowSelect="false" allowCellSelect="false" enableHotTrack="false"
+			            ondrawcell="ondrawcell" allowCellWrap="true" showCheckBox="true" checkRecursive="true">
+			                <div property="columns">
+			                    <div type="indexcolumn"></div>
+			                    <div name="menuName" field="menuName" width="250">模块名称</div>
+			                    <div field="functions" width="80%">功能权限</div>
+			                </div>
+			            </div>
+                    </div>
+                    <div  size="240"  showCollapseButton="true">
+                        <div class="mini-toolbar" style="padding:2px;border-top:0;border-left:0;border-right:0;">
+			                <span style="padding-left:5px;">名称：</span>
+			                <input id="rangeSecTreeKey" class="mini-textbox" style="width:100px;" onenter="searchRangeSecTree" />
+			                <a class="mini-button" iconCls="icon-search" plain="true" onclick="searchRangeSecTree()">查找</a>
+			            </div>
+			            <div class="mini-fit">
+			                <div id="rangeSecTree" class="mini-tree" style="width:238px;padding:5px;" showTreeIcon="true" textField="secName" idField="secId" parentField="parentSecId"
+			                resultAsTree="false" showCheckBox="true" checkRecursive="true" expandOnLoad="0"></div>
+			            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.body.style.visibility = "visible";
+    mini.parse();
+    var secTree = mini.get("secTree");
+    secTree.load(infoDomain+"/purview/getPurviewSecTree");
+    var prviewFucntionTree = mini.get("prviewFucntionTree");
+    prviewFucntionTree.load(infoDomain+"/purview/getPurviewFucntionTree");
+    var rangeSecTree = mini.get("rangeSecTree");
+    rangeSecTree.load(infoDomain+"/purview/getPurviewRangeSecTree");
+    var showAllSelect = true;
+    secTree.on("nodeselect", function (e) {
+    	var secId=e.node.secId;
+    	prviewFucntionTree.load({secId:secId});
+    	rangeSecTree.load({secId:secId});
+    });
+    function ondrawcell(e) {
+        var tree = e.sender
+            , record = e.record
+            , column = e.column
+            , field = e.field
+            , id = record[tree.getIdField()]
+            , funs = record.functions;
+
+        function createCheckboxs(funs) {
+            if (!funs) return "";
+            var html = "";
+            if (showAllSelect) {
+                var value = record.checkAll !== false ? "全选" : "取消";
+
+                var clickFn = 'checkAllFunc(\'' + id + '\', this)';
+                html += '<input onclick="' + clickFn + '" type="button" value="' + value + '" style="border:solid 1px #aaa;"/>';
+            }
+            for (var i = 0, l = funs.length; i < l; i++) {
+                var fn = funs[i];
+                var clickFn = 'checkFunc(\'' + id + '\',\'' + fn.action + '\', this.checked)';
+                var checked = fn.checked ? 'checked' : '';
+                html += '<label class="function-item"><input onclick="' + clickFn + '" ' + checked + ' type="checkbox" name="' + fn.action +
+                    '" hideFocus/>' + fn.name + '</label>';
+            }
+            return html;
+        }
+
+        if (field == 'functions') {
+            e.cellHtml = createCheckboxs(funs);
+        }
+    }
+
+    function getFuns() {
+        //var data = tree.getData();
+        var data = prviewFucntionTree.getCheckedNodes(false);
+        var json = mini.encode(data);
+        alert(json);
+    }
+
+    function checkAll() {
+    	var text=mini.get("__select").getText();
+    	if(text=="全选"){
+            var nodes = prviewFucntionTree.getAllChildNodes(prviewFucntionTree.getRootNode());
+            prviewFucntionTree.checkNodes(nodes);
+            selectAllFunction(true);
+            mini.get("__select").setText("取消");
+    	}else{
+    		var nodes = prviewFucntionTree.getAllChildNodes(prviewFucntionTree.getRootNode());
+   	        prviewFucntionTree.uncheckNodes(nodes);
+   	        selectAllFunction(false);
+   	        mini.get("__select").setText("全选");
+    	}
+
+    }
+    function uncheckAll() {
+        var nodes = prviewFucntionTree.getAllChildNodes(prviewFucntionTree.getRootNode());
+        prviewFucntionTree.uncheckNodes(nodes);
+    }
+    function checkFunc(id, action, checked) {
+        var record = prviewFucntionTree.getRecord(id);
+        if (!record) return;
+        var funs = record.functions;
+        if (!funs) return;
+
+        function getAction(action) {
+            for (var i = 0, l = funs.length; i < l; i++) {
+                var o = funs[i];
+                if (o.action == action) return o;
+            }
+        }
+        var obj = getAction(action);
+        if (!obj) return;
+        obj.checked = checked;
+    }
+
+    function checkAllFunc(id, btn) {
+        var record = prviewFucntionTree.getRecord(id);
+        if (!record) return;
+        var funs = record.functions;
+        if (!funs) return;
+
+
+        var checked = record.checkAll !== false;
+
+        for (var i = 0, l = funs.length; i < l; i++) {
+            var o = funs[i];
+            o.checked = checked;
+        }
+
+        record.checkAll = !checked;
+        prviewFucntionTree.updateRow(record);
+        if (id == "0") { //如果根结点选中选择所有系统功能
+            if (btn.value == "全选") {
+                selectAllFunction(true);
+            } else {
+                selectAllFunction(false);
+            }
+        }
+
+    }
+
+    function aa() {
+        alert("xxx");
+    }
+
+    function selectAllFunction(flag) {
+        $(".function-item input[type='checkbox']").attr("checked", flag);
+    }
+    
+    //批量新增权限
+    function batchAddPurview() {
+    	var secData = secTree.getSelectedNode(false);
+    	var secDataJson = mini.encode(secData);
+    	alert(secDataJson);
+    	var prviewFucntionData = prviewFucntionTree.getCheckedNodes(false);
+        var prviewFucntionDataJson = mini.encode(prviewFucntionData);
+        alert(prviewFucntionDataJson);
+    	var rangeSecData = rangeSecTree.getCheckedNodes(false);
+    	var rangeSecDataJson = mini.encode(rangeSecData);
+        alert(rangeSecDataJson);
+        mini.confirm("权限设置会降低系统性能,确认新增权限吗？", "确定？",function (action) {            
+                 if (action == "ok") {
+                     $.ajax({
+                         url: infoDomain+"/purview/batchSavePurview",
+                         type:'POST',
+                         dataType:"json",
+	    				 contentType:"application/x-www-form-urlencoded",
+                         data:{secDataJson:secDataJson,prviewFucntionDataJson:prviewFucntionDataJson,rangeSecDataJson:rangeSecDataJson},
+                         success: function (obj) {
+                        	 if(obj.success){
+	                        	 mini.alert("授权成功");
+                        	 
+                        	 }
+                         },
+                         error: function () {}
+                     });
+                 }
+             }
+        );
+     }
+    
+    
+    function searchSecTree() {
+        var key = mini.get("secTreeKey").getValue();
+        if (key == "") {
+        	secTree.clearFilter();
+        } else {
+           key = key.toLowerCase();                
+           secTree.filter(function (node) {
+               var text = node.secName ? node.secName.toLowerCase() : "";
+               if (text.indexOf(key) != -1) {
+                   return true;
+               }
+           });
+        }
+    }
+    
+    function searchRangeSecTree() {
+        var key = mini.get("rangeSecTreeKey").getValue();
+        if (key == "") {
+        	rangeSecTree.clearFilter();
+        } else {
+           key = key.toLowerCase();                
+           rangeSecTree.filter(function (node) {
+               var text = node.secName ? node.secName.toLowerCase() : "";
+               if (text.indexOf(key) != -1) {
+                   return true;
+               }
+           });
+        }
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByPostType()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByPostType()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByPostType()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByPostType()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonPostType()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="postTypeComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isPostTypeFieldData" value="name" onitemclick="onComboboxFieldChanged"/>
+                    <input id="postTypeSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByPostType" onfocus="clearQuickSearchByPostType"/>
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByPostType()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="height:100px;">
+        <div id="postTypeDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" idField="id" sizeList="[5,10,20,50]"
+        pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="code" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">编号</div>
+                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>
+                <div field="comment" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">说明</div>
+                <div field="type" width="100" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onTypeRenderer">类型</div>
+                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+                <div field="createName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">创建人</div>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="postTypeAddOrEditWindow" class="mini-window" title="维护岗位类型" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="postTypeAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="id" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">编号<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="code" name="code" class="mini-textbox" emptyText="请输入编号" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入名称" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">类型<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                       <input id="type" name="type" class="mini-combobox" emptyText="请输入岗位类型" data="isTypeData" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                         <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">说明<font color="red">*</font>：</td>
+                    <td colspan="3">
+                         <input id="comment" name="comment" class="mini-textarea"  style="width:100%" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="postTypeAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="postTypeAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="postTypeSearchWindow" class="mini-window" title="岗位类型查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="postTypeSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+              	 <tr>
+                    <td width="20%;" align="right">编号：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%;" align="right">类型：</td>
+                    <td width="30%;">
+                        <input name="type" class="mini-combobox" data="isTypeData" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">说明：</td>
+                    <td width="30%;">
+                        <input name="comment" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="postTypeSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="postTypeSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="postTypeViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyPostTypeViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                 <tr>
+                    <td style="width:150px;" align="right">编号：</td>
+                    <td style="width:270px;">
+                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                 </tr>
+                 <tr>
+                    <td style="width:150px;" align="right">类型：</td>
+                    <td style="width:270px;">
+                        <input id="view_type" name="type" class="mini-combobox" data="isTypeData" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">序号：</td>
+                    <td style="width:270px;">
+                        <input id="view_sort" name="sort" class="mini-textbox" style="width:80%" />
+                    </td>
+                 </tr>
+                 <tr>
+                    <td style="width:150px;" align="right">说明：</td>
+                     <td colspan="3">
+                        <input id="view_comment" name="comment" class="mini-textbox" style="width:80%" />
+                    </td>
+                   
+                 </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isPostTypeFieldData = [
+        {
+            id: 'code'
+            , text: '编号'
+        }, {
+            id: 'name'
+            , text: '名称'
+        }, {
+            id: 'comment'
+            , text: '说明'
+        }, {
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    var isTypeData = [{ id:0,text:'部门缺省类型'},{ id: 1,text: '一般类型'},{id: 2,text: '单位缺省类型'}];
+    mini.parse();
+    var postTypeDataGrid = mini.get("postTypeDataGrid");
+    var postTypeDataGridUrl=infoDomain+'/postType/getPostTypeList';
+    postTypeDataGrid.setUrl(postTypeDataGridUrl)
+    postTypeDataGrid.load();
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByPostType() {
+            _add_function('postTypeAddOrEditWindow', 'postTypeAddOrEidthForm', '新增岗位类型');
+        }
+        //编辑相关方法
+    function clickEditButtonByPostType() {
+            var ajaxurl = infoDomain+"/postType/getPostTypeById";
+            _edit_function('postTypeDataGrid', 'postTypeAddOrEditWindow', 'postTypeAddOrEidthForm', '编辑岗位类型', ajaxurl, null, null);
+        }
+        //删除相关方法
+    function clickRemoveButtonByPostType() {
+        var ajaxurl = infoDomain+"/postType/deletePostTypeById";
+        _delete_function('postTypeDataGrid', ajaxurl, backFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonPostType() {
+        _refresh_function('postTypeDataGrid', null);
+    }
+
+    //确定相关方法
+    function postTypeAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/postType/" + (_add_action('id') ? 'savePostType' : 'updatePostType');
+        _save_function('postTypeAddOrEidthForm', ajaxurl, backFunction, null, null);
+    }
+
+    //取消相关方法
+    function postTypeAddOrEditOnCancel() {
+            _cancel_function('postTypeAddOrEditWindow');
+        }
+        //执行完毕调用的方法   
+    function backFunction() {
+            postTypeAddOrEditOnCancel();
+            clickRefreshButtonPostType();
+        }
+        //查询相关方法begin
+    function clickSearchButtonByPostType() {
+        _search_function('postTypeSearchWindow', 'postTypeSearchForm', '岗位类型查询');
+    }
+
+    function postTypeSerchOnOk() {
+        postTypeSearch();
+    }
+
+    function postTypeSerchOnCancel() {
+        _cancel_function('postTypeSearchWindow');
+    }
+
+    function postTypeSearch() {
+        var form = new mini.Form("#postTypeSearchForm");
+        var o = form.getData();
+        o.code =o.code;
+        o.name =o.name;
+        o.comment =o.comment;
+        postTypeDataGrid.load(o, postTypeSearchSuccse, _search_Fail);
+    }
+
+    function postTypeSearchSuccse() {
+        _cancel_function('postTypeSearchWindow');
+    }
+
+
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+        editRowInfo('postTypeDataGrid','postTypeViewForm','readOnlyPostTypeViewForm',infoDomain+'/postType/getPostTypeById',row_uid);
+    }
+    postTypeDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("postTypeComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByPostType();
+        }
+    }
+
+    function clickQuickSearchByPostType() {
+        var __fieldName = mini.get("postTypeComboboxField").getValue();
+        var __fieldValue = mini.get("postTypeSearchKeyWord").getValue();
+        __fieldValue=encodeURIComponent(__fieldValue);
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            postTypeDataGrid.load(filterJsonObj);
+        } else {
+            postTypeDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByPostType(e) {
+        mini.get("postTypeSearchKeyWord")
+            .setValue();
+    }
+    //岗位类型渲染
+    function onTypeRenderer(e) {
+     	 var typeName="";
+         var record=e.record;
+         var type=record.type;
+         if("0"==type){
+        	 typeName="部门缺省类型";
+         }else if("1"==type){
+        	 typeName="一般类型";
+         }else if("2"==type){
+        	 typeName="单位缺省类型";
+         }
+         return typeName;
+     }
+    </script>
+</body>
+
+</html>

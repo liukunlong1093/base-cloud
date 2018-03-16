@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>欢迎登录后台管理系统</title>
+        <script src="./global/global.js" type="text/javascript"></script>
+        <script language="javascript">
+        	document.write('<link href="'+staticDomain+'/css/style.css" rel="stylesheet" type="text/css" />');
+            $(function() {
+                $('.loginbox').css({
+                    'position': 'absolute',
+                    'left': ($(window).width() - 692) / 2
+                });
+                $(window).resize(function() {
+                    $('.loginbox').css({
+                        'position': 'absolute',
+                        'left': ($(window).width() - 692) / 2
+                    });
+                });
+                
+                $("#__pwd").keydown(function(event) {  
+                    if (event.keyCode == 13) {  
+                    	login();
+                    }  
+                });  
+            });
+        </script>
+    </head>
+    
+    <body style="background-color:#1c77ac; background-image:url(../images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
+        <div id="mainBody">
+            <div id="cloud1" class="cloud"></div>
+            <div id="cloud2" class="cloud"></div>
+        </div>
+        <div class="logintop"><span>欢迎登录后台管理界面平台</span>
+            <ul>
+                <li><a href="#">回首页</a></li>
+                <li><a href="#">帮助</a></li>
+                <li><a href="#">关于</a></li>
+            </ul>
+        </div>
+        <div class="loginbody">
+            <span class="systemlogo"></span>
+            <div class="loginbox">
+                <ul>
+                    <li><input id="__name" name="name" type="text" class="loginuser"/></li>
+                    <li><input id="__pwd" name="pwd" type="password" class="loginpwd"/></li>
+                    <li>
+                        <input name="" type="button" class="loginbtn" value="登录" onclick="javascript:login()" />
+                        <label><input name="" type="checkbox" value="" checked="checked" />记住密码</label>
+                        <label><a href="#">忘记密码？</a></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="loginbm">版权所有 © ftdsoft.cn  粤ICP备15078921号-1&nbsp;&nbsp;&nbsp;&nbsp;仅供学习交流
+        </div>
+        <script type="text/javascript">
+        	mini.parse();
+        	function login() {;
+        		var name=$("#__name").val();
+             	var pwd=$("#__pwd").val();
+             	if(isEmpty(name, false)) {
+             		mini.alert("用户名不能为空!");
+             		return;
+             	}
+ 				if(isEmpty(pwd, false)) {
+ 					mini.alert("密码不能为空!");
+ 					return;
+             	}
+             	var data={};
+             	data.name=name;
+             	data.pwd=pwd;
+             	
+                $.ajax({
+                     url: infoDomain+"/main/login",
+                     type:"POST",
+					 dataType:"json",
+	   		         contentType:"application/x-www-form-urlencoded",
+	   		         data:data,
+                     success: function(obj) {
+                     		if(obj.success){
+	                     	  //登陆成功用户信息经过AES加密后存入cookie中开始
+	               			  console.log(obj.data);	
+					          var su=obj.data;
+					          var secret=su.secret;
+					          secret=secret.replace(/[\r\n]/g,"");
+					          su["secret"]=secret;
+					          var suStr=JSON.stringify(su);
+					          var expiresIn=su.expiresIn;//单位分钟
+					          expiresIn=parseInt(expiresIn);
+					          var expiresDate= new Date();
+					          expiresDate.setTime(expiresDate.getTime() + (expiresIn * 60 * 1000)); //?替换成分钟数如果为60分钟则为 60 * 60 *1000
+	 				 		  var encryptedData=getAESEncryptedData(suStr);
+							  jQuery.cookie('su',encryptedData, {expires:expiresDate, path: '/',domain:cookieDomain});
+	                          window.location="/page/admin/index/main.html";
+                     		}
+
+                     },
+                     error:function(obj){
+                        var error=mini.decode(obj.responseText);
+		                if(error.code=="501" || error.code=="502"){
+                     		 mini.alert(error.msg);
+                     		 $("#__name").val("");
+                     		 $("#__pwd").val("");
+                     		 $("#__name").focus();
+                     	 }else if(error.code=="503"){
+                     		 mini.alert(error.msg);
+                     		 $("#__pwd").val("");
+                     	 }
+		             }
+                 });
+            }
+        </script>
+    </body>
+</html>

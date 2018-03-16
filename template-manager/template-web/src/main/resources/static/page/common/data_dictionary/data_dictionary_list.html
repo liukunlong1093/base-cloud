@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <input type="hidden" id="data_code" name="code" value="" />
+    <div class="mini-splitter" style="width:100%;height:100%;">
+	    <div size="240" showCollapseButton="true">
+	        <div class="mini-toolbar" style="padding:2px;border-top:0;border-left:0;border-right:0;">
+	        	<span style="padding-left:5px;">名称：</span>
+	            <input class="mini-textbox" id="queryDataName" emptyText="请输入业务名称" />
+	            <a class="mini-button" iconCls="icon-search" plain="true" onclick="query();">查找</a>
+	        </div>
+	        <div class="mini-fit">
+	            <ul id="dataDictionaryTree" class="mini-tree" url=infoDomain+"/dataDictionary/getDataDictionaryList?isPage=0" style="width:100%;" dataField="data" showTreeIcon="true" textField="name" idField="code" parentField="parentCode" resultAsTree="false" onnodemousedown="chooseTree"></ul>
+	        </div>
+	    </div>
+	    <div showCollapseButton="true">
+	    	<div class="mini-toolbar" style="border:0;">
+		        <table style="width:100%;">
+		            <tr>
+		                <td style="width:100%;">
+		                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByDataDictionary()" />
+		                    <a class="mini-button" iconCls="icon-save" style="font-weight: bold;" plain="true" text="保存" onclick="clickSaveButtonDataDictionary()" />
+		                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByDataDictionary()" />
+		                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByDataDictionary()" />
+		                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByDataDictionary()" />
+		                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonDataDictionary()" />
+		               		<a class="mini-button" iconCls="icon-unlock" style="font-weight: bold;" plain="true" text="设为可修改" onclick="onEditDataDictionary('1')" />
+                            <a class="mini-button" iconCls="icon-lock" style="font-weight: bold;" plain="true" text="设为不可修改" onclick="onEditDataDictionary('2')" />
+		                </td>
+		                <td style="white-space:nowrap;">
+		                    <input id="dataDictionaryComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isDataDictionaryFieldData" value="name" onitemclick="onComboboxFieldChanged"/>
+		                    <input id="dataDictionarySearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByDataDictionary" onfocus="clearQuickSearchByDataDictionary"/>
+		                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByDataDictionary()">搜索</a>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>
+		    <div class="mini-fit" style="height:100px;">
+		        <div id="dataDictionaryDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/dataDictionary/getDataDictionaryList"
+		        idField="id" sizeList="[5,10,20,50]" pageSize="14" allowResize="true" allowCellEdit="true" allowCellSelect="true" multiSelect="true" editNextOnEnterKey="true" oncellbeginedit="OnCellBeginEdit">
+		            <div property="columns">
+		                <div type="indexcolumn"></div>
+		                <div type="checkcolumn"></div>
+		                <div field="code" width="120" headerAlign="center" allowSort="true">编码CODE
+                             <input property="editor" class="mini-textbox" style="width:100%;" />
+                        </div>
+                        <div field="name" width="120" headerAlign="center" allowSort="true">业务名称
+                            <input property="editor" class="mini-textbox" style="width:100%;" />
+                        </div>
+                        <div field="sort" width="120" headerAlign="center" allowSort="true">排列数字
+                            <input property="editor" class="mini-textbox" style="width:100%;" />
+                        </div>
+                        <div field="isEdit" width="100" headerAlign="center"  headerAlign="center" allowSort="true" renderer="isEditRenderer">是否修改</div>
+                        <div type="checkboxcolumn" field="isValid" trueValue="0" falseValue="1" width="60" headerAlign="center" >是否启用</div>
+                        <div type="checkboxcolumn" field="isDefault" trueValue="0" falseValue="1" width="60" headerAlign="center">是否默认</div>
+		            </div>
+		        </div>
+		    </div>
+	    </div>
+    </div>
+    
+    <!--弹出新增及编辑界面begin-->
+    <div id="dataDictionaryAddOrEditWindow" class="mini-window" title="维护数据字典" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="dataDictionaryAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="DataDictionaryId" />
+            <input class="mini-hidden" name="createBy" value="" />
+             <input class="mini-hidden" name="parentCode" id="save_parentCode" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">业务编码<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="code" name="code" class="mini-textbox" emptyText="请输入业务编码" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">业务名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入业务名称" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+              	    <td style="width:150px;" align="right">是否默认<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                       	<input id="isDefault" name="isDefault" class="mini-radiobuttonlist" value="0" data="[{id: 0, text: '否'}, {id: 1, text: '是'}]"/>
+                    </td>
+                    <td style="width:150px;" align="right">是否修改<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                       	<input id="isEdit" name="isEdit" class="mini-radiobuttonlist" value="0" data="[{id: 0, text: '否'}, {id: 1, text: '是'}]"/>
+                    </td>
+                </tr>
+                 <tr>
+                      <td style="width:150px;" align="right">是否有效<font color="red">*</font>：</td>
+                      <td style="width:270px;">
+                          <input id="isValid" name="isValid" class="mini-radiobuttonlist" value="0" data="[{id: 0, text: '否'}, {id: 1, text: '是'}]"/>
+                      </td>
+                      <td style="width:150px;" align="right">排列数字：</td>
+                      <td style="width:270px;">
+                      	<input id="sort" name="sort" class="mini-spinner" emptyText="请输入排列数字序号" style="width:100%" />
+                      </td>
+                </tr>
+                <tr>
+                    	<td style="width:150px;" align="right">字段描述<font color="red">*</font>：</td>
+                    	<td style="width:270px;" colspan="3">
+                        	<input id="comment" name="comment" class="mini-textarea" emptyText="请输入说明" style="width:100%;height:120px;" />
+                    	</td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="dataDictionaryAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="dataDictionaryAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="dataDictionarySearchWindow" class="mini-window" title="数据字典查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="dataDictionarySearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                 <tr>
+	                 <td style="width:150px;" align="right">业务编码：</td>
+	                 <td style="width:270px;">
+	                     <input name="code" class="mini-textbox" emptyText="请输入业务编码" style="width:100%" />
+	                 </td>
+	                 <td style="width:150px;" align="right">业务名称：</td>
+	                 <td style="width:270px;">
+	                     <input name="name" class="mini-textbox" emptyText="请输入业务名称" style="width:100%" />
+	                 </td>
+	             </tr>
+	             <tr>
+	                 <td style="width:150px;" align="right">是否默认：</td>
+	                 <td style="width:270px;">
+	                 	<input name="isDefault" class="mini-combobox"  data="[{id: 99, text: '全部'}, {id: 0, text: '否'}, {id: 1, text: '是'}]"  style="width:100%" />
+	                 </td>
+	                 <td style="width:150px;" align="right">是否修改：</td>
+	                 <td style="width:270px;">
+	                 	<input name="isEdit" class="mini-combobox"  data="[{id: 99, text: '全部'}, {id: 0, text: '否'}, {id: 1, text: '是'}]"  style="width:100%" />
+	                 </td>
+	             </tr>
+	             <tr>
+	                 <td style="width:150px;" align="right">是否有效：</td>
+	                 <td style="width:270px;">
+	                     <input name="isValid" class="mini-combobox"  data="[{id: 99, text: '全部'}, {id: 0, text: '否'}, {id: 1, text: '是'}]"  style="width:100%" />
+	                 </td>
+	                 <td style="width:150px;" align="right">排列数字：</td>
+	                 <td style="width:270px;">
+	                 	<input name="sort" class="mini-textbox" emptyText="请输入排列数字序号" style="width:100%" />
+	                 </td>
+	             </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="dataDictionarySerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="dataDictionarySerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="dataDictionaryViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyDataDictionaryViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:150px;" align="right">业务编码：</td>
+                    <td style="width:270px;">
+                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">业务名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">是否默认：</td>
+                    <td style="width:270px;">
+                        <input id="view_isDefault" name="isDefault" class="mini-combobox"  data="[{id: 99, text: '全部'}, {id: 0, text: '否'}, {id: 1, text: '是'}]"  style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">是否修改：</td>
+                    <td style="width:270px;">
+                   		<input id="view_isEdit" name="isEdit" class="mini-combobox"  data="[{id: 99, text: '全部'}, {id: 0, text: '否'}, {id: 1, text: '是'}]"  style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">是否有效：</td>
+                    <td style="width:270px;">
+                        <input id="view_isValid" name="isValid" class="mini-combobox"  data="[{id: 99, text: '全部'}, {id: 0, text: '否'}, {id: 1, text: '是'}]"  style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">排列数字：</td>
+                    <td style="width:270px;">
+                        <input id="view_sort" name="sort" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</td>
+                     <td colspan="3">
+                          <input id="view_comment" name="comment" class="mini-textbox"  style="width:80%" />
+                     </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isDataDictionaryFieldData = [
+        {
+            id: 'code'
+            , text: '业务编码'
+        }, {
+            id: 'name'
+            , text: '业务名称'
+        }, {
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    mini.parse();
+    var dataDictionaryDataGrid = mini.get("dataDictionaryDataGrid");
+    dataDictionaryDataGrid.load({parentCode: 'parent'});
+    var dataDictionaryViewForm = document.getElementById("dataDictionaryViewForm");
+    </script>
+    <script type="text/javascript">
+    function chooseTree(e) {
+        var node = e.node; //当前节点
+        var code = node.code;
+        jQuery("#data_code").val(code);
+        dataDictionaryDataGrid.load({
+            parentCode: code
+        });
+    }
+    //新增相关方法
+    function clickAddButtonByDataDictionary() {
+        _add_function('dataDictionaryAddOrEditWindow', 'dataDictionaryAddOrEidthForm', '新增数据字典');
+    }
+    //编辑相关方法
+    function clickEditButtonByDataDictionary() {
+        var ajaxurl = infoDomain+"/dataDictionary/getDataDictionaryById";
+        _edit_function('dataDictionaryDataGrid', 'dataDictionaryAddOrEditWindow', 'dataDictionaryAddOrEidthForm', '编辑数据字典', ajaxurl, null, null);
+    }
+    //删除相关方法
+    function clickRemoveButtonByDataDictionary() {
+        var ajaxurl = infoDomain+"/dataDictionary/deleteDataDictionaryById";
+        _delete_function('dataDictionaryDataGrid', ajaxurl, DataDictionaryBackFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonDataDictionary() {
+        _refresh_function('dataDictionaryDataGrid', null);
+    }
+
+    //确定相关方法
+    function dataDictionaryAddOrEditOnOk() {
+    	var parentCode = mini.get("dataDictionaryTree").getValue();
+    	if(parentCode==''){
+    		parentCode = "parent";
+    	}
+    	mini.get('save_parentCode').setValue(parentCode);
+        var ajaxurl = infoDomain+"/dataDictionary/" + (_add_action('DataDictionaryId') ? 'saveDataDictionary' : 'updateDataDictionary');
+        _save_function('dataDictionaryAddOrEidthForm', ajaxurl, DataDictionaryBackFunction, null, null);
+    }
+
+    //取消相关方法
+    function dataDictionaryAddOrEditOnCancel() {
+        _cancel_function('dataDictionaryAddOrEditWindow');
+    }
+    //执行完毕调用的方法   
+    function DataDictionaryBackFunction() {
+        dataDictionaryAddOrEditOnCancel();
+        clickRefreshButtonDataDictionary();
+    }
+    //查询相关方法begin
+    function clickSearchButtonByDataDictionary() {
+        _search_function('dataDictionarySearchWindow', 'dataDictionarySearchForm', '数据字典查询');
+    }
+
+    function dataDictionarySerchOnOk() {
+        dataDictionarySearch();
+    }
+
+    function dataDictionarySerchOnCancel() {
+        _cancel_function('dataDictionarySearchWindow');
+    }
+
+    function dataDictionarySearch() {
+        var form = new mini.Form("#dataDictionarySearchForm");
+        var o = form.getData();
+        o.code = encodeURIComponent(o.code);
+        o.name = encodeURIComponent(o.name);
+        o.parentCode = encodeURIComponent(o.parentCode);
+        o.comment = encodeURIComponent(o.comment);
+        o.createBy = encodeURIComponent(o.createBy);
+        o.createName = encodeURIComponent(o.createName);
+        o.updateBy = encodeURIComponent(o.updateBy);
+        o.updateName = encodeURIComponent(o.updateName);
+        dataDictionaryDataGrid.load(o, dataDictionarySearchSuccse, _search_Fail);
+    }
+
+    function dataDictionarySearchSuccse() {
+        _cancel_function('dataDictionarySearchWindow');
+    }
+    
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+    	editRowInfo('dataDictionaryDataGrid','dataDictionaryViewForm','readOnlyDataDictionaryViewForm',infoDomain+'/dataDictionary/getDataDictionaryById',row_uid);
+    }
+    dataDictionaryDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("dataDictionaryComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByDataDictionary();
+        }
+    }
+
+    function clickQuickSearchByDataDictionary() {
+        var __fieldName = mini.get("dataDictionaryComboboxField").getValue();
+        var __fieldValue = mini.get("dataDictionarySearchKeyWord").getValue();
+        __fieldValue = encodeURIComponent(__fieldValue);
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            dataDictionaryDataGrid.load(filterJsonObj);
+        } else {
+            dataDictionaryDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByDataDictionary(e) {
+        mini.get("dataDictionarySearchKeyWord").setValue();
+    }
+    
+    function OnCellBeginEdit(e) {
+        var record = e.record;
+        var uid = record._uid;
+        var row = dataDictionaryDataGrid.getRowByUID(uid);
+        if (record.isEdit == "0") {
+        	e.cancel = true;
+        }
+    }
+    
+    function isEditRenderer(e){
+		var record = e.record;
+		var isEdit=record.isEdit;
+		var s="<font color='green'><strong>是</strong></font>";
+		if(isEdit=='0'){
+			s="<font color='red'><strong>否</strong></font>";
+		}
+		return s;
+	}
+    
+    function clickSaveButtonDataDictionary(){
+    	var dataDictionaryDataGrid = mini.get("dataDictionaryDataGrid");
+    	var dictionaryDate = dataDictionaryDataGrid.getData();
+    	var json = null;
+    	if(null!=dictionaryDate&&dictionaryDate.length>0){
+    		json = mini.encode(dictionaryDate,"yyyy-MM-dd HH:mm:ss");
+    	}
+    	var ajaxurl = infoDomain+"/dataDictionary/batchUpdateDataDictionary";
+    	_common_ajax_function(json, ajaxurl, "clickRefreshButtonDataDictionary","保存中，请稍后......","保存成功","保存失败");
+        
+    }
+    function query(){
+    	var dataDictionaryTree = mini.get("dataDictionaryTree");
+    	var dataName = mini.get("queryDataName").getValue();
+    	dataDictionaryTree.load({
+        	name: dataName
+        });
+    }
+    
+    function onEditDataDictionary(type){
+		var grid = mini.get("dataDictionaryDataGrid");
+		var rows = grid.getSelecteds();
+        if (rows.length > 0) {
+        	var json_array=new Array();
+			for (var i = 0, l = rows.length; i < l; i++) {
+				var r = rows[i];
+				
+				var json_data = {};
+				createJson(json_data,"id", r.id);
+				if(type=='1'){
+					createJson(json_data,"isEdit", 1);
+				}else if(type=='2'){
+					createJson(json_data,"isEdit", 0);
+				}
+				
+				json_array.push(json_data);
+			}
+			
+			var json = arrayToJson(json_array);
+			var ajaxurl = infoDomain+"/dataDictionary/batchUpdateDataDictionary";
+        	_common_ajax_function(json, ajaxurl, "clickRefreshButtonDataDictionary","保存中，请稍后......","保存成功","保存失败");
+        } else {
+			mini.alert("您至少需要选中一条数据记录!");
+        }
+    }
+    
+
+    </script>
+</body>
+
+</html>

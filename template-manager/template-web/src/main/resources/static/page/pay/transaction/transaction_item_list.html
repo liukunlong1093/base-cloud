@@ -1,0 +1,407 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ include file="../../common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="<%=path%>/res/miniui/miniui.css"/>
+	<script src="<%=path%>/res/miniui/boot.js" type="text/javascript"></script>
+	<script src="<%=path%>/res/miniui/miniui_common.js" type="text/javascript"></script>  
+</head>
+<body>
+	<input class="mini-hidden" name="Shrink_row" id="Shrink_row"/>
+	<div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+	            <td style="width:100%;">
+	                <p:purviewButton cls="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByTransactionItem()"/>
+	                <p:purviewButton cls="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByTransactionItem()"/>
+	                <p:purviewButton cls="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByTransactionItem()"/>
+	                <p:purviewButton cls="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByTransactionItem()"/>
+	                <p:purviewButton cls="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonTransactionItem()"/>
+	            </td>
+	            <td style="white-space:nowrap;">
+	            	<input id="transactionItemComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isTransactionItemFieldData" value="name" onitemclick="onComboboxFieldChanged"/>         
+					<input id="transactionItemSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByTransactionItem" onfocus="clearQuickSearchByTransactionItem"/>
+			        <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByTransactionItem()">搜索</a>
+			    </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="background:red;height:100px;">
+        <div id="transactionItemDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url="<%=path%>/transactionItem/getTransactionItemList" idField="id" sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+        	<div property="columns">
+                <div type="indexcolumn" ></div>
+                <div type="checkcolumn" ></div> 
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+        						        								<div field="transactionId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">交易主表标识</div>   
+						        								<div field="sourceType" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">交易类型 0-订单,1-充值</div>   
+						        								<div field="sourceId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">交易类型来源标识</div>   
+						        								<div field="paymentTypeId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">支付类型标识</div>   
+						        								<div field="paymentTypeName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">支付类型名称</div>   
+						        								<div field="paymentMethodId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">支付方式标识</div>   
+						        								<div field="paymentMethodName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">支付方式名称</div>   
+						        								<div field="paymentMethodCode" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">支付接口编号</div>   
+						        								<div field="paymentAmount" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">支付金额</div>   
+						        								<div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>   
+						        								<div field="isDel" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">是否删除0:不删除；1:删除</div>   
+						        				<div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss" >创建时间</div>
+		        								<div field="createBy" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">创建人</div>   
+						        								<div field="createName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">创建人名称</div>   
+						        				<div field="updateTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss" >更新时间</div>
+		        								<div field="updateBy" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">更新人</div>   
+						        								<div field="updateName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">更新人名称</div>   
+									</div>
+        </div> 
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="transactionItemAddOrEditWindow" class="mini-window" title="维护交易信息明细" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+	    <div id="transactionItemAddOrEidthForm" class="form" >
+	        <input class="mini-hidden" name="id" id="transactionItemId"/>
+	        <input class="mini-hidden" name="createBy" value=""/>
+			 <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+			 									<tr>
+																			<td style="width:150px;" align="right"></td>
+						<td style="width:270px;"></td>
+																				 																			<td style="width:150px;" align="right">交易主表标识<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="transactionId" name="transactionId" class="mini-textbox" emptyText="请输入交易主表标识"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">交易类型 0-订单,1-充值<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="sourceType" name="sourceType" class="mini-textbox" emptyText="请输入交易类型 0-订单,1-充值"  required="true"  style="width:100%"/></td>
+																				 																			<td style="width:150px;" align="right">交易类型来源标识<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="sourceId" name="sourceId" class="mini-textbox" emptyText="请输入交易类型来源标识"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">支付类型标识<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="paymentTypeId" name="paymentTypeId" class="mini-textbox" emptyText="请输入支付类型标识"  required="true"  style="width:100%"/></td>
+																				 																			<td style="width:150px;" align="right">支付类型名称<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="paymentTypeName" name="paymentTypeName" class="mini-textbox" emptyText="请输入支付类型名称"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">支付方式标识<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="paymentMethodId" name="paymentMethodId" class="mini-textbox" emptyText="请输入支付方式标识"  required="true"  style="width:100%"/></td>
+																				 																			<td style="width:150px;" align="right">支付方式名称<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="paymentMethodName" name="paymentMethodName" class="mini-textbox" emptyText="请输入支付方式名称"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">支付接口编号<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="paymentMethodCode" name="paymentMethodCode" class="mini-textbox" emptyText="请输入支付接口编号"  required="true"  style="width:100%"/></td>
+																				 																			<td style="width:150px;" align="right">支付金额<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="paymentAmount" name="paymentAmount" class="mini-textbox" emptyText="请输入支付金额"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="sort" name="sort" class="mini-textbox" emptyText="请输入排序"  required="true"  style="width:100%"/></td>
+																				 																			<td style="width:150px;" align="right">是否删除0:不删除；1:删除<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="isDel" name="isDel" class="mini-textbox" emptyText="请输入是否删除0:不删除；1:删除"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+													<td style="width:150px;" align="right">创建时间<font color="red">*</font>：</td>
+					<td style="width:270px;"><input id="createTime" name="createTime" class="mini-datepicker" emptyText="请输入创建时间"  required="true"   style="width:100%"/></td>
+															 																			<td style="width:150px;" align="right">创建人<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="createBy" name="createBy" class="mini-textbox" emptyText="请输入创建人"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">创建人名称<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="createName" name="createName" class="mini-textbox" emptyText="请输入创建人名称"  required="true"  style="width:100%"/></td>
+																				 													<td style="width:150px;" align="right">更新时间<font color="red">*</font>：</td>
+					<td style="width:270px;"><input id="updateTime" name="updateTime" class="mini-datepicker" emptyText="请输入更新时间"  required="true"   style="width:100%"/></td>
+																	</tr>
+							 									<tr>
+																			<td style="width:150px;" align="right">更新人<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="updateBy" name="updateBy" class="mini-textbox" emptyText="请输入更新人"  required="true"  style="width:100%"/></td>
+																				 																			<td style="width:150px;" align="right">更新人名称<font color="red">*</font>：</td>
+						<td style="width:270px;"><input id="updateName" name="updateName" class="mini-textbox" emptyText="请输入更新人名称"  required="true"  style="width:100%"/></td>
+																						</tr>
+							 		     </table>
+		    <div property="footer" align="center">
+		    	<a class="mini-button" onclick="transactionItemAddOrEditOnOk();" style="width:60px;">确定</a>       
+	  			<a class="mini-button" onclick="transactionItemAddOrEditOnCancel();" style="width:60px;">取消</a> 
+		    </div>
+	    </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="transactionItemSearchWindow" class="mini-window" title="交易信息明细查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+	    <div id="transactionItemSearchForm" class="form" >
+	        <table style="width:100%;" cellpadding="3" cellspacing="3">
+        										<tr>
+																			<td width="20%;" align="right"></td>
+						<td width="30%;"></td>
+																			    																			<td width="20%;" align="right">交易主表标识：</td>
+						<td width="30%;"><input name="transactionId"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+																			<td width="20%;" align="right">交易类型 0-订单,1-充值：</td>
+						<td width="30%;"><input name="sourceType"  class="mini-textbox" style="width: 160px;" /></td>
+																			    																			<td width="20%;" align="right">交易类型来源标识：</td>
+						<td width="30%;"><input name="sourceId"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+																			<td width="20%;" align="right">支付类型标识：</td>
+						<td width="30%;"><input name="paymentTypeId"  class="mini-textbox" style="width: 160px;" /></td>
+																			    																			<td width="20%;" align="right">支付类型名称：</td>
+						<td width="30%;"><input name="paymentTypeName"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+																			<td width="20%;" align="right">支付方式标识：</td>
+						<td width="30%;"><input name="paymentMethodId"  class="mini-textbox" style="width: 160px;" /></td>
+																			    																			<td width="20%;" align="right">支付方式名称：</td>
+						<td width="30%;"><input name="paymentMethodName"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+																			<td width="20%;" align="right">支付接口编号：</td>
+						<td width="30%;"><input name="paymentMethodCode"  class="mini-textbox" style="width: 160px;" /></td>
+																			    																			<td width="20%;" align="right">支付金额：</td>
+						<td width="30%;"><input name="paymentAmount"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+																			<td width="20%;" align="right">排序：</td>
+						<td width="30%;"><input name="sort"  class="mini-textbox" style="width: 160px;" /></td>
+																			    																			<td width="20%;" align="right">是否删除0:不删除；1:删除：</td>
+						<td width="30%;"><input name="isDel"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+													<td width="20%;" align="right">创建时间：</td>
+					<td width="30%;"><input name="createTime"  class="mini-datepicker" style="width: 160px;" /></td>
+														    																			<td width="20%;" align="right">创建人：</td>
+						<td width="30%;"><input name="createBy"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    									<tr>
+																			<td width="20%;" align="right">创建人名称：</td>
+						<td width="30%;"><input name="createName"  class="mini-textbox" style="width: 160px;" /></td>
+																			    													<td width="20%;" align="right">更新时间：</td>
+					<td width="30%;"><input name="updateTime"  class="mini-datepicker" style="width: 160px;" /></td>
+																	</tr>
+						    									<tr>
+																			<td width="20%;" align="right">更新人：</td>
+						<td width="30%;"><input name="updateBy"  class="mini-textbox" style="width: 160px;" /></td>
+																			    																			<td width="20%;" align="right">更新人名称：</td>
+						<td width="30%;"><input name="updateName"  class="mini-textbox" style="width: 160px;" /></td>
+																						</tr>
+						    	        </table>
+	        <div property="footer" align="center">
+				<a class="mini-button" onclick="transactionItemSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>       
+		        <a class="mini-button" onclick="transactionItemSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a> 
+	   		</div>
+	    </div>
+	    
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="transactionItemViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyTransactionItemViewForm" class="form" >
+     	  <table border="1" cellspacing="0" width = "100%" style="border-collapse:collapse;">
+     	  									<tr>
+																			<td style="width:150px;" align="right"></td>
+						<td style="width:270px;"></td>
+																			   																			<td style="width:150px;" align="right">交易主表标识：</td>
+						<td style="width:270px;"><input id="view_transactionId" name="transactionId" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">交易类型 0-订单,1-充值：</td>
+						<td style="width:270px;"><input id="view_sourceType" name="sourceType" class="mini-textbox" style="width:80%"/></td>
+																			   																			<td style="width:150px;" align="right">交易类型来源标识：</td>
+						<td style="width:270px;"><input id="view_sourceId" name="sourceId" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">支付类型标识：</td>
+						<td style="width:270px;"><input id="view_paymentTypeId" name="paymentTypeId" class="mini-textbox" style="width:80%"/></td>
+																			   																			<td style="width:150px;" align="right">支付类型名称：</td>
+						<td style="width:270px;"><input id="view_paymentTypeName" name="paymentTypeName" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">支付方式标识：</td>
+						<td style="width:270px;"><input id="view_paymentMethodId" name="paymentMethodId" class="mini-textbox" style="width:80%"/></td>
+																			   																			<td style="width:150px;" align="right">支付方式名称：</td>
+						<td style="width:270px;"><input id="view_paymentMethodName" name="paymentMethodName" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">支付接口编号：</td>
+						<td style="width:270px;"><input id="view_paymentMethodCode" name="paymentMethodCode" class="mini-textbox" style="width:80%"/></td>
+																			   																			<td style="width:150px;" align="right">支付金额：</td>
+						<td style="width:270px;"><input id="view_paymentAmount" name="paymentAmount" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">排序：</td>
+						<td style="width:270px;"><input id="view_sort" name="sort" class="mini-textbox" style="width:80%"/></td>
+																			   																			<td style="width:150px;" align="right">是否删除0:不删除；1:删除：</td>
+						<td style="width:270px;"><input id="view_isDel" name="isDel" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+													<td style="width:150px;" align="right">创建时间：</td>
+					<td style="width:270px;"><input id="view_createTime" name="createTime" class="mini-datepicker" style="width:80%"/></td>
+														   																			<td style="width:150px;" align="right">创建人：</td>
+						<td style="width:270px;"><input id="view_createBy" name="createBy" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">创建人名称：</td>
+						<td style="width:270px;"><input id="view_createName" name="createName" class="mini-textbox" style="width:80%"/></td>
+																			   													<td style="width:150px;" align="right">更新时间：</td>
+					<td style="width:270px;"><input id="view_updateTime" name="updateTime" class="mini-datepicker" style="width:80%"/></td>
+																	</tr>
+						   									<tr>
+																			<td style="width:150px;" align="right">更新人：</td>
+						<td style="width:270px;"><input id="view_updateBy" name="updateBy" class="mini-textbox" style="width:80%"/></td>
+																			   																			<td style="width:150px;" align="right">更新人名称：</td>
+						<td style="width:270px;"><input id="view_updateName" name="updateName" class="mini-textbox" style="width:80%"/></td>
+																						</tr>
+						   		  </table>
+     	</div>
+    </div>
+    <script type="text/javascript">
+    var isTransactionItemFieldData=[
+    								{id:'transactionId',text: '交易主表标识'},																{id:'sourceId',text: '交易类型来源标识'},																{id:'paymentTypeName',text: '支付类型名称'},																{id:'paymentMethodName',text: '支付方式名称'},																																																								{id:'createName',text: '创建人名称'},																								{id:'updateName',text: '更新人名称'},				{id:'moreFilter', text: '更多筛选'}];
+        mini.parse();
+        var transactionItemDataGrid = mini.get("transactionItemDataGrid");
+        transactionItemDataGrid.load();
+        var transactionItemViewForm = document.getElementById("transactionItemViewForm"); 
+        
+        
+    </script>
+    <script type="text/javascript">
+    	//新增相关方法
+        function clickAddButtonByTransactionItem() {
+        	_add_function('transactionItemAddOrEditWindow', 'transactionItemAddOrEidthForm', '新增交易信息明细');
+        }
+        //编辑相关方法
+        function clickEditButtonByTransactionItem() {
+        	var ajaxurl = "<%=path%>/transactionItem/getTransactionItemById";
+        	_edit_function('transactionItemDataGrid', 'transactionItemAddOrEditWindow', 'transactionItemAddOrEidthForm', '编辑交易信息明细', ajaxurl, null, null);
+        }
+        //删除相关方法
+        function clickRemoveButtonByTransactionItem() {
+        	var ajaxurl = "<%=path%>/transactionItem/deleteTransactionItem";
+        	_delete_function('transactionItemDataGrid', ajaxurl,transactionItemBackFunction, null, null, null, null);
+        }
+        
+    	//刷新相关方法
+    	function clickRefreshButtonTransactionItem() {
+			_refresh_function('transactionItemDataGrid', null);
+        }
+        //确定相关方法
+        function transactionItemAddOrEditOnOk() {
+			var ajaxurl = "<%=path%>/transactionItem/" + (_add_action('transactionItemId') ? 'addTransactionItem' : 'updateTransactionItem');
+			_save_function('transactionItemAddOrEidthForm', ajaxurl,transactionItemBackFunction, null, null);
+		}
+       
+        //取消相关方法
+		function transactionItemAddOrEditOnCancel(){
+			_cancel_function('transactionItemAddOrEditWindow');
+		}
+		//执行完毕调用的方法   
+		function transactionItemBackFunction(){
+			transactionItemAddOrEditOnCancel();
+			clickRefreshButtonTransactionItem();
+		}   
+        //查询相关方法begin
+        function clickSearchButtonByTransactionItem() {
+        	_search_function('transactionItemSearchWindow','transactionItemSearchForm','交易信息明细查询');
+        }
+        function transactionItemSerchOnOk() {
+        	transactionItemSearch();
+        }
+        function transactionItemSerchOnCancel() {
+        	_cancel_function('transactionItemSearchWindow');
+        }
+        function transactionItemSearch() {
+//         	var createTime_begin = mini.get("createTime_begin").getValue();
+//         	createTime_begin = mini.formatDate(createTime_begin,"yyyy-MM-dd");
+// 			var createTime_end = mini.get("createTime_end").getValue();
+// 			createTime_end = mini.formatDate(createTime_end,"yyyy-MM-dd");
+            var form = new mini.Form("#transactionItemSearchForm");
+			var o = form.getData();
+									    						    o.transactionId=encodeURIComponent(o.transactionId);
+						    						    						    o.sourceId=encodeURIComponent(o.sourceId);
+						    						    						    o.paymentTypeName=encodeURIComponent(o.paymentTypeName);
+						    						    						    o.paymentMethodName=encodeURIComponent(o.paymentMethodName);
+						    						    						    						    						    						    						    						    o.createName=encodeURIComponent(o.createName);
+						    						    						    						    o.updateName=encodeURIComponent(o.updateName);
+						                transactionItemDataGrid.load(o,transactionItemSearchSuccse,_search_Fail);
+        }
+        function transactionItemSearchSuccse(){
+        	_cancel_function('transactionItemSearchWindow');
+        }
+        function onActionRenderer(e) {
+	        var grid = e.sender;
+	        var record = e.record;
+	        var _uid =record._uid;
+	        var rowIndex = e.rowIndex;
+	        var s = '<img src="<%=path%>/res/images/finder_drop_arrow.gif" onclick="showView('+_uid+')"/>';
+	        return s;
+         }
+    	 function showView(_uid){
+         	editRow(_uid);
+         }
+         function editRow(row_uid) {
+         	var shrink=mini.get("Shrink_row");
+         	_currentRow=row_uid;
+         	if(isEmpty(shrink.getValue(),false)){
+         		shrink.setValue(row_uid);
+         		var row = transactionItemDataGrid.getRowByUID(row_uid);
+                 if (row) {
+                     //显示行详细
+                     transactionItemDataGrid.hideAllRowDetail();
+                     transactionItemDataGrid.showRowDetail(row);
+                     //将editForm元素，加入行详细单元格内
+                     var td = transactionItemDataGrid.getRowDetailCellEl(row);
+                     td.appendChild(transactionItemViewForm);
+                     transactionItemViewForm.style.display = "";
+                     var id=row.id;
+             		 if(!isEmpty(id,false)){
+     	        		 var form = new mini.Form("#readOnlyTransactionItemViewForm");
+     		        	 form.clear();
+     		             form.loading();
+     		             $.ajax({
+    	                    url: "<%=path%>/transactionItem/getTransactionItemById?id=" +id,
+    	                    success: function (obj) {
+    	                        form.unmask();
+    	                        var o = mini.decode(obj.data);
+    	                        form.setData(o);
+    	                        labelModel("readOnlyTransactionItemViewForm");
+	    	                 },error: function () {
+    	                        mini.alert("表单加载错误");
+    	                        form.unmask();
+	    	                 }
+    	             	});
+             	    	
+             	    }
+                    transactionItemDataGrid.doLayout();
+                 }
+         	}else{
+         		 transactionItemDataGrid.hideAllRowDetail();
+         		 mini.get("Shrink_row").setValue("");
+         	}
+             
+         }
+         transactionItemDataGrid.on("rowdblclick",function(e){//点击行显示详细信息
+         	var record = e.record;
+         	var _uid =record._uid;
+            editRow(_uid);
+         }); 
+         
+         function onComboboxFieldChanged(e){
+        	  var filed = mini.get("transactionItemComboboxField").getValue();
+        	  if("moreFilter"==filed){
+        		  clickSearchButtonByTransactionItem();
+        	  }
+         }
+         function clickQuickSearchByTransactionItem() {
+         	var __fieldName = mini.get("transactionItemComboboxField").getValue();
+         	var __fieldValue = mini.get("transactionItemSearchKeyWord").getValue();
+         	__fieldValue=encodeURIComponent(__fieldValue);
+ 			if(!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+	         	var filterJsonStr="{'"+__fieldName+"':'"+__fieldValue+"'}";
+	         	var filterJsonObj=mini.decode(filterJsonStr,true);
+ 				transactionItemDataGrid.load(filterJsonObj);
+ 			}else{
+ 				transactionItemDataGrid.load();
+ 			}
+         }
+         function clearQuickSearchByTransactionItem(e){
+        	 mini.get("transactionItemSearchKeyWord").setValue();
+         }
+    </script>
+</body>
+</html>

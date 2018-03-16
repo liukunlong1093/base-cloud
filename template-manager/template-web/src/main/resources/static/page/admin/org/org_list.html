@@ -1,0 +1,1058 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <input class="mini-hidden" name="Shrink_row" id="post_shrink_row" />
+    <div class="mini-splitter" style="width:100%;height:100%;">
+    	<div size="240" showCollapseButton="true">
+    		<div class="mini-toolbar" style="padding:2px;border-top:0;border-left:0;border-right:0;">                
+	            <span style="padding-left:5px;">名称：</span>
+	            <input id="orgTreeKey" class="mini-textbox" style="width:100px;" onenter="searchOrgTreeNode"/>
+	            <a class="mini-button" iconCls="icon-search" plain="true" onclick="searchOrgTreeNode()">查找</a>
+	        </div>
+	        <div class="mini-fit">
+	            <div id="orgTree" class="mini-tree"  style="width:238px;padding:5px;" showTreeIcon="true" url=infoDomain+"/org/getOrgTree" textField="name" idField="id" parentField="parentId" resultAsTree="false"  checkRecursive="true" expandOnLoad="0" ></div>
+	        </div>
+    	</div>
+    	<div showCollapseButton="true">
+    		<div class="mini-toolbar" style="border:0;">
+		        <table style="width:100%;">
+		            <tr>
+		                <td style="width:100%;">
+		                    <a  class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByOrg()" />
+		                    <a  class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByOrg()" />
+		                    <a  class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByOrg()" />
+		                    <a  class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByOrg()" />
+		                    <a  class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonOrg()" />
+		                </td>
+		                <td style="white-space:nowrap;">
+		                    <input id="orgComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isOrgFieldData" value="name" onitemclick="onComboboxFieldChanged"
+		                    />
+		                    <input id="orgSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByOrg" onfocus="clearQuickSearchByOrg" />
+		                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByOrg()">搜索</a>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>
+		    <div class="mini-fit" style="height:100px;">
+		        <div id="orgDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true"  url=infoDomain+"/org/getOrgList" idField="id" sizeList="[5,10,20,50]"
+		        pageSize="14" multiSelect="true">
+		            <div property="columns">
+		                <div type="indexcolumn"></div>
+		                <div type="checkcolumn"></div>
+		                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onOrgActionRenderer">查看</div>
+		                <div field="code" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">组织编号</div>
+		                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">组织名称</div>
+		                <div field="type" width="100" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onTypeRenderer">类型</div>
+		                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>
+		                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+		            </div>
+		        </div>
+		    </div>
+    	</div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="orgAddOrEditWindow" class="mini-window" title="维护组织机构" style="width:750px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="orgTabs" class="mini-tabs" activeIndex="0" style="width:710px;" contextMenu="#tabsMenu" >
+		    <div name="first" title="组织机构基本信息">
+		        <div id="orgAddOrEidthForm" class="form">
+		            <input class="mini-hidden" name="id" id="orgId" />
+		            <input class="mini-hidden" name="createBy" value="" />
+		            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+		                <tr>
+		                    <td style="width:150px;" align="right">组织编号<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="code" name="code" class="mini-textbox" emptyText="请输入组织编号" required="true" style="width:100%" />
+		                    </td>
+		                    <td style="width:150px;" align="right">名称<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="name" name="name" class="mini-textbox" emptyText="请输入名称" required="true" style="width:100%" />
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td style="width:150px;" align="right">所属部门<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="orgParentId" name="parentId" class="mini-treeselect" emptyText="请输入上层组织"  url=infoDomain+"/org/getOrgTree" multiSelect="false"  valueFromSelect="false" textField="name" idField="id" parentField="parentId"   allowInput="true" style="width:100%"/>
+		                    </td>
+		                    <td style="width:150px;" align="right">类型<font color="red">*</font>：</td>
+		                    <td style="width:270px;">
+		                        <input id="type" name="type" class="mini-combobox" emptyText="请输入类型" data="isTypeData" required="true" style="width:100%" />
+		                    </td>
+		                </tr>
+		                <tr>
+		                     <td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+		                     <td colspan="3">
+		                         <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+		                     </td>
+		                </tr>
+		                <tr>
+		                     <td style="width:150px;" align="right">说明<font color="red">*</font>：</td>
+		                     <td colspan="3">
+		                         <input id="comment" name="comment" class="mini-textarea"  style="width:100%" />
+		                     </td>
+		                </tr>
+		            </table>
+		            <div property="footer" align="center">
+		                <a class="mini-button" onclick="orgAddOrEditOnOk();" style="width:60px;">确定</a>
+		                <a class="mini-button" onclick="orgAddOrEditOnCancel();" style="width:60px;">取消</a>
+		            </div>
+		        </div>
+		    </div>
+		    <div title="组织用户信息">
+		        <div class="mini-toolbar" style="border:0;">
+			        <table style="width:100%;">
+			            <tr>
+			                <td style="width:100%;">
+			                    <a  class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="openUserSearchWin()" />
+			                    <a  class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByOrgUserRel()" />
+			                    <a  class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonOrgUserRel()" />
+			                </td>
+			                <td style="white-space:nowrap;">
+			                    <input id="orgUserRelComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isUserFieldData" value="name" onitemclick="onComboboxFieldChanged"
+			                    />
+			                    <input id="orgUserRelSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByOrgUserRel" onfocus="clearQuickSearchByOrgUserRel"
+			                    />
+			                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByOrgUserRel()">搜索</a>
+			                </td>
+			            </tr>
+			        </table>
+			    </div>
+			    <div class="mini-fit" style="height:260px;">
+			        <div id="orgUserRelDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true"  url=infoDomain+"/org/getOrgUserRelList" idField="id" sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+			            <div property="columns">
+			                <div type="indexcolumn"></div>
+			                <div type="checkcolumn"></div>
+<!-- 			                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onOrgActionRenderer">查看</div> -->
+<!-- 			                <div field="orgId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">组织标识</div> -->
+<!-- 			                <div field="userId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">用户标识</div> -->
+			                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">帐号</div>
+			                <div field="fullname" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+			                <div field="sex" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserSexRenderer">性别</div>
+			                <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserStatusRenderer">状态</div>
+			                <div field="birthday" width="50" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd">生日</div>
+			            </div>
+			        </div>
+			    </div>
+		    </div>
+		    <div title="组织岗位信息">
+		    	<div class="mini-toolbar" style="border:0;">
+			        <table style="width:100%;">
+			            <tr>
+			                <td style="width:100%;">
+			                    <a  class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByPost()" />
+			                    <a  class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByPost()" />
+			                    <a  class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByPost()" />
+			                    <a  class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonPost()" />
+			                </td>
+			                <td style="white-space:nowrap;">
+			                    <input id="postComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isPostFieldData" value="name" onitemclick="onComboboxFieldChanged"
+			                    />
+			                    <input id="postSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByPost" onfocus="clearQuickSearchByPost" />
+			                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByPost()">搜索</a>
+			                </td>
+			            </tr>
+			        </table>
+			    </div>
+			    <div class="mini-fit" style="height:350px;">
+			        <div id="postDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/post/getPostList" idField="id" sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+			            <div property="columns">
+			                <div type="indexcolumn"></div>
+			                <div type="checkcolumn"></div>
+			                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onPostActionRenderer">查看</div>
+			                <div field="code" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">岗位编号</div>
+			                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">岗位名称</div>
+			                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>
+			                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+			            </div>
+			        </div>
+			    </div>
+		    </div>
+		</div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="orgSearchWindow" class="mini-window" title="组织机构查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="orgSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">组织编号：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="orgSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="orgSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="orgViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyOrgViewForm" class="form">
+        	<fieldset  style="width:97%;">
+                <legend><span><font style='font-weight:bold;'>部门信息</font></span></legend>
+	            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+	                <tr>
+	                    <td style="width:150px;" align="right">组织编号：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+	                    </td>
+	                    <td style="width:150px;" align="right">名称：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td style="width:150px;" align="right">所属部门：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_parentId" name="parentId" class="mini-treeselect"  multiSelect="false"  valueFromSelect="false" url=infoDomain+"/org/getOrgTree" textField="name" idField="id" parentField="parentId"   allowInput="true" style="width:80%"/>
+	                    </td>
+	                    <td style="width:150px;" align="right">类型：</td>
+	                    <td style="width:270px;">
+	                        <input id="view_type" name="type" class="mini-combobox" data="isTypeData" style="width:80%" />
+	                    </td>
+	                </tr>
+	            </table>
+            </fieldset>
+            <fieldset  style="width:97%;">
+                <legend><span><font style='font-weight:bold;'>岗位信息</font></span></legend>
+	            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;" id="__showPostUser">
+	                <tr>
+	                     <td style="width:150px;" align="right">技术经理<font color="red">*</font>：</td>
+	                     <td colspan="3">小名,张三,张三,张三,张三</td>
+	                </tr>
+	                <tr>
+	                     <td style="width:150px;" align="right">项目经理<font color="red">*</font>：</td>
+	                     <td colspan="3">王武</td>
+	                </tr>
+	            </table>
+            </fieldset>
+        </div>
+    </div>
+    
+     <!--弹出选择用户界面begin-->
+    <div id="userSearchWindow" class="mini-window" title="请选择用户" style="width:722px;" showModal="true" allowResize="true" allowDrag="true">
+    	<div class="mini-toolbar" style="border:0;">
+	        <table style="width:100%;">
+	            <tr>
+	                <td style="width:100%;">
+	                    <a  class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByUser()" />
+	                    <a  class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByUser()" />
+	                    <a  class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByUser()" />
+	                    <a  class="mini-button" iconCls="icon-ok" style="font-weight: bold;" plain="true" text="确定" onclick="clickSubmitOrgUser()" />
+	                    <a  class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonUser()" />
+	                </td>
+	                <td style="white-space:nowrap;">
+	                    <input id="userComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isUserFieldData" value="name" onitemclick="onComboboxFieldChanged" />
+	                    <input id="userSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByUser" onfocus="clearQuickSearchByUser" />
+	                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByUser()">搜索</a>
+	                </td>
+	            </tr>
+	        </table>
+       </div>
+       <div class="mini-fit" style="height:300px;">
+         <div id="userDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true"  url=infoDomain+"/user/getUserList" idField="id" sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+             <div property="columns">
+                 <div type="indexcolumn"></div>
+                 <div type="checkcolumn"></div>
+                 <div field="name" width="80" headerCls="fontweight" headerAlign="left" allowSort="true">帐号</div>
+<!--                  <div field="pwd" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">密码</div> -->
+                 <div field="fullname" width="80" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+                 <div field="sex" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserSexRenderer">性别</div>
+                 <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserStatusRenderer">状态</div>
+                 <div field="birthday" width="50" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd">生日</div>
+<!--                  <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div> -->
+                 <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+<!--                  <div field="createBy" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">创建人</div> -->
+<!--                  <div field="updateTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">更新时间</div> -->
+<!--                  <div field="updateBy" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">更新人</div> -->
+             </div>
+         </div>
+       </div>
+    </div>
+    <!--弹出新增及编辑用户界面begin-->
+     <div id="userAddOrEditWindow" class="mini-window" title="维护用户" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+         <div id="userAddOrEidthForm" class="form">
+             <input class="mini-hidden" name="id" id="id" />
+             <input class="mini-hidden" name="createBy" value="" />
+             <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                 <tr>
+                     <td style="width:150px;" align="right">帐号<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userName" name="name" class="mini-textbox" emptyText="请输入帐号" required="true" style="width:100%" />
+                     </td>
+                     <td style="width:150px;" align="right">密码<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userPwd" name="pwd" class="mini-password" emptyText="请输入密码" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">名称<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userFullname" name="fullname" class="mini-textbox" emptyText="请输入名称" required="true" style="width:100%" />
+                     </td>
+                     <td style="width:150px;" align="right">状态<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userStatus" name="status" class="mini-combobox" emptyText="请输入状态" data="isUserStatusData" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">性别<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userSex" name="sex" class="mini-combobox" emptyText="请输入性别" data="isUserSexData"  required="true" style="width:100%" />
+                     </td>
+                     <td style="width:150px;" align="right">生日<font color="red">*</font>：</td>
+                     <td style="width:270px;">
+                         <input id="userBirthday" name="birthday" class="mini-datepicker" emptyText="请输入生日" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="userSort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                  <tr>
+                     <td style="width:150px;" align="right">说明<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="userComment" name="comment" class="mini-textarea"  style="width:100%" />
+                     </td>
+                 </tr>
+             </table>
+             <div property="footer" align="center">
+                 <a class="mini-button" onclick="userAddOrEditOnOk();" style="width:60px;">确定</a>
+                 <a class="mini-button" onclick="userAddOrEditOnCancel();" style="width:60px;">取消</a>
+             </div>
+         </div>
+     </div>
+     <!--弹出新增及编辑用户界面end-->
+     
+     
+      <!--弹出组织岗位新增及编辑界面begin-->
+    <div id="postAddOrEditWindow" class="mini-window" title="维护岗位" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="postAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="id" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+               <tr>
+                    <td style="width:150px;" align="right">岗位编号<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="postCode" name="code" class="mini-textbox" emptyText="请输入岗位编号" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">岗位名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="postName" name="name" class="mini-textbox" emptyText="请输入岗位名称" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">所属部门</td>
+                    <td style="width:270px;">
+                    	<input id="postOrgId" name="orgId" class="mini-treeselect"  emptyText="请选择部门"  multiSelect="false"  valueFromSelect="false" url=infoDomain+"/org/getOrgTree" textField="name" idField="id" parentField="parentId"   allowInput="true" required="true" style="width:100%"/>
+                    </td>
+                    <td style="width:150px;" align="right">岗位类型<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="postTypeId" name="postTypeId" class="mini-combobox"  emptyText="请选择岗位类型"  textField="name" valueField="id" emptyText="请选择岗位类型" url="" required="true" allowInput="true" showNullItem="false" nullItemText="请选择..." style="width:100%"/>
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">排序<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="postSort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                  <tr>
+                     <td style="width:150px;" align="right">说明<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="postComment" name="comment" class="mini-textarea"  style="width:100%" />
+                     </td>
+                 </tr>
+                
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="postAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="postAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出组织岗位新增及编辑界面end-->
+    <!--下拉展示岗位用户列表begin-->
+     <div id="postViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyPostViewForm" class="form">
+			<div class="mini-toolbar" style="border:0;">
+		        <table style="width:100%;">
+		            <tr>
+		                <td style="width:100%;">
+		                    <a  class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="openOrgUserSearchWin()" />
+		                    <a  class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByPostUserRel()" />
+		                    <a  class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonPostUserRel()" />
+		                </td>
+		                <td style="white-space:nowrap;">
+		                    <input id="postUserRelComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isUserFieldData" value="name" onitemclick="onComboboxFieldChanged"/>
+		                    <input id="postUserRelSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByPostUserRel" onfocus="clearQuickSearchByPostUserRel"/>
+		                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByPostUserRel()">搜索</a>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>
+		    <div class="mini-fit" style="height:200px;">
+		        <div id="postUserRelDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/post/getPostUserRelList" idField="id"
+		        pageSize="14" multiSelect="true" showPager="false" virtualScroll="true" >
+		            <div property="columns">
+		                <div type="indexcolumn"></div>
+		                <div type="checkcolumn"></div>
+<!-- 		                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onOrgActionRenderer">查看</div> -->
+<!-- 		                <div field="postId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">岗位标识</div> -->
+<!-- 		                <div field="userId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">用户标识</div> -->
+		                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">帐号</div>
+		                <div field="fullname" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+		                <div field="sex" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserSexRenderer">性别</div>
+		                <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserStatusRenderer">状态</div>
+		                <div field="birthday" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd">生日</div>
+<!-- 		                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true"></div> -->
+		            </div>
+		        </div>
+		    </div>
+        </div>
+     </div>
+     <!--下拉展示岗位用户列表end-->
+     
+     <!--弹出选择组织用户界面begin-->
+    <div id="orgUserSearchWindow" class="mini-window" title="请选择用户" style="width:722px;" showModal="true" allowResize="true" allowDrag="true">
+    	 <div class="mini-toolbar" style="border:0;">
+		       <table style="width:100%;">
+		           <tr>
+		               <td style="width:100%;">
+		                   <a  class="mini-button" iconCls="icon-ok" style="font-weight: bold;" plain="true" text="确定" onclick="clickSubmitPostUser()" />
+		                   <a  class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonOrgUserSearch()" />
+		               </td>
+		               <td style="white-space:nowrap;">
+		                   <input id="orgUserComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isUserFieldData" value="name" onitemclick="onComboboxFieldChanged"
+		                   />
+		                   <input id="orgUserSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByOrgUser" onfocus="clearQuickSearchByOrgUser"
+		                   />
+		                   <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByOrgUser()">搜索</a>
+		               </td>
+		           </tr>
+		       </table>
+		   </div>
+		   <div class="mini-fit" style="height:300px;">
+		       <div id="orgUserWinDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=infoDomain+"/org/getOrgUserRelList" idField="id"
+		       sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+		           <div property="columns">
+		               <div type="indexcolumn"></div>
+		               <div type="checkcolumn"></div>
+		               <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">帐号</div>
+		               <div field="fullname" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+		               <div field="sex" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserSexRenderer">性别</div>
+		               <div field="status" width="50" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onUserStatusRenderer">状态</div>
+		               <div field="birthday" width="50" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd">生日</div>
+		           </div>
+		       </div>
+		   </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var selectNodeOrgId="";//选中的组织节点ID
+    var __orgId="-1";//用户新增成功后或编辑成功后的时候的组织ID
+    var __postId="";//展开组织岗位列表的时候赋值
+    var isOrgFieldData = [{id: 'code',text: '组织编号'}, {id: 'name', text: '名称'}, {id: 'comment', text: '说明'}, {id: 'moreFilter', text: '更多筛选'}];
+    var isPostFieldData = [{id: 'code', text: '岗位编号'},{id:'name',text:'岗位名称'}, {id:'comment', text: '岗位说明'}];
+    var isTypeData = [{ id: 0, text: '组织' }, { id:1, text: '部门'}];
+    var isUserFieldData = [{id: 'name', text: '帐号'}, {id: 'fullname', text: '名称'}];
+    var isUserSexData = [{ id: '', text: '请选择'},{ id: 0, text: '男' }, { id:1, text: '女'}];
+    var isUserStatusData = [{ id: '0', text: '启用' }, { id:'1', text: '停用'}];
+    mini.parse();
+    var orgTree=mini.get("orgTree");
+    orgTree.load();
+    var orgDataGrid = mini.get("orgDataGrid");
+    orgDataGrid.load();
+    var orgUserRelDataGrid = mini.get("orgUserRelDataGrid");
+    orgUserRelDataGrid.load();
+    var postDataGrid = mini.get("postDataGrid");
+    postDataGrid.load();
+    var orgUserWinDataGrid=mini.get("orgUserWinDataGrid");
+    orgUserWinDataGrid.load();
+    var postUserRelDataGrid = mini.get("postUserRelDataGrid");
+    postUserRelDataGrid.load();
+    var userDataGrid = mini.get("userDataGrid");
+    userDataGrid.load();
+    var orgViewForm = document.getElementById("orgViewForm");
+    var postViewForm = document.getElementById("postViewForm");
+    orgTree.on("nodeselect", function (e) {
+    	selectNodeOrgId=e.node.id;
+        orgDataGrid.load({parentId:selectNodeOrgId});
+    });
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByOrg() {
+            _add_function('orgAddOrEditWindow', 'orgAddOrEidthForm', '新增组织机构');
+            var windowdiv = mini.get("orgAddOrEditWindow");
+            windowdiv.showAtPos("center","top");
+            mini.get("orgParentId").setValue(selectNodeOrgId);
+            orgUserRelDataGrid.load({orgId:__orgId});
+            postDataGrid.load({orgId:__orgId});
+            mini.get("orgTabs").getTab(1).enabled=false;
+            mini.get("orgTabs").getTab(2).enabled=false;
+    }
+    //编辑相关方法
+    function clickEditButtonByOrg() {
+            var ajaxurl = infoDomain+"/org/getOrgById";
+            _edit_function('orgDataGrid', 'orgAddOrEditWindow', 'orgAddOrEidthForm', '编辑组织机构', ajaxurl,"clickEditButtonByOrgSuccess", null, null);
+            var windowdiv = mini.get("orgAddOrEditWindow");
+	        windowdiv.showAtPos("center","top");
+	        mini.get("orgTabs").getTab(1).enabled=true;
+            mini.get("orgTabs").getTab(2).enabled=true;
+    }
+    function clickEditButtonByOrgSuccess(obj){
+    	var data=obj.data;
+        __orgId=data.id;
+    	//加载当前部门下面的组织用户列表
+        orgUserRelDataGrid.load({orgId:__orgId});
+        //加载当前部门下面的岗位列表
+        postDataGrid.load({orgId:__orgId});
+    }
+        //删除相关方法
+    function clickRemoveButtonByOrg() {
+        var ajaxurl = infoDomain+"/org/deleteOrgById";
+        _delete_function('orgDataGrid', ajaxurl, "clickRefreshButtonOrg()", null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonOrg() {
+    	if (!isEmpty(selectNodeOrgId, false)){
+	    	orgDataGrid.load({parentId:selectNodeOrgId});
+        }else{
+	        _refresh_function('orgDataGrid', null);
+        }
+    }
+
+    //确定相关方法
+    function orgAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/org/" + (_add_action('orgId') ? 'addOrg' : 'updateOrg');
+        _save_function('orgAddOrEidthForm', ajaxurl,"orgBackFunction", null, null);
+    }
+
+    //取消相关方法
+    function orgAddOrEditOnCancel() {
+            _cancel_function('orgAddOrEditWindow');
+    }
+    //执行完毕调用的方法   
+    function orgBackFunction(obj) {
+    	    var data=obj.data;
+            __orgId=data.id;
+            //加载当前部门下面的组织用户列表
+            orgUserRelDataGrid.load({orgId:__orgId});
+            //加载当前部门下面的岗位列表
+            postDataGrid.load({orgId:__orgId});
+           // orgAddOrEditOnCancel();
+           //clickRefreshButtonOrg();
+            mini.get("orgTabs").getTab(1).enabled=true;
+            mini.get("orgTabs").getTab(2).enabled=true;
+     }
+     //查询相关方法begin
+    function clickSearchButtonByOrg() {
+        _search_function('orgSearchWindow', 'orgSearchForm', '组织机构查询');
+    }
+
+    function orgSerchOnOk() {
+        orgSearch();
+    }
+
+    function orgSerchOnCancel() {
+        _cancel_function('orgSearchWindow');
+    }
+
+    function orgSearch() {
+        if (!isEmpty(selectNodeOrgId, false)){
+	    	orgDataGrid.setUrl(infoDomain+"/org/getOrgList?parentId="+selectNodeOrgId);
+        }
+        var form = new mini.Form("#orgSearchForm");
+        var o = form.getData();
+        o.code = encodeURIComponent(o.code);
+        o.name = encodeURIComponent(o.name);
+        if (!isEmpty(o.comment, false)) {
+	        o.comment = encodeURIComponent(o.comment);
+        }
+        orgDataGrid.load(o, orgSearchSuccse, _search_Fail);
+    }
+
+    function orgSearchSuccse() {
+        _cancel_function('orgSearchWindow');
+    }
+
+    function onOrgActionRenderer(e) {
+        return onActionRenderer(e);
+    }
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+        var shrink = mini.get("Shrink_row");
+        _currentRow = row_uid;
+        if (isEmpty(shrink.getValue(), false)) {
+            shrink.setValue(row_uid);
+            var row = orgDataGrid.getRowByUID(row_uid);
+            if (row) {
+                //显示行详细
+                orgDataGrid.hideAllRowDetail();
+                orgDataGrid.showRowDetail(row);
+                //将editForm元素，加入行详细单元格内
+                var td = orgDataGrid.getRowDetailCellEl(row);
+                td.appendChild(orgViewForm);
+                orgViewForm.style.display = "";
+                var id = row.id;
+                if (!isEmpty(id, false)) {
+                    var form = new mini.Form("#readOnlyOrgViewForm");
+                    form.clear();
+                    form.loading();
+                    $.ajax({
+                        url: infoDomain+"/org/getOrgById?id=" + id,
+                        dataType:"json",
+	    				contentType:"application/json"
+                        , success: function (obj) {
+                            form.unmask();
+                            var o = mini.decode(obj.data);
+                            form.setData(o);
+                            labelModel("readOnlyOrgViewForm");
+                        }
+                        , error: function () {
+                            mini.alert("表单加载错误");
+                            form.unmask();
+                        }
+                    });
+                    
+                    $.ajax({
+                        url: infoDomain+"/org/getOrgPostUser?orgId=" + id
+                        ,success: function (obj) {
+                        	var o = mini.decode(obj);
+                            var text="";
+                            for(var post in o){
+                            	 text=text+'<tr><td style="width:150px;" align="right">'+post+'：</td>';
+                            	 text=text+'<td colspan="3">'+o[post]+'</td></tr>';
+                            }
+                            $("#__showPostUser").html(text);
+                        }, error: function () {
+                            mini.alert("表单加载错误");
+                            form.unmask();
+                        }
+                    });
+
+                }
+                orgDataGrid.doLayout();
+            }
+        } else {
+            orgDataGrid.hideAllRowDetail();
+            mini.get("Shrink_row")
+                .setValue("");
+        }
+
+    }
+    orgDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("orgComboboxField").getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByOrg();
+        }
+    }
+
+    function clickQuickSearchByOrg() {
+        if (!isEmpty(selectNodeOrgId, false)){
+	    	orgDataGrid.setUrl(infoDomain+"/org/getOrgList?parentId="+selectNodeOrgId);
+        }
+        var __fieldName = mini.get("orgComboboxField").getValue();
+        var __fieldValue = mini.get("orgSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            orgDataGrid.load(filterJsonObj);
+        } else {
+            orgDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByOrg(e) {
+        mini.get("orgSearchKeyWord").setValue();
+    }
+    //组织类型渲染
+    function onTypeRenderer(e) {
+     	 var typeName="";
+         var record=e.record;
+         var type=record.type;
+         if("0"==type){
+        	 typeName="组织";
+         }else if("1"==type){
+        	 typeName="部门";
+         }
+         return typeName;
+     }
+     function searchOrgTreeNode() {
+         var key = mini.get("orgTreeKey").getValue();
+         if (key == "") {
+        	 orgTree.clearFilter();
+         } else {
+            key = key.toLowerCase();                
+            orgTree.filter(function (node) {
+                var text = node.name ? node.name.toLowerCase() : "";
+                if (text.indexOf(key) != -1) {
+                    return true;
+                }
+            });
+         }
+     }
+   //组织用户相关方法开始
+    //删除相关方法
+    function clickRemoveButtonByOrgUserRel() {
+        var ajaxurl = infoDomain+"/org/deleteOrgUserRelById";
+        _delete_function('orgUserRelDataGrid', ajaxurl,"clickRefreshButtonOrgUserRel", null, null, null, null);
+    }
+    //刷新相关方法
+    function clickRefreshButtonOrgUserRel() {
+        _refresh_function('orgUserRelDataGrid',infoDomain+"/org/getOrgUserRelList?orgId="+__orgId);
+    }
+    function clickQuickSearchByOrgUserRel() {
+    	orgUserRelDataGrid.setUrl(infoDomain+"/org/getOrgUserRelList?orgId="+__orgId);
+        var __fieldName = mini.get("orgUserRelComboboxField").getValue();
+        var __fieldValue = mini.get("orgUserRelSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            orgUserRelDataGrid.load(filterJsonObj);
+        } else {
+            orgUserRelDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByOrgUserRel(e) {
+        mini.get("orgUserRelSearchKeyWord").setValue();
+    }
+   //组织用户相关方法结束
+   //组织用户弹出查询相关方法开始
+     //新增相关方法
+     function clickAddButtonByUser() {
+             _add_function('userAddOrEditWindow', 'userAddOrEidthForm', '新增用户');
+         }
+         //编辑相关方法
+     function clickEditButtonByUser() {
+             var ajaxurl = infoDomain+"/user/getUserById";
+             _edit_function('userDataGrid', 'userAddOrEditWindow', 'userAddOrEidthForm', '编辑用户', ajaxurl, null, null);
+         }
+         //删除相关方法
+     function clickRemoveButtonByUser() {
+         var ajaxurl = infoDomain+"/user/deleteUserById";
+         _delete_function('userDataGrid', ajaxurl, backFunction, null, null, null, null);
+     }
+
+     //刷新相关方法
+     function clickRefreshButtonUser() {
+         _refresh_function('userDataGrid', null);
+     }
+
+     //确定相关方法
+     function userAddOrEditOnOk() {
+         var ajaxurl = infoDomain+"/user/" + (_add_action('id') ? 'addUser' : 'updateUser');
+         _save_function('userAddOrEidthForm', ajaxurl, backFunction, null, null);
+     }
+
+     //取消相关方法
+     function userAddOrEditOnCancel() {
+             _cancel_function('userAddOrEditWindow');
+         }
+         //执行完毕调用的方法   
+     function backFunction() {
+             userAddOrEditOnCancel();
+             clickRefreshButtonUser();
+    }
+     function clickQuickSearchByUser() {
+         var __fieldName = mini.get("userComboboxField").getValue();
+         var __fieldValue = mini.get("userSearchKeyWord").getValue();
+         if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+             var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+             var filterJsonObj = mini.decode(filterJsonStr, true);
+             userDataGrid.load(filterJsonObj);
+         } else {
+             userDataGrid.load();
+         }
+     }
+
+     function clearQuickSearchByUser(e) {
+         mini.get("userSearchKeyWord").setValue();
+     }
+     //渲染性别
+     function onUserSexRenderer(e) {
+     	 var sexName="女";
+         var record = e.record;
+         var sex = record.sex;
+         if("0"==sex){
+         	sexName="男";
+         }else if("1"==sex){
+         	sexName="女";
+         }
+         return sexName;
+     }
+   //状态渲染
+     function onUserStatusRenderer(e) {
+      	  var statusName="";
+          var record=e.record;
+          var status=record.status;
+          if("0"==status){
+          	statusName="启用";
+          }else if("1"==status){
+          	statusName="<font color='red'>停用</font>";
+          }
+          return statusName;
+      }
+   
+      function openUserSearchWin(){
+    	  _show_window_function("userSearchWindow","用户查询");
+      }
+      
+      
+    //添加组织用户成员
+     function clickSubmitOrgUser() {
+      	var rows = userDataGrid.getSelecteds();
+          if (rows.length > 0) {
+          		mini.confirm("确认添加用户到该组织下？", "确定？",
+                function (action) {            
+                     if (action == "ok") {
+                  	   var userId = [];
+                       for (var i = 0, l = rows.length; i < l; i++) {
+                             var r = rows[i];
+                             userId.push(r.id);
+                        }
+                         var userIds = userId.join(',');
+                         userDataGrid.loading("操作中，请稍后......");
+                         $.ajax({
+                             url: infoDomain+"/org/batchSaveOrgUserRel",
+                             data:{orgId:__orgId,userIds:userIds},
+                             success: function (text) {
+                            	 _hide_window_function("userSearchWindow");
+                            	 //加载当前部门下面的组织用户列表
+                                 orgUserRelDataGrid.load({orgId:__orgId});
+                                 userDataGrid.load();
+                             },
+                             error: function () {}
+                         });
+                     }
+                 }
+              );
+          } else {
+              mini.alert("请选中需要添加的用户");
+          }
+      }
+    //组织用户弹出查询相关方法结束
+    //组织岗位相关方法开始
+    //新增相关方法
+    function clickAddButtonByPost() {
+            _add_function('postAddOrEditWindow', 'postAddOrEidthForm', '新增岗位');
+            //新增默认部门为当前编辑或新增的部门
+            mini.get("postOrgId").load();
+            mini.get("postOrgId").setValue(__orgId);
+            mini.get("postTypeId").load(infoDomain+"/postType/buildPostType");
+            
+    }
+        //编辑相关方法
+    function clickEditButtonByPost() {
+            var ajaxurl = infoDomain+"/post/getPostById";
+            _edit_function('postDataGrid', 'postAddOrEditWindow', 'postAddOrEidthForm', '编辑岗位', ajaxurl, null, null);
+        }
+        //删除相关方法
+    function clickRemoveButtonByPost() {
+        var ajaxurl = infoDomain+"/post/deletePostById";
+        _delete_function('postDataGrid', ajaxurl, backPostFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonPost() {
+        _refresh_function('postDataGrid', infoDomain+"/post/getPostList?orgId="+__orgId);
+    }
+
+    //确定相关方法
+    function postAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/post/" + (_add_action('id') ? 'savePost' : 'updatePost');
+        _save_function('postAddOrEidthForm', ajaxurl, backPostFunction, null, null);
+    }
+
+    //取消相关方法
+    function postAddOrEditOnCancel() {
+            _cancel_function('postAddOrEditWindow');
+    }
+    //执行完毕调用的方法   
+    function backPostFunction() {
+            postAddOrEditOnCancel();
+            postDataGrid.load({orgId:__orgId});
+    }
+        
+    function onPostActionRenderer(e) {
+        var record = e.record;
+        var _uid = record._uid;
+        var icoSrc=staticDomain+"/images/finder_drop_arrow.gif";
+        var s = '<img src='+icoSrc+' onclick="showPostView(' + _uid + ')"/>';
+        return s;
+    }
+
+    function showPostView(_uid) {
+        postEditRow(_uid);
+    }
+
+    function postEditRow(row_uid) {
+        debugger;
+        var shrink = mini.get("post_shrink_row");
+        _currentRow = row_uid;
+        if (isEmpty(shrink.getValue(), false)) {
+            shrink.setValue(row_uid);
+            var row = postDataGrid.getRowByUID(row_uid);
+            if (row) {
+              debugger;
+                //显示行详细
+                postDataGrid.hideAllRowDetail();
+                postDataGrid.showRowDetail(row);
+                //将editForm元素，加入行详细单元格内
+                var td = postDataGrid.getRowDetailCellEl(row);
+                td.appendChild(postViewForm);
+                postViewForm.style.display = "";
+                var id = row.id;
+                if (!isEmpty(id, false)) {
+                    postUserRelDataGrid.setUrl(infoDomain+"/post/getPostUserRelList?postId="+id);
+                    postUserRelDataGrid.load();
+                    __postId=id;
+
+                }
+                postDataGrid.doLayout();
+            }
+        } else {
+            postDataGrid.hideAllRowDetail();
+            mini.get("post_shrink_row").setValue("");
+        }
+
+    }
+    postDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+    function clickQuickSearchByPost() {
+    	postDataGrid.setUrl(infoDomain+"/post/getPostList?orgId="+__orgId);
+        var __fieldName = mini.get("postComboboxField").getValue();
+        var __fieldValue = mini.get("postSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            postDataGrid.load(filterJsonObj);
+        } else {
+            postDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByPost(e) {
+        mini.get("postSearchKeyWord").setValue();
+    }
+    
+    //组织岗位相关方法结束
+    //岗位用户相关方法开始
+    function openOrgUserSearchWin(){
+    	  _show_window_function("orgUserSearchWindow","部门用户查询");
+    	  orgUserWinDataGrid.load({orgId:__orgId});
+    }
+    //刷新组织用户弹出界面列表
+    function clickRefreshButtonOrgUserSearch(){
+    	orgUserWinDataGrid.load({orgId:__orgId});
+    }
+    //删除相关方法
+    function clickRemoveButtonByPostUserRel() {
+        var ajaxurl = infoDomain+"/post/deletePostUserRelById";
+        _delete_function('postUserRelDataGrid', ajaxurl,"clickRefreshButtonPostUserRel", null, null, null, null);
+    }
+    //刷新相关方法
+    function clickRefreshButtonPostUserRel() {
+        _refresh_function('postUserRelDataGrid', infoDomain+"/post/getPostUserRelList?postId="+__postId);
+    }
+    //添加岗位用户成员
+    function clickSubmitPostUser() {
+     	var rows = orgUserWinDataGrid.getSelecteds();
+         if (rows.length > 0) {
+         	   mini.confirm("确认添加用户到该岗位下？", "确定？",
+               function (action) {            
+                    if (action == "ok") {
+                 	   var userId = [];
+                      for (var i = 0, l = rows.length; i < l; i++) {
+                            var r = rows[i];
+                            userId.push(r.userId);
+                       }
+                        var userIds = userId.join(',');
+                        orgUserWinDataGrid.loading("操作中，请稍后......");
+                        $.ajax({
+                            url: infoDomain+"/post/batchSavePostUserRel",
+                            dataType:"json",
+	    				    contentType:"application/json",
+                            data:{postId:__postId,userIds:userIds},
+                            success: function (text) {
+                           		_hide_window_function("orgUserSearchWindow");
+                           		_refresh_function('postUserRelDataGrid', infoDomain+"/post/getPostUserRelList?postId="+__postId);
+                            },
+                            error: function () {}
+                        });
+                    }
+                }
+             );
+         } else {
+             mini.alert("请选中需要添加的用户");
+         }
+     }
+    
+     function clickQuickSearchByPostUserRel() {
+    	postUserRelDataGrid.setUrl(infoDomain+"/post/getPostUserRelList?postId="+__postId);
+        var __fieldName = mini.get("postUserRelComboboxField").getValue();
+        var __fieldValue = mini.get("postUserRelSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            postUserRelDataGrid.load(filterJsonObj);
+        } else {
+            postUserRelDataGrid.load();
+        }
+     }
+     function clearQuickSearchByPostUserRel(e) {
+        mini.get("postUserRelSearchKeyWord").setValue();
+     }
+     //岗位用户相关方法结束
+  	function clickQuickSearchByOrgUser() {
+  		orgUserWinDataGrid.setUrl(infoDomain+"/org/getOrgUserRelList?orgId="+__orgId);
+        var __fieldName = mini.get("orgUserComboboxField").getValue();
+        var __fieldValue = mini.get("orgUserSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            orgUserWinDataGrid.load(filterJsonObj);
+        } else {
+        	orgUserWinDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByOrgUser(e) {
+        mini.get("orgUserRelSearchKeyWord").setValue();
+    }
+    </script>
+</body>
+
+</html>

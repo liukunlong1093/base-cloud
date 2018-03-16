@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByApi()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByApi()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByApi()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByApi()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonApi()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="apiComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isApiFieldData" value="name" onitemclick="onComboboxFieldChanged"
+                    />
+                    <input id="apiSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByApi" onfocus="clearQuickSearchByApi"
+                    />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByApi()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="height:100px;">
+        <div id="apiDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true"  idField="id"
+        sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="projectName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">项目名称</div>
+                <div field="moduleName" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">模块名称</div>
+                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">接口名称</div>
+                <div field="url" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">接口地址</div>
+                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序</div>
+                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="apiAddOrEditWindow" class="mini-window" title="维护应用程序接口" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="apiAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="id" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <input class="mini-hidden" name="projectName" id="projectName" value="" />
+            <input class="mini-hidden" name="moduleName" id="moduleName" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">项目名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="projectId" name="projectId" class="mini-combobox" emptyText="请选择项目名称" textField="name" valueField="code" onvaluechanged="onProjectChanged('')"
+                        url=commonDomain+"/dataDictionary/getDataDictionaryList?parentCode=project_type"   required="true" allowInput="true" style="width:100%"/> 
+                   
+                    </td>
+                    <td style="width:150px;" align="right">模块名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="moduleId" name="moduleId" class="mini-combobox" emptyText="请选择项目模块" textField="name" valueField="code" required="true" allowInput="true" style="width:100%"/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">接口名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入接口名称" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">接口地址<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="url" name="url" class="mini-textbox" emptyText="请输入接口地址" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">接口排序<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="width:150px;" align="right">接口说明<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="comment" name="comment" class="mini-textarea"  style="width:100%" />
+                     </td>
+                 </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="apiAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="apiAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="apiSearchWindow" class="mini-window" title="应用程序接口查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="apiSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">项目名称：</td>
+                    <td width="30%;">
+                        <input id="search_projectId" name="projectId" class="mini-combobox" textField="name" valueField="code" onvaluechanged="onProjectChanged('search')"
+                        url=commonDomain+"/dataDictionary/getDataDictionaryList?parentCode=project_type"   allowInput="true" style="width: 160px;" showNullItem="true"/> 
+                    </td>
+                    <td width="20%;" align="right">模块名称：</td>
+                    <td width="30%;">
+                        <input id="search_moduleId" name="moduleId" class="mini-combobox"  textField="name" valueField="code"  allowInput="true" style="width: 160px;" showNullItem="true"/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%;" align="right">接口名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">接口地址：</td>
+                    <td width="30%;">
+                        <input name="url" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="apiSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="apiSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="apiViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyApiViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:150px;" align="right">项目名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_projectName" name="projectName" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">模块名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_moduleName" name="moduleName" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">接口名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">接口地址：</td>
+                    <td style="width:270px;">
+                        <input id="view_url" name="url" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">接口排序：</td>
+                    <td  colspan="3">
+                        <input id="view_sort" name="sort" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">接口说明：</td>
+                    <td colspan="3">
+                        <input id="view_comment" name="comment" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isApiFieldData = [
+        {
+            id: 'name'
+            , text: '名称'
+        },{
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    var isProjectIdData = [{ id: '', text: '请选择'},{ id: 1, text: 'info' }, { id:1, text: '女'}];
+    var isModuleIdData = [{ id: '', text: '请选择'},{ id: 0, text: '男' }, { id:1, text: '女'}];
+    mini.parse();
+    var apiDataGrid = mini.get("apiDataGrid");
+    apiDataGrid.setUrl(infoDomain+"/api/getApiList");
+    apiDataGrid.load();
+    var projectId = mini.get("projectId");
+    var moduleId = mini.get("moduleId");
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByApi() {
+        _add_function('apiAddOrEditWindow', 'apiAddOrEidthForm', '新增应用程序接口');
+    }
+    //编辑相关方法
+    function clickEditButtonByApi() {
+        var ajaxurl = infoDomain+"/api/getApiById";
+        _edit_function('apiDataGrid', 'apiAddOrEditWindow', 'apiAddOrEidthForm', '编辑应用程序接口', ajaxurl, null, null);
+    }
+    //删除相关方法
+    function clickRemoveButtonByApi() {
+        var ajaxurl = infoDomain+"/api/deleteApiById";
+        _delete_function('apiDataGrid', ajaxurl, backFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonApi() {
+        _refresh_function('apiDataGrid', null);
+    }
+
+    //确定相关方法
+    function apiAddOrEditOnOk() {
+        mini.get("projectName").setValue(projectId.getText());
+        mini.get("moduleName").setValue(moduleId.getText());
+        var ajaxurl = infoDomain+"/api/" + (_add_action('id') ? 'saveApi' : 'updateApi');
+        _save_function('apiAddOrEidthForm', ajaxurl, backFunction, null, null);
+    }
+
+    //取消相关方法
+    function apiAddOrEditOnCancel() {
+            _cancel_function('apiAddOrEditWindow');
+    }
+    //执行完毕调用的方法   
+    function backFunction() {
+            apiAddOrEditOnCancel();
+            clickRefreshButtonApi();
+    }
+    //查询相关方法begin
+    function clickSearchButtonByApi() {
+        _search_function('apiSearchWindow', 'apiSearchForm', '应用程序接口查询');
+    }
+
+    function apiSerchOnOk() {
+        apiSearch();
+    }
+
+    function apiSerchOnCancel() {
+        _cancel_function('apiSearchWindow');
+    }
+
+    function apiSearch() {
+        var form = new mini.Form("#apiSearchForm");
+        var o = form.getData();
+        apiDataGrid.load(o, apiSearchSuccse, _search_Fail);
+    }
+
+    function apiSearchSuccse() {
+        _cancel_function('apiSearchWindow');
+    }
+
+    
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+       editRowInfo('apiDataGrid','apiViewForm','readOnlyApiViewForm',infoDomain+'/api/getApiById',row_uid);
+    }
+    apiDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("apiComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByApi();
+        }
+    }
+
+    function clickQuickSearchByApi() {
+        var __fieldName = mini.get("apiComboboxField").getValue();
+        var __fieldValue = mini.get("apiSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            apiDataGrid.load(filterJsonObj);
+        } else {
+            apiDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByApi(e) {
+        mini.get("apiSearchKeyWord").setValue();
+    }
+    function onProjectChanged(prefix){
+     	var __projectId;
+    	var __moduleId;
+    	if(!isEmpty(prefix, false)){
+    	    __projectId = mini.get(prefix+"_projectId");
+    		__moduleId =  mini.get(prefix+"_moduleId");
+    	}else{
+    		__projectId = mini.get("projectId");
+    		__moduleId = mini.get("moduleId");
+    	}
+   		var id = __projectId.getValue();
+        __moduleId.setValue("");
+        var url =commonDomain+"/dataDictionary/getDataDictionaryList?parentCode="+id
+        __moduleId.setUrl(url);
+        __moduleId.select(0);
+    }
+    </script>
+</body>
+
+</html>

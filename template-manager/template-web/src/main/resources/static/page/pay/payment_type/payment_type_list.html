@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;">
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByPaymentType()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByPaymentType()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByPaymentType()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByPaymentType()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonPaymentType()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="paymentTypeComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isPaymentTypeFieldData" value="name" onitemclick="onComboboxFieldChanged"
+                    />
+                    <input id="paymentTypeSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByPaymentType" onfocus="clearQuickSearchByPaymentType"
+                    />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByPaymentType()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="background:red;height:100px;">
+        <div id="paymentTypeDataGrid" class="mini-datagrid" style="width:100%;height:100%;" allowAlternating="true" url=payDomain+"/paymentType/getPaymentTypeList" idField="id"
+        sizeList="[5,10,20,50]" pageSize="14" multiSelect="true">
+            <div property="columns">
+                <div type="indexcolumn"></div>
+                <div type="checkcolumn"></div>
+                <div field="action" width="30" headerCls="fontweight" headerAlign="left" allowSort="false" renderer="onActionRenderer">查看</div>
+                <div field="name" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">名称</div>
+                <div field="type" width="100" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onTypeRenderer">类型</div>
+                <div field="isHidden" width="100" headerCls="fontweight" headerAlign="left" allowSort="true" renderer="onIsHiddenRenderer">是否隐藏</div>
+                <div field="comment" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">备注说明</div>
+                <div field="sort" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">排序数字</div>
+                <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" allowSort="false" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="paymentTypeAddOrEditWindow" class="mini-window" title="维护支付类型" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="paymentTypeAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="paymentTypeId" />
+            <input class="mini-hidden" name="createBy" value="" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="type" name="type" class="mini-combobox" emptyText="请输入类型" data="isTypeData" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">是否隐藏<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="isHidden" name="isHidden" class="mini-radiobuttonlist" value="0" data="[{id: 0, text: '否'}, {id: 1, text: '是'}]" emptyText="请输入是否隐藏" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">排序数字<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序数字" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">备注说明<font color="red">*</font>：</td>
+                    <td colspan="3">
+                        <input id="comment" name="comment" class="mini-textarea" emptyText="请输入备注说明" required="true" style="width:100%" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="paymentTypeAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="paymentTypeAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="paymentTypeSearchWindow" class="mini-window" title="支付类型查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="paymentTypeSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">类型：</td>
+                    <td width="30%;">
+                        <input name="type" class="mini-combobox" data="isTypeData" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="paymentTypeSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="paymentTypeSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="paymentTypeViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyPaymentTypeViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:150px;" align="right">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</td>
+                    <td style="width:270px;">
+                        <input id="view_type" name="type" class="mini-combobox" data="isTypeData" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">是否隐藏：</td>
+                    <td style="width:270px;">
+                        <input id="view_isHidden" name="isHidden" class="mini-combobox" value="0" data="[{id: 0, text: '否'}, {id: 1, text: '是'}]" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">排序数字：</td>
+                    <td style="width:270px;">
+                        <input id="view_sort" name="sort" class="mini-spinner" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">备注说明：</td>
+                    <td colspan="3">
+                        <input id="view_comment" name="comment" class="mini-textarea" style="width:80%" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isPaymentTypeFieldData = [
+        {
+            id: 'name'
+            , text: '名称'
+        }, {
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    var isTypeData = [{ id: 0, text: 'PC'},{ id:1, text:'手机' }];
+    mini.parse();
+    var paymentTypeDataGrid = mini.get("paymentTypeDataGrid");
+    paymentTypeDataGrid.load();
+    var paymentTypeViewForm = document.getElementById("paymentTypeViewForm");
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByPaymentType() {
+        _add_function('paymentTypeAddOrEditWindow', 'paymentTypeAddOrEidthForm', '新增支付类型');
+    }
+    //编辑相关方法
+    function clickEditButtonByPaymentType() {
+        var ajaxurl = payDomain+"/paymentType/getPaymentTypeById";
+        _edit_function('paymentTypeDataGrid', 'paymentTypeAddOrEditWindow', 'paymentTypeAddOrEidthForm', '编辑支付类型', ajaxurl, null, null);
+    }
+    //删除相关方法
+    function clickRemoveButtonByPaymentType() {
+        var ajaxurl = payDomain+"/paymentType/deletePaymentTypeById";
+        _delete_function('paymentTypeDataGrid', ajaxurl, paymentTypeBackFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonPaymentType() {
+        _refresh_function('paymentTypeDataGrid', null);
+    }
+    //确定相关方法
+    function paymentTypeAddOrEditOnOk() {
+        var ajaxurl = payDomain+"/paymentType/" + (_add_action('paymentTypeId') ? 'savePaymentType' : 'updatePaymentType');
+        _save_function('paymentTypeAddOrEidthForm', ajaxurl, paymentTypeBackFunction, null, null);
+    }
+
+    //取消相关方法
+    function paymentTypeAddOrEditOnCancel() {
+        _cancel_function('paymentTypeAddOrEditWindow');
+    }
+    //执行完毕调用的方法   
+    function paymentTypeBackFunction() {
+        paymentTypeAddOrEditOnCancel();
+        clickRefreshButtonPaymentType();
+    }
+    //查询相关方法begin
+    function clickSearchButtonByPaymentType() {
+        _search_function('paymentTypeSearchWindow', 'paymentTypeSearchForm', '支付类型查询');
+    }
+
+    function paymentTypeSerchOnOk() {
+        paymentTypeSearch();
+    }
+
+    function paymentTypeSerchOnCancel() {
+        _cancel_function('paymentTypeSearchWindow');
+    }
+
+    function paymentTypeSearch() {
+        var form = new mini.Form("#paymentTypeSearchForm");
+        var o = form.getData();
+        o.name = encodeURIComponent(o.name);
+        o.comment = encodeURIComponent(o.comment);
+        o.createName = encodeURIComponent(o.createName);
+        o.updateName = encodeURIComponent(o.updateName);
+        paymentTypeDataGrid.load(o, paymentTypeSearchSuccse, _search_Fail);
+    }
+
+    function paymentTypeSearchSuccse() {
+        _cancel_function('paymentTypeSearchWindow');
+    }
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+   		editRowInfo('paymentTypeDataGrid','paymentTypeViewForm','readOnlyPaymentTypeViewForm',payDomain+'/paymentType/getPaymentTypeById',row_uid);
+    }
+    paymentTypeDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("paymentTypeComboboxField").getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByPaymentType();
+        }
+    }
+
+    function clickQuickSearchByPaymentType() {
+        var __fieldName = mini.get("paymentTypeComboboxField").getValue();
+        var __fieldValue = mini.get("paymentTypeSearchKeyWord").getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            paymentTypeDataGrid.load(filterJsonObj);
+        } else {
+            paymentTypeDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByPaymentType(e) {
+        mini.get("paymentTypeSearchKeyWord").setValue();
+    }
+    
+    //类型渲染
+    function onTypeRenderer(e) {
+     	 var name="";
+         var record=e.record;
+         var value=record.type;
+         if("0"==value){
+        	 name="PC";
+         }else if("1"==value){
+        	 name="手机";
+         }
+         return name;
+    } 
+    function onIsHiddenRenderer(e) {
+     	 var name="";
+         var record=e.record;
+         var value=record.isHidden;
+         if("0"==value){
+        	 name="显示";
+         }else if("1"==value){
+        	 name="隐藏";
+         }
+         return name;
+    } 
+    </script>
+</body>
+
+</html>

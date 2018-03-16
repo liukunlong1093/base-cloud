@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="../../global/global.js?aa" type="text/javascript"></script>
+</head>
+
+<body style="visibility:hidden;"> 
+    <input class="mini-hidden" name="Shrink_row" id="Shrink_row" />
+    <div class="mini-toolbar" style="border:0;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" style="font-weight: bold;" plain="true" text="新增" onclick="clickAddButtonByMenu()" />
+                    <a class="mini-button" iconCls="icon-edit" style="font-weight: bold;" plain="true" text="编辑" onclick="clickEditButtonByMenu()" />
+                    <a class="mini-button" iconCls="icon-remove" style="font-weight: bold;" plain="true" text="删除" onclick="clickRemoveButtonByMenu()" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" text="查询" onclick="clickSearchButtonByMenu()" />
+                    <a class="mini-button" iconCls="icon-reload" style="font-weight: bold;" plain="true" text="刷新" onclick="clickRefreshButtonMenu()" />
+                </td>
+                <td style="white-space:nowrap;">
+                    <input id="menuComboboxField" class="mini-combobox" style="width:80px;" valueField="id" data="isMenuFieldData" value="name" onitemclick="onComboboxFieldChanged"
+                    />
+                    <input id="menuSearchKeyWord" name="keyWord" class="mini-textbox" style="width: 150px;" onenter="clickQuickSearchByMenu" onfocus="clearQuickSearchByMenu" />
+                    <a class="mini-button" iconCls="icon-search" style="font-weight: bold;" plain="true" onclick="clickQuickSearchByMenu()">搜索</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mini-fit" style="height:100px;">
+	    <div id="menuDataGrid" class="mini-treegrid" style="width:100%;height:100%;"  showTreeIcon="true" url=infoDomain+"/menu/getMenuList?isPage=0" treeColumn="name" idField="id" parentField="parentId" resultAsTree="false" allowResize="true" expandOnLoad="true">
+		    <div property="columns">
+		        <div type="indexcolumn"></div>
+		           <div name="name" field="name" width="160" headerCls="fontweight" headerAlign="left">菜单名称</div>
+		           <div field="code" width="100" headerCls="fontweight" headerAlign="left">菜单编号</div>
+<!-- 	               <div field="parentId" width="100" headerCls="fontweight" headerAlign="left" allowSort="true">父标识</div> -->
+	               <div field="name" width="100" headerCls="fontweight" headerAlign="left">菜单名称</div>
+	               <div field="iconName" width="100" headerCls="fontweight" headerAlign="left">图标名称</div>
+	               <div field="link" width="100" headerCls="fontweight" headerAlign="left">链接地址</div>
+	               <div field="sort" width="100" headerCls="fontweight" headerAlign="left">排序</div>
+	               <div field="createTime" width="100" headerCls="fontweight" headerAlign="left" dateFormat="yyyy-MM-dd HH:mm:ss">创建时间</div>
+	               <div field="op" width="50" headerCls="fontweight" headerAlign="left" Align="left" renderer="opRenderer">操作</div>
+		    </div>
+	    </div>
+    </div>
+    <!--弹出新增及编辑界面begin-->
+    <div id="menuAddOrEditWindow" class="mini-window" title="维护菜单" style="width:710px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="menuAddOrEidthForm" class="form">
+            <input class="mini-hidden" name="id" id="id" />
+            <input id="parentId" name="parentId" class="mini-hidden"  value="0" />
+            <table cellspacing="2" cellpadding="2" bordercolor="#DBE2E7" style="border-collapse:collapse;width: 680px;" border="1">
+                <tr>
+                    <td style="width:150px;" align="right">菜单编号<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="code" name="code" class="mini-textbox" emptyText="请输入菜单编号" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">菜单名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="name" name="name" class="mini-textbox" emptyText="请输入菜单名称" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">图标名称<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="iconName" name="iconName" class="mini-textbox" emptyText="请输入图标名称" required="true" style="width:100%" />
+                    </td>
+                    <td style="width:150px;" align="right">链接地址<font color="red">*</font>：</td>
+                    <td style="width:270px;">
+                        <input id="link" name="link" class="mini-textbox" emptyText="请输入链接地址" required="true" style="width:100%" />
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">排序序号<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="menuAddOrEditOnOk();" style="width:60px;">确定</a>
+                <a class="mini-button" onclick="menuAddOrEditOnCancel();" style="width:60px;">取消</a>
+            </div>
+        </div>
+    </div>
+    <!--弹出新增及编辑界面end-->
+    <!--弹出查询界面begin-->
+    <div id="menuSearchWindow" class="mini-window" title="菜单查询" style="width:500px;" showModal="true" allowResize="true" allowDrag="true">
+        <div id="menuSearchForm" class="form">
+            <table style="width:100%;" cellpadding="3" cellspacing="3">
+                <tr>
+                    <td width="20%;" align="right">菜单编号：</td>
+                    <td width="30%;">
+                        <input name="code" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">菜单名称：</td>
+                    <td width="30%;">
+                        <input name="name" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%;" align="right">图标名称：</td>
+                    <td width="30%;">
+                        <input name="iconName" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                    <td width="20%;" align="right">链接地址：</td>
+                    <td width="30%;">
+                        <input name="link" class="mini-textbox" style="width: 160px;" />
+                    </td>
+                </tr>
+            </table>
+            <div property="footer" align="center">
+                <a class="mini-button" onclick="menuSerchOnOk();" style="width:60px; font-weight:bold;">确定</a>
+                <a class="mini-button" onclick="menuSerchOnCancel();" style="width:60px; font-weight:bold;">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--弹出查询界面end-->
+    <!--弹出显示详情界面start-->
+    <div id="menuViewForm" style="display:none;padding:5px;position:relative;background: none repeat scroll 0 0">
+        <div id="readOnlyMenuViewForm" class="form">
+            <table border="1" cellspacing="0" width="100%" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:150px;" align="right">菜单编号：</td>
+                    <td style="width:270px;">
+                        <input id="view_code" name="code" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">菜单名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_name" name="name" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px;" align="right">图标名称：</td>
+                    <td style="width:270px;">
+                        <input id="view_iconName" name="iconName" class="mini-textbox" style="width:80%" />
+                    </td>
+                    <td style="width:150px;" align="right">链接地址：</td>
+                    <td style="width:270px;">
+                        <input id="view_link" name="link" class="mini-textbox" style="width:80%" />
+                    </td>
+                </tr>
+                <tr>
+                     <td style="width:150px;" align="right">排序序号<font color="red">*</font>：</td>
+                     <td colspan="3">
+                         <input id="sort" name="sort" class="mini-spinner" emptyText="请输入排序" required="true" style="width:100%" />
+                     </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.body.style.visibility = "visible";
+    var isMenuFieldData = [
+        {
+            id: 'code'
+            , text: '菜单编号'
+        }, {
+            id: 'name'
+            , text: '菜单名称'
+        }, {
+            id: 'iconName'
+            , text: '图标名称'
+        }, {
+            id: 'link'
+            , text: '链接地址'
+        }, {
+            id: 'moreFilter'
+            , text: '更多筛选'
+        }];
+    mini.parse();
+    var menuDataGrid = mini.get("menuDataGrid");
+    menuDataGrid.load();
+    var menuViewForm = document.getElementById("menuViewForm");
+    </script>
+    <script type="text/javascript">
+    //新增相关方法
+    function clickAddButtonByMenu() {
+            _add_function('menuAddOrEditWindow', 'menuAddOrEidthForm', '新增菜单');
+        }
+        //编辑相关方法
+    function clickEditButtonByMenu() {
+            var ajaxurl = infoDomain+"/menu/getMenuById";
+            _edit_function('menuDataGrid', 'menuAddOrEditWindow', 'menuAddOrEidthForm', '编辑菜单', ajaxurl, null, null);
+        }
+        //删除相关方法
+    function clickRemoveButtonByMenu() {
+        var ajaxurl = infoDomain+"/menu/deleteMenuById";
+        _delete_function('menuDataGrid', ajaxurl, backFunction, null, null, null, null);
+    }
+
+    //刷新相关方法
+    function clickRefreshButtonMenu() {
+        _refresh_function('menuDataGrid', null);
+    }
+
+    //确定相关方法
+    function menuAddOrEditOnOk() {
+        var ajaxurl = infoDomain+"/menu/" + (_add_action('id') ? 'saveMenu' : 'updateMenu');
+        _save_function('menuAddOrEidthForm', ajaxurl, backFunction, null, null);
+    }
+
+    //取消相关方法
+    function menuAddOrEditOnCancel() {
+            _cancel_function('menuAddOrEditWindow');
+        }
+        //执行完毕调用的方法   
+    function backFunction() {
+            menuAddOrEditOnCancel();
+            clickRefreshButtonMenu();
+        }
+        //查询相关方法begin
+    function clickSearchButtonByMenu() {
+        _search_function('menuSearchWindow', 'menuSearchForm', '菜单查询');
+    }
+
+    function menuSerchOnOk() {
+        menuSearch();
+    }
+
+    function menuSerchOnCancel() {
+        _cancel_function('menuSearchWindow');
+    }
+
+    function menuSearch() {
+        var form = new mini.Form("#menuSearchForm");
+        var o = form.getData();
+        o.code = o.code;
+        o.name =o.name;
+        o.iconName = o.iconName;
+        o.link = o.link;
+        menuDataGrid.load(o, menuSearchSuccse, _search_Fail);
+    }
+
+    function menuSearchSuccse() {
+        _cancel_function('menuSearchWindow');
+    }
+
+    function showView(_uid) {
+        editRow(_uid);
+    }
+
+    function editRow(row_uid) {
+        editRowInfo('menuDataGrid','menuViewForm','readOnlyMenuViewForm',infoDomain+'/menu/getMenuById',row_uid);
+    }
+    menuDataGrid.on("rowdblclick", function (e) { //点击行显示详细信息
+        var record = e.record;
+        var _uid = record._uid;
+        editRow(_uid);
+    });
+
+    function onComboboxFieldChanged(e) {
+        var filed = mini.get("menuComboboxField")
+            .getValue();
+        if ("moreFilter" == filed) {
+            clickSearchButtonByMenu();
+        }
+    }
+
+    function clickQuickSearchByMenu() {
+        var __fieldName = mini.get("menuComboboxField")
+            .getValue();
+        var __fieldValue = mini.get("menuSearchKeyWord")
+            .getValue();
+        if (!isEmpty(__fieldName, false) && !isEmpty(__fieldValue, false)) {
+            var filterJsonStr = "{'" + __fieldName + "':'" + __fieldValue + "'}";
+            var filterJsonObj = mini.decode(filterJsonStr, true);
+            menuDataGrid.load(filterJsonObj);
+        } else {
+            menuDataGrid.load();
+        }
+    }
+
+    function clearQuickSearchByMenu(e) {
+        mini.get("menuSearchKeyWord").setValue();
+    }
+    
+    function opRenderer(e){
+    	var grid = e.sender;
+    	var record = e.record;
+    	var s="";
+    	
+    	var node=e.node;
+    	if(!isEmpty(node,false)){
+    		var level=grid.getLevel(node);
+    		if(level!=2){
+    			var id=record.id;
+    			s = "<span style='cursor:pointer;color:green' onClick=addSubMenu('"+id+"')>"+"添加"+"</span>";
+    		}
+    	}
+    	return s;
+    }
+    function addSubMenu(id){
+    	 clickAddButtonByMenu();
+    	 mini.get("parentId").setValue(id);
+    }
+    </script>
+</body>
+
+</html>

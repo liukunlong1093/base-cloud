@@ -1,0 +1,1142 @@
+<!-- 不允许为空：required="true" -->
+<!-- 必须是邮箱地址：vtype="email" -->
+<!-- 字符串或数字长度（<= 6）：vtype="maxLength:6" -->
+<!-- 字符串或数字长度（>= 2）：vtype="minLength:2" -->
+<!-- 多重校验：vtype="xxx;xxx" -->
+<validators>
+	<validator op="com.mes.system.web.ApiController.getApiById">
+		<arg name="id" describe="应用程序接口标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.ApiController.getApiList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="系统接口标识" type="Long" required="false"></param>
+			<param name="name" describe="接口名称" type="String" required="false"></param>
+			<param name="projectId" describe="项目标识" type="String" required="false"></param>
+			<param name="projectName" describe="项目名称" type="String" required="false"></param>
+			<param name="moduleId" describe="模块标识" type="String" required="false"></param>
+			<param name="moduleName" describe="模块名称" type="String" required="false"></param>
+			<param name="url" describe="接口地址" type="Long" required="false"></param>
+			<param name="comment" describe="系统接口说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.ApiController.saveApi">
+		<arg name="apiDTO" type="DTO" describe="应用程序接口数据传输对象" required="true">
+			<param name="name" describe="接口名称" type="String" required="false"></param>
+			<param name="projectId" describe="项目标识" type="String" required="false"></param>
+			<param name="projectName" describe="项目名称" type="String" required="false"></param>
+			<param name="moduleId" describe="模块标识" type="String" required="false"></param>
+			<param name="moduleName" describe="模块名称" type="String" required="false"></param>
+			<param name="url" describe="接口地址" type="Long" required="false"></param>
+			<param name="comment" describe="系统接口说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.ApiController.updateApi">
+		<arg name="unitDTO" type="DTO" describe="应用程序接口数据传输对象" required="true">
+			<param name="id" describe="系统接口标识" type="Long" required="false"></param>
+			<param name="name" describe="接口名称" type="String" required="false"></param>
+			<param name="projectId" describe="项目标识" type="String" required="false"></param>
+			<param name="projectName" describe="项目名称" type="String" required="false"></param>
+			<param name="moduleId" describe="模块标识" type="String" required="false"></param>
+			<param name="moduleName" describe="模块名称" type="String" required="false"></param>
+			<param name="url" describe="接口地址" type="Long" required="false"></param>
+			<param name="comment" describe="系统接口说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.ApiController.deleteApiById">
+		<arg name="id" describe="应用程序接口标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.ApiController.batchSaveApi">
+		<arg name="apiList" type="List_DTO" describe="应用程序接口对象集合" required="true">
+			<param name="name" describe="接口名称" type="String" required="false"></param>
+			<param name="projectId" describe="项目标识" type="String" required="false"></param>
+			<param name="projectName" describe="项目名称" type="String" required="false"></param>
+			<param name="moduleId" describe="模块标识" type="String" required="false"></param>
+			<param name="moduleName" describe="模块名称" type="String" required="false"></param>
+			<param name="url" describe="接口地址" type="Long" required="false"></param>
+			<param name="comment" describe="系统接口说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.UserController.getUserById">
+		<arg name="id" describe="用户标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.UserController.getUserList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="用户标识" type="Long" required="false"></param>
+			<param name="name" describe="用户名(登录帐号)" type="String" required="false"></param>
+			<param name="pwd" describe="密码" type="String" required="false"></param>
+			<param name="fullname" describe="真实名称" type="String" required="false"></param>
+			<param name="sex" describe="性别(0男1女)" type="Long" required="false"></param>
+			<param name="status" describe="状态(0启用,1停用)" type="Long" required="false"></param>
+			<param name="birthday" describe="生日" type="Date" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.UserController.saveUser">
+		<arg name="userDTO" type="DTO" describe="用户数据传输对象" required="true">
+			<param name="name" describe="用户名(登录帐号)" type="String" required="false"></param>
+			<param name="pwd" describe="密码" type="String" required="false"></param>
+			<param name="fullname" describe="真实名称" type="String" required="false"></param>
+			<param name="sex" describe="性别(0男1女)" type="Long" required="false"></param>
+			<param name="status" describe="状态(0启用,1停用)" type="Long" required="false"></param>
+			<param name="birthday" describe="生日" type="Date" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.UserController.updateUser">
+		<arg name="unitDTO" type="DTO" describe="用户数据传输对象" required="true">
+			<param name="id" describe="用户标识" type="Long" required="false"></param>
+			<param name="name" describe="用户名(登录帐号)" type="String" required="false"></param>
+			<param name="pwd" describe="密码" type="String" required="false"></param>
+			<param name="fullname" describe="真实名称" type="String" required="false"></param>
+			<param name="sex" describe="性别(0男1女)" type="Long" required="false"></param>
+			<param name="status" describe="状态(0启用,1停用)" type="Long" required="false"></param>
+			<param name="birthday" describe="生日" type="Date" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.UserController.deleteUserById">
+		<arg name="id" describe="用户标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.UserController.batchSaveUser">
+		<arg name="userList" type="List_DTO" describe="用户对象集合" required="true">
+			<param name="name" describe="用户名(登录帐号)" type="String" required="false"></param>
+			<param name="pwd" describe="密码" type="String" required="false"></param>
+			<param name="fullname" describe="真实名称" type="String" required="false"></param>
+			<param name="sex" describe="性别(0男1女)" type="Long" required="false"></param>
+			<param name="status" describe="状态(0启用,1停用)" type="Long" required="false"></param>
+			<param name="birthday" describe="生日" type="Date" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.system.web.MenuController.getMenuById">
+		<arg name="id" describe="菜单标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.MenuController.getMenuList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="菜单标识" type="Long" required="false"></param>
+			<param name="code" describe="菜单编号" type="String" required="false"></param>
+			<param name="parentId" describe="父标识" type="Long" required="false"></param>
+			<param name="name" describe="菜单名称" type="String" required="false"></param>
+			<param name="iconName" describe="图标名称" type="String" required="false"></param>
+			<param name="link" describe="链接" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuController.saveMenu">
+		<arg name="menuDTO" type="DTO" describe="菜单数据传输对象" required="true">
+			<param name="code" describe="菜单编号" type="String" required="false"></param>
+			<param name="parentId" describe="父标识" type="Long" required="false"></param>
+			<param name="name" describe="菜单名称" type="String" required="false"></param>
+			<param name="iconName" describe="图标名称" type="String" required="false"></param>
+			<param name="link" describe="链接" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuController.updateMenu">
+		<arg name="unitDTO" type="DTO" describe="菜单数据传输对象" required="true">
+			<param name="id" describe="菜单标识" type="Long" required="false"></param>
+			<param name="code" describe="菜单编号" type="String" required="false"></param>
+			<param name="parentId" describe="父标识" type="Long" required="false"></param>
+			<param name="name" describe="菜单名称" type="String" required="false"></param>
+			<param name="iconName" describe="图标名称" type="String" required="false"></param>
+			<param name="link" describe="链接" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuController.deleteMenuById">
+		<arg name="id" describe="菜单标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.MenuController.batchSaveMenu">
+		<arg name="menuList" type="List_DTO" describe="菜单对象集合" required="true">
+			<param name="code" describe="菜单编号" type="String" required="false"></param>
+			<param name="parentId" describe="父标识" type="Long" required="false"></param>
+			<param name="name" describe="菜单名称" type="String" required="false"></param>
+			<param name="iconName" describe="图标名称" type="String" required="false"></param>
+			<param name="link" describe="链接" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.system.web.OrgController.getOrgById">
+		<arg name="id" describe="组织机构标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.OrgController.getOrgList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="组织标识" type="Long" required="false"></param>
+			<param name="code" describe="组织编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="parentId" describe="上层组织" type="Long" required="false"></param>
+			<param name="type" describe="类型(0组织 1部门)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OrgController.saveOrg">
+		<arg name="orgDTO" type="DTO" describe="组织机构数据传输对象" required="true">
+			<param name="code" describe="组织编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="parentId" describe="上层组织" type="Long" required="false"></param>
+			<param name="type" describe="类型(0组织 1部门)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OrgController.updateOrg">
+		<arg name="unitDTO" type="DTO" describe="组织机构数据传输对象" required="true">
+			<param name="id" describe="组织标识" type="Long" required="false"></param>
+			<param name="code" describe="组织编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="parentId" describe="上层组织" type="Long" required="false"></param>
+			<param name="type" describe="类型(0组织 1部门)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OrgController.deleteOrgById">
+		<arg name="id" describe="组织机构标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.OrgController.batchSaveOrg">
+		<arg name="orgList" type="List_DTO" describe="组织机构对象集合" required="true">
+			<param name="code" describe="组织编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="parentId" describe="上层组织" type="Long" required="false"></param>
+			<param name="type" describe="类型(0组织 1部门)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.system.web.OrgUserRelController.getOrgUserRelById">
+		<arg name="id" describe="组织用户标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.OrgUserRelController.getOrgUserRelList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="组织用户成员标识" type="Long" required="false"></param>
+			<param name="orgId" describe="组织标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OrgController.saveOrgUserRel">
+		<arg name="orgUserRelDTO" type="DTO" describe="组织用户数据传输对象" required="true">
+			<param name="orgId" describe="组织标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OrgController.updateOrgUserRel">
+		<arg name="unitDTO" type="DTO" describe="组织用户数据传输对象" required="true">
+			<param name="id" describe="组织用户成员标识" type="Long" required="false"></param>
+			<param name="orgId" describe="组织标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OrgController.deleteOrgUserRelById">
+		<arg name="id" describe="组织用户标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.OrgController.batchSaveOrgUserRel">
+		<arg name="orgUserRelList" type="List_DTO" describe="组织用户对象集合" required="true">
+			<param name="orgId" describe="组织标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.system.web.PostTypeController.getPostTypeById">
+		<arg name="id" describe="岗位类型标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.PostTypeController.getPostTypeList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="岗位类型标识" type="Long" required="false"></param>
+			<param name="code" describe="岗位类型编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="type" describe="类型(1一般类型,0部门缺省类型，2单位缺省类型)" type="Long" required="false"></param>
+			<param name="comment" describe="岗位类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostTypeController.savePostType">
+		<arg name="postTypeDTO" type="DTO" describe="岗位类型数据传输对象" required="true">
+			<param name="code" describe="岗位类型编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="type" describe="类型(1一般类型,0部门缺省类型，2单位缺省类型)" type="Long" required="false"></param>
+			<param name="comment" describe="岗位类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostTypeController.updatePostType">
+		<arg name="unitDTO" type="DTO" describe="岗位类型数据传输对象" required="true">
+			<param name="id" describe="岗位类型标识" type="Long" required="false"></param>
+			<param name="code" describe="岗位类型编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="type" describe="类型(1一般类型,0部门缺省类型，2单位缺省类型)" type="Long" required="false"></param>
+			<param name="comment" describe="岗位类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostTypeController.deletePostTypeById">
+		<arg name="id" describe="岗位类型标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.PostTypeController.batchSavePostType">
+		<arg name="postTypeList" type="List_DTO" describe="岗位类型对象集合" required="true">
+			<param name="code" describe="岗位类型编号" type="String" required="false"></param>
+			<param name="name" describe="名称" type="String" required="false"></param>
+			<param name="type" describe="类型(1一般类型,0部门缺省类型，2单位缺省类型)" type="Long" required="false"></param>
+			<param name="comment" describe="岗位类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.getPostById">
+		<arg name="id" describe="岗位标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.PostController.getPostList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="岗位标识" type="Long" required="false"></param>
+			<param name="postTypeId" describe="岗位类型标识" type="Long" required="false"></param>
+			<param name="orgId" describe="织组标识" type="Long" required="false"></param>
+			<param name="code" describe="岗位编号" type="String" required="false"></param>
+			<param name="name" describe="岗位名称" type="String" required="false"></param>
+			<param name="comment" describe="岗位说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.savePost">
+		<arg name="postDTO" type="DTO" describe="岗位数据传输对象" required="true">
+			<param name="postTypeId" describe="岗位类型标识" type="Long" required="false"></param>
+			<param name="orgId" describe="织组标识" type="Long" required="false"></param>
+			<param name="code" describe="岗位编号" type="String" required="false"></param>
+			<param name="name" describe="岗位名称" type="String" required="false"></param>
+			<param name="comment" describe="岗位说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.updatePost">
+		<arg name="unitDTO" type="DTO" describe="岗位数据传输对象" required="true">
+			<param name="id" describe="岗位标识" type="Long" required="false"></param>
+			<param name="postTypeId" describe="岗位类型标识" type="Long" required="false"></param>
+			<param name="orgId" describe="织组标识" type="Long" required="false"></param>
+			<param name="code" describe="岗位编号" type="String" required="false"></param>
+			<param name="name" describe="岗位名称" type="String" required="false"></param>
+			<param name="comment" describe="岗位说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.deletePostById">
+		<arg name="id" describe="岗位标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.PostController.batchSavePost">
+		<arg name="postList" type="List_DTO" describe="岗位对象集合" required="true">
+			<param name="postTypeId" describe="岗位类型标识" type="Long" required="false"></param>
+			<param name="orgId" describe="织组标识" type="Long" required="false"></param>
+			<param name="code" describe="岗位编号" type="String" required="false"></param>
+			<param name="name" describe="岗位名称" type="String" required="false"></param>
+			<param name="comment" describe="岗位说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.getPostUserRelById">
+		<arg name="id" describe="岗位用户标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.PostController.getPostUserRelList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="岗位用户成员标识" type="Long" required="false"></param>
+			<param name="postId" describe="岗位标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.savePostUserRel">
+		<arg name="postUserRelDTO" type="DTO" describe="岗位用户数据传输对象" required="true">
+			<param name="postId" describe="岗位标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.updatePostUserRel">
+		<arg name="unitDTO" type="DTO" describe="岗位用户数据传输对象" required="true">
+			<param name="id" describe="岗位用户成员标识" type="Long" required="false"></param>
+			<param name="postId" describe="岗位标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.PostController.deletePostUserRelById">
+		<arg name="id" describe="岗位用户标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.PostController.batchSavePostUserRel">
+		<arg name="postUserRelList" type="List_DTO" describe="岗位用户对象集合" required="true">
+			<param name="postId" describe="岗位标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="序号" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+
+	<validator op="com.mes.system.web.DomainController.getDomainById">
+		<arg name="id" describe="群组标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.DomainController.getDomainList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="群组标识" type="Long" required="false"></param>
+			<param name="code" describe="群组编号" type="String" required="false"></param>
+			<param name="name" describe="群组名称" type="String" required="false"></param>
+			<param name="type" describe="群组类型(0系统群组)" type="Long" required="false"></param>
+			<param name="comment" describe="群组说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DomainController.saveDomain">
+		<arg name="domainDTO" type="DTO" describe="群组数据传输对象" required="true">
+			<param name="code" describe="群组编号" type="String" required="false"></param>
+			<param name="name" describe="群组名称" type="String" required="false"></param>
+			<param name="type" describe="群组类型(0系统群组)" type="Long" required="false"></param>
+			<param name="comment" describe="群组说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DomainController.updateDomain">
+		<arg name="unitDTO" type="DTO" describe="群组数据传输对象" required="true">
+			<param name="id" describe="群组标识" type="Long" required="false"></param>
+			<param name="code" describe="群组编号" type="String" required="false"></param>
+			<param name="name" describe="群组名称" type="String" required="false"></param>
+			<param name="type" describe="群组类型(0系统群组)" type="Long" required="false"></param>
+			<param name="comment" describe="群组说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DomainController.deleteDomainById">
+		<arg name="id" describe="群组标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.DomainController.batchSaveDomain">
+		<arg name="domainList" type="List_DTO" describe="群组对象集合" required="true">
+			<param name="code" describe="群组编号" type="String" required="false"></param>
+			<param name="name" describe="群组名称" type="String" required="false"></param>
+			<param name="type" describe="群组类型(0系统群组)" type="Long" required="false"></param>
+			<param name="comment" describe="群组说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.system.web.DomainUserRelController.getDomainUserRelById">
+		<arg name="id" describe="群组用户成员标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.DomainUserRelController.getDomainUserRelList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="群组用户成员标识" type="Long" required="false"></param>
+			<param name="domainId" describe="群组标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DomainUserRelController.saveDomainUserRel">
+		<arg name="domainUserRelDTO" type="DTO" describe="群组用户成员数据传输对象" required="true">
+			<param name="domainId" describe="群组标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DomainUserRelController.updateDomainUserRel">
+		<arg name="unitDTO" type="DTO" describe="群组用户成员数据传输对象" required="true">
+			<param name="id" describe="群组用户成员标识" type="Long" required="false"></param>
+			<param name="domainId" describe="群组标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DomainUserRelController.deleteDomainUserRelById">
+		<arg name="id" describe="群组用户成员标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.DomainUserRelController.batchSaveDomainUserRel">
+		<arg name="domainUserRelList" type="List_DTO" describe="群组用户成员对象集合" required="true">
+			<param name="domainId" describe="群组标识" type="Long" required="false"></param>
+			<param name="userId" describe="用户标识" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuPurviewController.getMenuPurviewById">
+		<arg name="id" describe="菜单权限标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.MenuPurviewController.getMenuPurviewList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuPurviewController.saveMenuPurview">
+		<arg name="menuPurviewDTO" type="DTO" describe="菜单权限数据传输对象" required="true">
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuPurviewController.updateMenuPurview">
+		<arg name="unitDTO" type="DTO" describe="菜单权限数据传输对象" required="true">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.MenuPurviewController.deleteMenuPurviewById">
+		<arg name="id" describe="菜单权限标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.MenuPurviewController.batchSaveMenuPurview">
+		<arg name="menuPurviewList" type="List_DTO" describe="菜单权限对象集合" required="true">
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionPurviewController.getFunctionPurviewById">
+		<arg name="id" describe="功能权限标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.FunctionPurviewController.getFunctionPurviewList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能CODE" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionPurviewController.saveFunctionPurview">
+		<arg name="functionPurviewDTO" type="DTO" describe="功能权限数据传输对象" required="true">
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能CODE" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionPurviewController.updateFunctionPurview">
+		<arg name="unitDTO" type="DTO" describe="功能权限数据传输对象" required="true">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能CODE" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionPurviewController.deleteFunctionPurviewById">
+		<arg name="id" describe="功能权限标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.FunctionPurviewController.batchSaveFunctionPurview">
+		<arg name="functionPurviewList" type="List_DTO" describe="功能权限对象集合" required="true">
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能CODE" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DataPurviewController.getDataPurviewById">
+		<arg name="id" describe="数据权限标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.DataPurviewController.getDataPurviewList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能标识" type="String" required="false"></param>
+			<param name="rangeSecId" describe="范围权限对象SEC" type="String" required="false"></param>
+			<param name="rangeSecName" describe="范围权限对象SEC名称" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DataPurviewController.saveDataPurview">
+		<arg name="dataPurviewDTO" type="DTO" describe="数据权限数据传输对象" required="true">
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能标识" type="String" required="false"></param>
+			<param name="rangeSecId" describe="范围权限对象SEC" type="String" required="false"></param>
+			<param name="rangeSecName" describe="范围权限对象SEC名称" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DataPurviewController.updateDataPurview">
+		<arg name="unitDTO" type="DTO" describe="数据权限数据传输对象" required="true">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能标识" type="String" required="false"></param>
+			<param name="rangeSecId" describe="范围权限对象SEC" type="String" required="false"></param>
+			<param name="rangeSecName" describe="范围权限对象SEC名称" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.DataPurviewController.deleteDataPurviewById">
+		<arg name="id" describe="数据权限标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.DataPurviewController.batchSaveDataPurview">
+		<arg name="dataPurviewList" type="List_DTO" describe="数据权限对象集合" required="true">
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="secId" describe="权限对象SEC" type="String" required="false"></param>
+			<param name="secName" describe="权限对象SEC名称" type="String" required="false"></param>
+			<param name="menuId" describe="菜单主键" type="Long" required="false"></param>
+			<param name="functionId" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="functionCode" describe="系统功能标识" type="String" required="false"></param>
+			<param name="rangeSecId" describe="范围权限对象SEC" type="String" required="false"></param>
+			<param name="rangeSecName" describe="范围权限对象SEC名称" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OperateTypeController.getOperateTypeById">
+		<arg name="id" describe="权限操作类型标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.OperateTypeController.getOperateTypeList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="操作类型标识" type="Long" required="false"></param>
+			<param name="code" describe="操作类型编号" type="String" required="false"></param>
+			<param name="name" describe="操作类型名称" type="String" required="false"></param>
+			<param name="comment" describe="操作类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OperateTypeController.saveOperateType">
+		<arg name="operateTypeDTO" type="DTO" describe="权限操作类型数据传输对象" required="true">
+			<param name="code" describe="操作类型编号" type="String" required="false"></param>
+			<param name="name" describe="操作类型名称" type="String" required="false"></param>
+			<param name="comment" describe="操作类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OperateTypeController.updateOperateType">
+		<arg name="unitDTO" type="DTO" describe="权限操作类型数据传输对象" required="true">
+			<param name="id" describe="操作类型标识" type="Long" required="false"></param>
+			<param name="code" describe="操作类型编号" type="String" required="false"></param>
+			<param name="name" describe="操作类型名称" type="String" required="false"></param>
+			<param name="comment" describe="操作类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.OperateTypeController.deleteOperateTypeById">
+		<arg name="id" describe="权限操作类型标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.OperateTypeController.batchSaveOperateType">
+		<arg name="operateTypeList" type="List_DTO" describe="权限操作类型对象集合" required="true">
+			<param name="code" describe="操作类型编号" type="String" required="false"></param>
+			<param name="name" describe="操作类型名称" type="String" required="false"></param>
+			<param name="comment" describe="操作类型说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionController.getFunctionById">
+		<arg name="id" describe="系统功能标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.FunctionController.getFunctionList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="code" describe="系统功能编号" type="String" required="false"></param>
+			<param name="menuId" describe="菜单ID" type="Long" required="false"></param>
+			<param name="operationTypeId" describe="操作类型ID" type="Long" required="false"></param>
+			<param name="name" describe="系统功能名称" type="String" required="false"></param>
+			<param name="comment" describe="系统功能说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionController.saveFunction">
+		<arg name="functionDTO" type="DTO" describe="系统功能数据传输对象" required="true">
+			<param name="code" describe="系统功能编号" type="String" required="false"></param>
+			<param name="menuId" describe="菜单ID" type="Long" required="false"></param>
+			<param name="operationTypeId" describe="操作类型ID" type="Long" required="false"></param>
+			<param name="name" describe="系统功能名称" type="String" required="false"></param>
+			<param name="comment" describe="系统功能说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionController.updateFunction">
+		<arg name="unitDTO" type="DTO" describe="系统功能数据传输对象" required="true">
+			<param name="id" describe="系统功能标识" type="Long" required="false"></param>
+			<param name="code" describe="系统功能编号" type="String" required="false"></param>
+			<param name="menuId" describe="菜单ID" type="Long" required="false"></param>
+			<param name="operationTypeId" describe="操作类型ID" type="Long" required="false"></param>
+			<param name="name" describe="系统功能名称" type="String" required="false"></param>
+			<param name="comment" describe="系统功能说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.system.web.FunctionController.deleteFunctionById">
+		<arg name="id" describe="系统功能标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.system.web.FunctionController.batchSaveFunction">
+		<arg name="functionList" type="List_DTO" describe="系统功能对象集合" required="true">
+			<param name="code" describe="系统功能编号" type="String" required="false"></param>
+			<param name="menuId" describe="菜单ID" type="Long" required="false"></param>
+			<param name="operationTypeId" describe="操作类型ID" type="Long" required="false"></param>
+			<param name="name" describe="系统功能名称" type="String" required="false"></param>
+			<param name="comment" describe="系统功能说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+
+
+	<!-- common -->
+	<validator op="com.mes.common.web.AreaController.getAreaById">
+		<arg name="id" describe="区域标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.AreaController.getAreaList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="主键标识" type="Long" required="false"></param>
+			<param name="parentId" describe="父主键标识" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="level" describe="层级" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0-否,1-是" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.AreaController.saveArea">
+		<arg name="areaDTO" type="DTO" describe="区域数据传输对象" required="true">
+			<param name="parentId" describe="父主键标识" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="level" describe="层级" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0-否,1-是" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.AreaController.updateArea">
+		<arg name="unitDTO" type="DTO" describe="区域数据传输对象" required="true">
+			<param name="id" describe="主键标识" type="Long" required="false"></param>
+			<param name="parentId" describe="父主键标识" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="level" describe="层级" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0-否,1-是" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.AreaController.deleteAreaById">
+		<arg name="id" describe="区域标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.AreaController.batchSaveArea">
+		<arg name="areaList" type="List_DTO" describe="区域对象集合" required="true">
+			<param name="parentId" describe="父主键标识" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="level" describe="层级" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0-否,1-是" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.common.web.DataDictionaryController.getDataDictionaryById">
+		<arg name="id" describe="数据字典标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.DataDictionaryController.getDataDictionaryList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="ID编号" type="Long" required="false"></param>
+			<param name="code" describe="业务编码" type="String" required="false"></param>
+			<param name="name" describe="业务名称" type="String" required="false"></param>
+			<param name="parentCode" describe="所属编码" type="String" required="false"></param>
+			<param name="isEdit" describe="是否可修改(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isValid" describe="是否有效(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isDefault" describe="是否默认(0:否  1:是)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序字段" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.DataDictionaryController.saveDataDictionary">
+		<arg name="dataDictionaryDTO" type="DTO" describe="数据字典数据传输对象" required="true">
+			<param name="id" describe="ID编号" type="Long" required="false"></param>
+			<param name="code" describe="业务编码" type="String" required="false"></param>
+			<param name="name" describe="业务名称" type="String" required="false"></param>
+			<param name="parentCode" describe="所属编码" type="String" required="false"></param>
+			<param name="isEdit" describe="是否可修改(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isValid" describe="是否有效(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isDefault" describe="是否默认(0:否  1:是)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序字段" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.DataDictionaryController.updateDataDictionary">
+		<arg name="unitDTO" type="DTO" describe="数据字典数据传输对象" required="true">
+			<param name="id" describe="ID编号" type="Long" required="false"></param>
+			<param name="code" describe="业务编码" type="String" required="false"></param>
+			<param name="name" describe="业务名称" type="String" required="false"></param>
+			<param name="parentCode" describe="所属编码" type="String" required="false"></param>
+			<param name="isEdit" describe="是否可修改(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isValid" describe="是否有效(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isDefault" describe="是否默认(0:否  1:是)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序字段" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.DataDictionaryController.deleteDataDictionaryById">
+		<arg name="id" describe="数据字典标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.DataDictionaryController.batchSaveDataDictionary">
+		<arg name="dataDictionaryList" type="List_DTO" describe="数据字典对象集合" required="true">
+			<param name="id" describe="ID编号" type="Long" required="false"></param>
+			<param name="code" describe="业务编码" type="String" required="false"></param>
+			<param name="name" describe="业务名称" type="String" required="false"></param>
+			<param name="parentCode" describe="所属编码" type="String" required="false"></param>
+			<param name="isEdit" describe="是否可修改(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isValid" describe="是否有效(0:否  1:是)" type="Long" required="false"></param>
+			<param name="isDefault" describe="是否默认(0:否  1:是)" type="Long" required="false"></param>
+			<param name="comment" describe="说明" type="String" required="false"></param>
+			<param name="sort" describe="排序字段" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.common.web.MsgTemplateController.getMsgTemplateById">
+		<arg name="id" describe="消息模板标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.MsgTemplateController.getMsgTemplateList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="code" describe="模板编码" type="String" required="false"></param>
+			<param name="type" describe="模板类型（1---邮件，2---短信，3---微信）" type="Long" required="false"></param>
+			<param name="status" describe="模板状态（0---启用，1---禁用）" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="content" describe="模板内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.MsgTemplateController.saveMsgTemplate">
+		<arg name="msgTemplateDTO" type="DTO" describe="消息模板数据传输对象" required="true">
+			<param name="code" describe="模板编码" type="String" required="false"></param>
+			<param name="type" describe="模板类型（1---邮件，2---短信，3---微信）" type="Long" required="false"></param>
+			<param name="status" describe="模板状态（0---启用，1---禁用）" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="content" describe="模板内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.MsgTemplateController.updateMsgTemplate">
+		<arg name="unitDTO" type="DTO" describe="消息模板数据传输对象" required="true">
+			<param name="id" describe="主键" type="Long" required="false"></param>
+			<param name="code" describe="模板编码" type="String" required="false"></param>
+			<param name="type" describe="模板类型（1---邮件，2---短信，3---微信）" type="Long" required="false"></param>
+			<param name="status" describe="模板状态（0---启用，1---禁用）" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="content" describe="模板内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.MsgTemplateController.deleteMsgTemplateById">
+		<arg name="id" describe="消息模板标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.MsgTemplateController.batchSaveMsgTemplate">
+		<arg name="msgTemplateList" type="List_DTO" describe="消息模板对象集合" required="true">
+			<param name="code" describe="模板编码" type="String" required="false"></param>
+			<param name="type" describe="模板类型（1---邮件，2---短信，3---微信）" type="Long" required="false"></param>
+			<param name="status" describe="模板状态（0---启用，1---禁用）" type="Long" required="false"></param>
+			<param name="title" describe="标题" type="String" required="false"></param>
+			<param name="content" describe="模板内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.common.web.SensitivityController.getSensitivityById">
+		<arg name="id" describe="敏感词标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.SensitivityController.getSensitivityList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="" type="Long" required="false"></param>
+			<param name="content" describe="敏感内容" type="String" required="false"></param>
+			<param name="replacement" describe="替换内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.SensitivityController.saveSensitivity">
+		<arg name="sensitivityDTO" type="DTO" describe="敏感词数据传输对象" required="true">
+			<param name="content" describe="敏感内容" type="String" required="false"></param>
+			<param name="replacement" describe="替换内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.SensitivityController.updateSensitivity">
+		<arg name="unitDTO" type="DTO" describe="敏感词数据传输对象" required="true">
+			<param name="id" describe="" type="Long" required="false"></param>
+			<param name="content" describe="敏感内容" type="String" required="false"></param>
+			<param name="replacement" describe="替换内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.SensitivityController.deleteSensitivityById">
+		<arg name="id" describe="敏感词标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.SensitivityController.batchSaveSensitivity">
+		<arg name="sensitivityList" type="List_DTO" describe="敏感词对象集合" required="true">
+			<param name="content" describe="敏感内容" type="String" required="false"></param>
+			<param name="replacement" describe="替换内容" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<validator op="com.mes.common.web.ConfigController.getConfigById">
+		<arg name="id" describe="配置标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.ConfigController.getConfigList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="表主键" type="Long" required="false"></param>
+			<param name="name" describe="配置名称" type="String" required="false"></param>
+			<param name="value" describe="配置值" type="String" required="false"></param>
+			<param name="type" describe="配置类型(已业务区分)" type="String" required="false"></param>
+			<param name="comment" describe="配置说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.ConfigController.saveConfig">
+		<arg name="configDTO" type="DTO" describe="配置数据传输对象" required="true">
+			<param name="name" describe="配置名称" type="String" required="false"></param>
+			<param name="value" describe="配置值" type="String" required="false"></param>
+			<param name="type" describe="配置类型(已业务区分)" type="String" required="false"></param>
+			<param name="comment" describe="配置说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.ConfigController.updateConfig">
+		<arg name="unitDTO" type="DTO" describe="配置数据传输对象" required="true">
+			<param name="id" describe="表主键" type="Long" required="false"></param>
+			<param name="name" describe="配置名称" type="String" required="false"></param>
+			<param name="value" describe="配置值" type="String" required="false"></param>
+			<param name="type" describe="配置类型(已业务区分)" type="String" required="false"></param>
+			<param name="comment" describe="配置说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.common.web.ConfigController.deleteConfigById">
+		<arg name="id" describe="配置标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.common.web.ConfigController.batchSaveConfig">
+		<arg name="configList" type="List_DTO" describe="配置对象集合" required="true">
+			<param name="name" describe="配置名称" type="String" required="false"></param>
+			<param name="value" describe="配置值" type="String" required="false"></param>
+			<param name="type" describe="配置类型(已业务区分)" type="String" required="false"></param>
+			<param name="comment" describe="配置说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+
+	<!-- 支付系统 -->
+	<validator op="com.mes.pay.web.PaymentTypeController.getPaymentTypeById">
+		<arg name="id" describe="支付类型标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.pay.web.PaymentTypeController.getPaymentTypeList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="支付类型标识" type="Long" required="false"></param>
+			<param name="name" describe="" type="String" required="false"></param>
+			<param name="type" describe="0 PC,1手机" type="Long" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="comment" describe="备注说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentTypeController.savePaymentType">
+		<arg name="paymentTypeDTO" type="DTO" describe="支付类型数据传输对象" required="true">
+			<param name="name" describe="" type="String" required="false"></param>
+			<param name="type" describe="0 PC,1手机" type="Long" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="comment" describe="备注说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentTypeController.updatePaymentType">
+		<arg name="unitDTO" type="DTO" describe="支付类型数据传输对象" required="true">
+			<param name="id" describe="支付类型标识" type="Long" required="false"></param>
+			<param name="name" describe="" type="String" required="false"></param>
+			<param name="type" describe="0 PC,1手机" type="Long" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="comment" describe="备注说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentTypeController.deletePaymentTypeById">
+		<arg name="id" describe="支付类型标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.pay.web.PaymentTypeController.batchSavePaymentType">
+		<arg name="paymentTypeList" type="List_DTO" describe="支付类型对象集合" required="true">
+			<param name="name" describe="" type="String" required="false"></param>
+			<param name="type" describe="0 PC,1手机" type="Long" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="comment" describe="备注说明" type="String" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentMethodController.getPaymentMethodById">
+		<arg name="id" describe="支付方式标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.pay.web.PaymentMethodController.getPaymentMethodList">
+		<arg name="condition" type="Map" describe="查询条件" required="false">
+			<param name="id" describe="支付方式标识" type="Long" required="false"></param>
+			<param name="code" describe="支付接口编号" type="String" required="false"></param>
+			<param name="payTypeId" describe="支付类型标识" type="Long" required="false"></param>
+			<param name="payTypeName" describe="支付类型名称" type="String" required="false"></param>
+			<param name="aliases" describe="支付方式别名" type="String" required="false"></param>
+			<param name="name" describe="支付方式名称" type="String" required="false"></param>
+			<param name="comment" describe="支付方式说明" type="String" required="false"></param>
+			<param name="logo" describe="支付方式logo" type="String" required="false"></param>
+			<param name="configInfo" describe="参数信息(json格式)" type="String" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentMethodController.savePaymentMethod">
+		<arg name="paymentMethodDTO" type="DTO" describe="支付方式数据传输对象" required="true">
+			<param name="code" describe="支付接口编号" type="String" required="false"></param>
+			<param name="payTypeId" describe="支付类型标识" type="Long" required="false"></param>
+			<param name="payTypeName" describe="支付类型名称" type="String" required="false"></param>
+			<param name="aliases" describe="支付方式别名" type="String" required="false"></param>
+			<param name="name" describe="支付方式名称" type="String" required="false"></param>
+			<param name="comment" describe="支付方式说明" type="String" required="false"></param>
+			<param name="logo" describe="支付方式logo" type="String" required="false"></param>
+			<param name="configInfo" describe="参数信息(json格式)" type="String" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentMethodController.updatePaymentMethod">
+		<arg name="unitDTO" type="DTO" describe="支付方式数据传输对象" required="true">
+			<param name="id" describe="支付方式标识" type="Long" required="false"></param>
+			<param name="code" describe="支付接口编号" type="String" required="false"></param>
+			<param name="payTypeId" describe="支付类型标识" type="Long" required="false"></param>
+			<param name="payTypeName" describe="支付类型名称" type="String" required="false"></param>
+			<param name="aliases" describe="支付方式别名" type="String" required="false"></param>
+			<param name="name" describe="支付方式名称" type="String" required="false"></param>
+			<param name="comment" describe="支付方式说明" type="String" required="false"></param>
+			<param name="logo" describe="支付方式logo" type="String" required="false"></param>
+			<param name="configInfo" describe="参数信息(json格式)" type="String" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+	<validator op="com.mes.pay.web.PaymentMethodController.deletePaymentMethodById">
+		<arg name="id" describe="支付方式标识" type="Long" required="false" />
+	</validator>
+	<validator op="com.mes.pay.web.PaymentMethodController.batchSavePaymentMethod">
+		<arg name="paymentMethodList" type="List_DTO" describe="支付方式对象集合" required="true">
+			<param name="code" describe="支付接口编号" type="String" required="false"></param>
+			<param name="payTypeId" describe="支付类型标识" type="Long" required="false"></param>
+			<param name="payTypeName" describe="支付类型名称" type="String" required="false"></param>
+			<param name="aliases" describe="支付方式别名" type="String" required="false"></param>
+			<param name="name" describe="支付方式名称" type="String" required="false"></param>
+			<param name="comment" describe="支付方式说明" type="String" required="false"></param>
+			<param name="logo" describe="支付方式logo" type="String" required="false"></param>
+			<param name="configInfo" describe="参数信息(json格式)" type="String" required="false"></param>
+			<param name="isHidden" describe="是否隐藏" type="Long" required="false"></param>
+			<param name="sort" describe="排序" type="Long" required="false"></param>
+			<param name="isDel" describe="是否删除0:不删除；1:删除" type="Long" required="false"></param>
+		</arg>
+	</validator>
+</validators>

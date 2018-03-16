@@ -1,0 +1,23 @@
+<!-- 不允许为空：required="true" -->
+<!-- 必须是邮箱地址：vtype="email" -->
+<!-- 字符串或数字长度（<= 6）：vtype="maxLength:6" -->
+<!-- 字符串或数字长度（>= 2）：vtype="minLength:2" -->
+<!-- 多重校验：vtype="xxx;xxx" -->
+<!-- 如果接口参数与校验参数个数不匹配则忽略当前接口的校验-->
+<validators>
+	<validator op="com.mes.product.web.UnitController.updateUnitTest">
+		<arg name="id" describe="标识" type="Long" required="true" vtype="maxLength:2"/>
+		<arg name="unitDTO" type="DTO" describe="单位数据传输对象" required="true" >
+			<param name="code"  describe="单位编码" type="String" required="true" vtype="maxLength:2"></param>
+			<param name="value" describe="单位值"  type="String" required="true" vtype="maxLength:2"></param>
+		</arg>
+		<arg name="condtion" type="Map" describe="查询条件" required="true" >
+			<param name="name"  describe="姓名" type="String" required="true" vtype="maxLength:2"></param>
+			<param name="age" describe="性别"  type="String" required="true" vtype="maxLength:2"></param>
+		</arg>
+		<arg name="ListMap" type="List_DTO" describe="查询条件" required="true" >
+			<param name="list"  describe="列表" type="String" required="true" vtype="maxLength:2"></param>
+		</arg>
+		<arg name="ListString" type="String" describe="字符串" required="true" ></arg>
+	</validator>
+</validators>

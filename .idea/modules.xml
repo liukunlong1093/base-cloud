@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/common-core/common-core.iml" filepath="$PROJECT_DIR$/common-core/common-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-parent/common-parent.iml" filepath="$PROJECT_DIR$/common-parent/common-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/config/config.iml" filepath="$PROJECT_DIR$/config/config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monitor/monitor.iml" filepath="$PROJECT_DIR$/monitor/monitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/registry/registry.iml" filepath="$PROJECT_DIR$/registry/registry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/template-manager/template-app/template-app.iml" filepath="$PROJECT_DIR$/template-manager/template-app/template-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/template-manager/template-gateway/template-gateway.iml" filepath="$PROJECT_DIR$/template-manager/template-gateway/template-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/template-manager/template-manager.iml" filepath="$PROJECT_DIR$/template-manager/template-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zipkin/zipkin.iml" filepath="$PROJECT_DIR$/zipkin/zipkin.iml" />
+    </modules>
+  </component>
+</project>

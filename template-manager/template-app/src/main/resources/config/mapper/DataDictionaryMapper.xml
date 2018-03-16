@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mes.common.dao.DataDictionaryMapper">
+
+	<!-- 查询字段与DTO映射 -->
+	<resultMap id="dataDictionaryDTO" type="com.mes.common.dto.DataDictionaryDTO">
+						<result column="id" property="id"
+			javaType="java.lang.Long" />
+								<result column="code" property="code"
+			javaType="java.lang.String" />
+								<result column="name" property="name"
+			javaType="java.lang.String" />
+								<result column="parent_code" property="parentCode"
+			javaType="java.lang.String" />
+								<result column="is_edit" property="isEdit"
+			javaType="java.lang.Long" />
+								<result column="is_valid" property="isValid"
+			javaType="java.lang.Long" />
+								<result column="is_default" property="isDefault"
+			javaType="java.lang.Long" />
+								<result column="comment" property="comment"
+			javaType="java.lang.String" />
+								<result column="sort" property="sort"
+			javaType="java.lang.Long" />
+								<result column="create_by" property="createBy"
+			javaType="java.lang.Long" />
+								<result column="create_name" property="createName"
+			javaType="java.lang.String" />
+								<result column="create_time" property="createTime"
+			javaType="java.util.Date" />
+								<result column="update_by" property="updateBy"
+			javaType="java.lang.Long" />
+								<result column="update_name" property="updateName"
+			javaType="java.lang.String" />
+								<result column="update_time" property="updateTime"
+			javaType="java.util.Date" />
+								<result column="is_del" property="isDel"
+			javaType="java.lang.Long" />
+					</resultMap>
+	<!-- 通用查询列 -->
+	<sql id="search_column_common">
+		id,code,name,parent_code,is_edit,is_valid,is_default,comment,sort,create_by,create_name,create_time,update_by,update_name,update_time,is_del		
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="search_conditon_common">
+						<if test=" id!=null ">
+			AND id=#{id}
+		</if>
+		
+						<if test=" code!=null and code!='' ">
+			AND code=#{code}
+		</if>
+		
+						<if test=" name!=null and name!='' ">
+			AND name=#{name}
+		</if>
+		
+						<if test=" parentCode!=null and parentCode!='' ">
+			AND parent_code=#{parentCode}
+		</if>
+		
+						<if test=" isEdit!=null ">
+			AND is_edit=#{isEdit}
+		</if>
+		
+						<if test=" isValid!=null ">
+			AND is_valid=#{isValid}
+		</if>
+		
+						<if test=" isDefault!=null ">
+			AND is_default=#{isDefault}
+		</if>
+		
+						<if test=" comment!=null and comment!='' ">
+			AND comment=#{comment}
+		</if>
+		
+						<if test=" sort!=null ">
+			AND sort=#{sort}
+		</if>
+		
+						<if test=" createBy!=null ">
+			AND create_by=#{createBy}
+		</if>
+		
+						<if test=" createName!=null and createName!='' ">
+			AND create_name=#{createName}
+		</if>
+		
+						<if test=" createTime!=null ">
+			AND create_time=#{createTime}
+		</if>
+		
+						<if test=" updateBy!=null ">
+			AND update_by=#{updateBy}
+		</if>
+		
+						<if test=" updateName!=null and updateName!='' ">
+			AND update_name=#{updateName}
+		</if>
+		
+						<if test=" updateTime!=null ">
+			AND update_time=#{updateTime}
+		</if>
+		
+						<if test=" isDel!=null ">
+			AND is_del=#{isDel}
+		</if>
+		
+			</sql>
+
+
+	<select id="getDataDictionaryList" resultMap="dataDictionaryDTO"
+		parameterType="java.util.Map">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_com_data_dictionary
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+		<choose>
+	        <when test="sortField !=null and sortField != '' and sortOrder!=null and sortOrder != '' ">
+	           ORDER BY ${sortField}  ${sortOrder}
+	        </when>
+	        <otherwise>
+	           ORDER BY ID DESC
+	        </otherwise>
+   		 </choose>
+	</select>
+	<select id="getDataDictionaryCount" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT COUNT(1) FROM t_com_data_dictionary
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+	</select>
+	<insert id="saveDataDictionary" parameterType="com.mes.common.dto.DataDictionaryDTO"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_com_data_dictionary(
+		<trim suffixOverrides=",">
+												<if test=" id!=null">
+				id,
+			</if>
+			
+															<if test=" code!=null and code!='' ">
+				code,
+			</if>
+			
+															<if test=" name!=null and name!='' ">
+				name,
+			</if>
+			
+															<if test=" parentCode!=null and parentCode!='' ">
+				parent_code,
+			</if>
+			
+															<if test=" isEdit!=null">
+				is_edit,
+			</if>
+			
+															<if test=" isValid!=null">
+				is_valid,
+			</if>
+			
+															<if test=" isDefault!=null">
+				is_default,
+			</if>
+			
+															<if test=" comment!=null and comment!='' ">
+				comment,
+			</if>
+			
+															<if test=" sort!=null">
+				sort,
+			</if>
+			
+															<if test=" createBy!=null">
+				create_by,
+			</if>
+			
+															<if test=" createName!=null and createName!='' ">
+				create_name,
+			</if>
+			
+															<if test=" createTime!=null">
+				create_time,
+			</if>
+			
+															<if test=" updateBy!=null">
+				update_by,
+			</if>
+			
+															<if test=" updateName!=null and updateName!='' ">
+				update_name,
+			</if>
+			
+															<if test=" updateTime!=null">
+				update_time,
+			</if>
+			
+															<if test=" isDel!=null">
+				is_del,
+			</if>
+			
+								</trim>
+		)
+		VALUES
+		(
+		<trim suffixOverrides=",">
+												<if test=" id!=null ">
+				#{id},
+			</if>
+			
+															<if test=" code!=null and code!='' ">
+				#{code},
+			</if>
+			
+															<if test=" name!=null and name!='' ">
+				#{name},
+			</if>
+			
+															<if test=" parentCode!=null and parentCode!='' ">
+				#{parentCode},
+			</if>
+			
+															<if test=" isEdit!=null ">
+				#{isEdit},
+			</if>
+			
+															<if test=" isValid!=null ">
+				#{isValid},
+			</if>
+			
+															<if test=" isDefault!=null ">
+				#{isDefault},
+			</if>
+			
+															<if test=" comment!=null and comment!='' ">
+				#{comment},
+			</if>
+			
+															<if test=" sort!=null ">
+				#{sort},
+			</if>
+			
+															<if test=" createBy!=null ">
+				#{createBy},
+			</if>
+			
+															<if test=" createName!=null and createName!='' ">
+				#{createName},
+			</if>
+			
+															<if test=" createTime!=null ">
+				#{createTime},
+			</if>
+			
+															<if test=" updateBy!=null ">
+				#{updateBy},
+			</if>
+			
+															<if test=" updateName!=null and updateName!='' ">
+				#{updateName},
+			</if>
+			
+															<if test=" updateTime!=null ">
+				#{updateTime},
+			</if>
+			
+															<if test=" isDel!=null ">
+				#{isDel},
+			</if>
+			
+								</trim>
+		)
+	</insert>
+
+	<delete id="deleteDataDictionaryById" parameterType="java.lang.Long">
+		DELETE FROM
+		t_com_data_dictionary WHERE ID=#{id}
+	</delete>
+	<update id="updateDataDictionary" parameterType="com.mes.common.dto.DataDictionaryDTO">
+		UPDATE t_com_data_dictionary
+		<trim prefix="set" suffixOverrides=",">
+												<if test=" id!=null ">
+				id= #{id},
+			</if>
+																		<if test=" code!=null and code!='' ">
+				code= #{code},
+			</if>
+																		<if test=" name!=null and name!='' ">
+				name= #{name},
+			</if>
+																		<if test=" parentCode!=null and parentCode!='' ">
+				parent_code= #{parentCode},
+			</if>
+																		<if test=" isEdit!=null ">
+				is_edit= #{isEdit},
+			</if>
+																		<if test=" isValid!=null ">
+				is_valid= #{isValid},
+			</if>
+																		<if test=" isDefault!=null ">
+				is_default= #{isDefault},
+			</if>
+																		<if test=" comment!=null and comment!='' ">
+				comment= #{comment},
+			</if>
+																		<if test=" sort!=null ">
+				sort= #{sort},
+			</if>
+																		<if test=" createBy!=null ">
+				create_by= #{createBy},
+			</if>
+																		<if test=" createName!=null and createName!='' ">
+				create_name= #{createName},
+			</if>
+																		<if test=" createTime!=null ">
+				create_time= #{createTime},
+			</if>
+																		<if test=" updateBy!=null ">
+				update_by= #{updateBy},
+			</if>
+																		<if test=" updateName!=null and updateName!='' ">
+				update_name= #{updateName},
+			</if>
+																		<if test=" updateTime!=null ">
+				update_time= #{updateTime},
+			</if>
+																		<if test=" isDel!=null ">
+				is_del= #{isDel},
+			</if>
+											</trim>
+		WHERE ID = #{id}
+	</update>
+	<select id="getDataDictionaryById" resultMap="dataDictionaryDTO"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_com_data_dictionary
+		WHERE ID = #{id}
+	</select>
+	<insert id="batchSaveDataDictionary" useGeneratedKeys="true"
+		parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO t_com_data_dictionary (
+		<trim suffixOverrides=",">
+										id,
+													code,
+													name,
+													parent_code,
+													is_edit,
+													is_valid,
+													is_default,
+													comment,
+													sort,
+													create_by,
+													create_name,
+													create_time,
+													update_by,
+													update_name,
+													update_time,
+													is_del,
+								</trim>
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			<trim suffixOverrides=",">
+													#{item.id},
+																	#{item.code},
+																	#{item.name},
+																	#{item.parentCode},
+																	#{item.isEdit},
+																	#{item.isValid},
+																	#{item.isDefault},
+																	#{item.comment},
+																	#{item.sort},
+																	#{item.createBy},
+																	#{item.createName},
+																	#{item.createTime},
+																	#{item.updateBy},
+																	#{item.updateName},
+																	#{item.updateTime},
+																	#{item.isDel},
+											</trim>
+			)
+		</foreach>
+	</insert>
+
+</mapper>

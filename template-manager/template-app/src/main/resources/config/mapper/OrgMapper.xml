@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mes.system.dao.OrgMapper">
+
+	<!-- 查询字段与DTO映射 -->
+	<resultMap id="orgDTO" type="com.mes.system.dto.OrgDTO">
+		<result column="ID" property="id" javaType="java.lang.Long" />
+		<result column="CODE" property="code" javaType="java.lang.String" />
+		<result column="NAME" property="name" javaType="java.lang.String" />
+		<result column="PARENT_ID" property="parentId" javaType="java.lang.Long" />
+		<result column="TYPE" property="type" javaType="java.lang.Long" />
+		<result column="COMMENT" property="comment" javaType="java.lang.String" />
+		<result column="SORT" property="sort" javaType="java.lang.Long" />
+		<result column="IS_DEL" property="isDel" javaType="java.lang.Long" />
+		<result column="CREATE_TIME" property="createTime" javaType="java.util.Date" />
+		<result column="CREATE_BY" property="createBy" javaType="java.lang.Long" />
+		<result column="CREATE_NAME" property="createName" javaType="java.lang.String" />
+		<result column="UPDATE_TIME" property="updateTime" javaType="java.util.Date" />
+		<result column="UPDATE_BY" property="updateBy" javaType="java.lang.Long" />
+		<result column="UPDATE_NAME" property="updateName" javaType="java.lang.String" />
+	</resultMap>
+	<!-- 通用查询列 -->
+	<sql id="search_column_common">
+		ID,CODE,NAME,PARENT_ID,TYPE,COMMENT,SORT,IS_DEL,CREATE_TIME,CREATE_BY,CREATE_NAME,UPDATE_TIME,UPDATE_BY,UPDATE_NAME
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="search_conditon_common">
+		<if test=" id!=null ">
+			AND ID=#{id}
+		</if>
+
+		<if test=" code!=null and code!='' ">
+			AND CODE=#{code}
+		</if>
+
+		<if test=" name!=null and name!='' ">
+			AND NAME=#{name}
+		</if>
+
+		<if test=" parentId!=null ">
+			AND PARENT_ID=#{parentId}
+		</if>
+
+		<if test=" type!=null ">
+			AND TYPE=#{type}
+		</if>
+
+		<if test=" comment!=null and comment!='' ">
+			AND COMMENT=#{comment}
+		</if>
+
+		<if test=" sort!=null ">
+			AND SORT=#{sort}
+		</if>
+
+		<if test=" isDel!=null ">
+			AND IS_DEL=#{isDel}
+		</if>
+
+		<if test=" createTime!=null ">
+			AND CREATE_TIME=#{createTime}
+		</if>
+
+		<if test=" createBy!=null ">
+			AND CREATE_BY=#{createBy}
+		</if>
+
+		<if test=" createName!=null and createName!='' ">
+			AND CREATE_NAME=#{createName}
+		</if>
+
+		<if test=" updateTime!=null ">
+			AND UPDATE_TIME=#{updateTime}
+		</if>
+
+		<if test=" updateBy!=null ">
+			AND UPDATE_BY=#{updateBy}
+		</if>
+
+		<if test=" updateName!=null and updateName!='' ">
+			AND UPDATE_NAME=#{updateName}
+		</if>
+
+	</sql>
+
+
+	<select id="getOrgList" resultMap="orgDTO" parameterType="java.util.Map">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_sys_org
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+		<choose>
+			<when test="sortField !=null and sortField != '' and sortOrder!=null and sortOrder != '' ">
+				ORDER BY ${sortField} ${sortOrder}
+			</when>
+			<otherwise>
+				ORDER BY ID DESC
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getOrgCount" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM t_sys_org
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+	</select>
+	<insert id="saveOrg" parameterType="com.mes.system.dto.OrgDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_sys_org(
+		<trim suffixOverrides=",">
+			<if test=" code!=null and code!='' ">
+				CODE,
+			</if>
+
+			<if test=" name!=null and name!='' ">
+				NAME,
+			</if>
+
+			<if test=" parentId!=null">
+				PARENT_ID,
+			</if>
+
+			<if test=" type!=null">
+				TYPE,
+			</if>
+
+			<if test=" comment!=null and comment!='' ">
+				COMMENT,
+			</if>
+
+			<if test=" sort!=null">
+				SORT,
+			</if>
+
+			<if test=" isDel!=null">
+				IS_DEL,
+			</if>
+
+			<if test=" createTime!=null">
+				CREATE_TIME,
+			</if>
+
+			<if test=" createBy!=null">
+				CREATE_BY,
+			</if>
+
+			<if test=" createName!=null and createName!='' ">
+				CREATE_NAME,
+			</if>
+
+			<if test=" updateTime!=null">
+				UPDATE_TIME,
+			</if>
+
+			<if test=" updateBy!=null">
+				UPDATE_BY,
+			</if>
+
+			<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME,
+			</if>
+
+		</trim>
+		)
+		VALUES
+		(
+		<trim suffixOverrides=",">
+			<if test=" code!=null and code!='' ">
+				#{code},
+			</if>
+
+			<if test=" name!=null and name!='' ">
+				#{name},
+			</if>
+
+			<if test=" parentId!=null ">
+				#{parentId},
+			</if>
+
+			<if test=" type!=null ">
+				#{type},
+			</if>
+
+			<if test=" comment!=null and comment!='' ">
+				#{comment},
+			</if>
+
+			<if test=" sort!=null ">
+				#{sort},
+			</if>
+
+			<if test=" isDel!=null ">
+				#{isDel},
+			</if>
+
+			<if test=" createTime!=null ">
+				#{createTime},
+			</if>
+
+			<if test=" createBy!=null ">
+				#{createBy},
+			</if>
+
+			<if test=" createName!=null and createName!='' ">
+				#{createName},
+			</if>
+
+			<if test=" updateTime!=null ">
+				#{updateTime},
+			</if>
+
+			<if test=" updateBy!=null ">
+				#{updateBy},
+			</if>
+
+			<if test=" updateName!=null and updateName!='' ">
+				#{updateName},
+			</if>
+
+		</trim>
+		)
+	</insert>
+
+	<delete id="deleteOrgById" parameterType="java.lang.Long">
+		DELETE FROM
+		t_sys_org WHERE ID=#{id}
+	</delete>
+	<update id="updateOrg" parameterType="com.mes.system.dto.OrgDTO">
+		UPDATE t_sys_org
+		<trim prefix="set" suffixOverrides=",">
+			<if test=" code!=null and code!='' ">
+				CODE= #{code},
+			</if>
+			<if test=" name!=null and name!='' ">
+				NAME= #{name},
+			</if>
+			<if test=" parentId!=null ">
+				PARENT_ID= #{parentId},
+			</if>
+			<if test=" type!=null ">
+				TYPE= #{type},
+			</if>
+			<if test=" comment!=null and comment!='' ">
+				COMMENT= #{comment},
+			</if>
+			<if test=" sort!=null ">
+				SORT= #{sort},
+			</if>
+			<if test=" isDel!=null ">
+				IS_DEL= #{isDel},
+			</if>
+			<if test=" createTime!=null ">
+				CREATE_TIME= #{createTime},
+			</if>
+			<if test=" createBy!=null ">
+				CREATE_BY= #{createBy},
+			</if>
+			<if test=" createName!=null and createName!='' ">
+				CREATE_NAME= #{createName},
+			</if>
+			<if test=" updateTime!=null ">
+				UPDATE_TIME= #{updateTime},
+			</if>
+			<if test=" updateBy!=null ">
+				UPDATE_BY= #{updateBy},
+			</if>
+			<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME= #{updateName},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+	<select id="getOrgById" resultMap="orgDTO" parameterType="java.lang.Long">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_sys_org
+		WHERE ID = #{id}
+	</select>
+	<insert id="batchSaveOrg" useGeneratedKeys="true" parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO t_sys_org (
+		<trim suffixOverrides=",">
+			CODE,
+			NAME,
+			PARENT_ID,
+			TYPE,
+			COMMENT,
+			SORT,
+			IS_DEL,
+			CREATE_TIME,
+			CREATE_BY,
+			CREATE_NAME,
+			UPDATE_TIME,
+			UPDATE_BY,
+			UPDATE_NAME,
+		</trim>
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			<trim suffixOverrides=",">
+				#{item.code},
+				#{item.name},
+				#{item.parentId},
+				#{item.type},
+				#{item.comment},
+				#{item.sort},
+				#{item.isDel},
+				#{item.createTime},
+				#{item.createBy},
+				#{item.createName},
+				#{item.updateTime},
+				#{item.updateBy},
+				#{item.updateName},
+			</trim>
+			)
+		</foreach>
+	</insert>
+
+</mapper>

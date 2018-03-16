@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mes.system.dao.DataPurviewMapper">
+
+	<!-- 查询字段与DTO映射 -->
+	<resultMap id="dataPurviewDTO" type="com.mes.system.dto.DataPurviewDTO">
+		<result column="ID" property="id" javaType="java.lang.Long" />
+		<result column="TITLE" property="title" javaType="java.lang.String" />
+		<result column="SEC_ID" property="secId" javaType="java.lang.String" />
+		<result column="SEC_NAME" property="secName" javaType="java.lang.String" />
+		<result column="MENU_ID" property="menuId" javaType="java.lang.Long" />
+		<result column="FUNCTION_ID" property="functionId" javaType="java.lang.Long" />
+		<result column="FUNCTION_CODE" property="functionCode" javaType="java.lang.String" />
+		<result column="RANGE_SEC_ID" property="rangeSecId" javaType="java.lang.String" />
+		<result column="RANGE_SEC_NAME" property="rangeSecName" javaType="java.lang.String" />
+		<result column="SORT" property="sort" javaType="java.lang.Long" />
+		<result column="IS_DEL" property="isDel" javaType="java.lang.Long" />
+		<result column="CREATE_TIME" property="createTime" javaType="java.util.Date" />
+		<result column="CREATE_BY" property="createBy" javaType="java.lang.Long" />
+		<result column="CREATE_NAME" property="createName" javaType="java.lang.String" />
+		<result column="UPDATE_TIME" property="updateTime" javaType="java.util.Date" />
+		<result column="UPDATE_BY" property="updateBy" javaType="java.lang.Long" />
+		<result column="UPDATE_NAME" property="updateName" javaType="java.lang.String" />
+	</resultMap>
+	<!-- 通用查询列 -->
+	<sql id="search_column_common">
+		ID,TITLE,SEC_ID,SEC_NAME,MENU_ID,FUNCTION_ID,FUNCTION_CODE,RANGE_SEC_ID,RANGE_SEC_NAME,SORT,IS_DEL,CREATE_TIME,CREATE_BY,CREATE_NAME,UPDATE_TIME,UPDATE_BY,UPDATE_NAME
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="search_conditon_common">
+		<if test=" id!=null ">
+			AND ID=#{id}
+		</if>
+
+		<if test=" title!=null and title!='' ">
+			AND TITLE=#{title}
+		</if>
+
+		<if test=" secId!=null and secId!='' ">
+			AND SEC_ID=#{secId}
+		</if>
+
+		<if test=" secName!=null and secName!='' ">
+			AND SEC_NAME=#{secName}
+		</if>
+
+		<if test=" menuId!=null ">
+			AND MENU_ID=#{menuId}
+		</if>
+
+		<if test=" functionId!=null ">
+			AND FUNCTION_ID=#{functionId}
+		</if>
+
+		<if test=" functionCode!=null and functionCode!='' ">
+			AND FUNCTION_CODE=#{functionCode}
+		</if>
+
+		<if test=" rangeSecId!=null and rangeSecId!='' ">
+			AND RANGE_SEC_ID=#{rangeSecId}
+		</if>
+
+		<if test=" rangeSecName!=null and rangeSecName!='' ">
+			AND RANGE_SEC_NAME=#{rangeSecName}
+		</if>
+
+		<if test=" sort!=null ">
+			AND SORT=#{sort}
+		</if>
+
+		<if test=" isDel!=null ">
+			AND IS_DEL=#{isDel}
+		</if>
+
+		<if test=" createTime!=null ">
+			AND CREATE_TIME=#{createTime}
+		</if>
+
+		<if test=" createBy!=null ">
+			AND CREATE_BY=#{createBy}
+		</if>
+
+		<if test=" createName!=null and createName!='' ">
+			AND CREATE_NAME=#{createName}
+		</if>
+
+		<if test=" updateTime!=null ">
+			AND UPDATE_TIME=#{updateTime}
+		</if>
+
+		<if test=" updateBy!=null ">
+			AND UPDATE_BY=#{updateBy}
+		</if>
+
+		<if test=" updateName!=null and updateName!='' ">
+			AND UPDATE_NAME=#{updateName}
+		</if>
+		<if test=" secId==null">
+			<if test="secIds!=null">
+				AND SEC_ID in
+				<foreach item="item" index="index" collection="secIds" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</if>
+
+	</sql>
+
+
+	<select id="getDataPurviewList" resultMap="dataPurviewDTO" parameterType="java.util.Map">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_sys_data_purview
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+		<choose>
+			<when test="sortField !=null and sortField != '' and sortOrder!=null and sortOrder != '' ">
+				ORDER BY ${sortField} ${sortOrder}
+			</when>
+			<otherwise>
+				ORDER BY ID DESC
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getDataPurviewCount" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM t_sys_data_purview
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+	</select>
+	<insert id="saveDataPurview" parameterType="com.mes.system.dto.DataPurviewDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_sys_data_purview(
+		<trim suffixOverrides=",">
+			<if test=" title!=null and title!='' ">
+				TITLE,
+			</if>
+
+			<if test=" secId!=null and secId!='' ">
+				SEC_ID,
+			</if>
+
+			<if test=" secName!=null and secName!='' ">
+				SEC_NAME,
+			</if>
+
+			<if test=" menuId!=null">
+				MENU_ID,
+			</if>
+
+			<if test=" functionId!=null">
+				FUNCTION_ID,
+			</if>
+
+			<if test=" functionCode!=null and functionCode!='' ">
+				FUNCTION_CODE,
+			</if>
+
+			<if test=" rangeSecId!=null and rangeSecId!='' ">
+				RANGE_SEC_ID,
+			</if>
+
+			<if test=" rangeSecName!=null and rangeSecName!='' ">
+				RANGE_SEC_NAME,
+			</if>
+
+			<if test=" sort!=null">
+				SORT,
+			</if>
+
+			<if test=" isDel!=null">
+				IS_DEL,
+			</if>
+
+			<if test=" createTime!=null">
+				CREATE_TIME,
+			</if>
+
+			<if test=" createBy!=null">
+				CREATE_BY,
+			</if>
+
+			<if test=" createName!=null and createName!='' ">
+				CREATE_NAME,
+			</if>
+
+			<if test=" updateTime!=null">
+				UPDATE_TIME,
+			</if>
+
+			<if test=" updateBy!=null">
+				UPDATE_BY,
+			</if>
+
+			<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME,
+			</if>
+
+		</trim>
+		)
+		VALUES
+		(
+		<trim suffixOverrides=",">
+			<if test=" title!=null and title!='' ">
+				#{title},
+			</if>
+
+			<if test=" secId!=null and secId!='' ">
+				#{secId},
+			</if>
+
+			<if test=" secName!=null and secName!='' ">
+				#{secName},
+			</if>
+
+			<if test=" menuId!=null ">
+				#{menuId},
+			</if>
+
+			<if test=" functionId!=null ">
+				#{functionId},
+			</if>
+
+			<if test=" functionCode!=null and functionCode!='' ">
+				#{functionCode},
+			</if>
+
+			<if test=" rangeSecId!=null and rangeSecId!='' ">
+				#{rangeSecId},
+			</if>
+
+			<if test=" rangeSecName!=null and rangeSecName!='' ">
+				#{rangeSecName},
+			</if>
+
+			<if test=" sort!=null ">
+				#{sort},
+			</if>
+
+			<if test=" isDel!=null ">
+				#{isDel},
+			</if>
+
+			<if test=" createTime!=null ">
+				#{createTime},
+			</if>
+
+			<if test=" createBy!=null ">
+				#{createBy},
+			</if>
+
+			<if test=" createName!=null and createName!='' ">
+				#{createName},
+			</if>
+
+			<if test=" updateTime!=null ">
+				#{updateTime},
+			</if>
+
+			<if test=" updateBy!=null ">
+				#{updateBy},
+			</if>
+
+			<if test=" updateName!=null and updateName!='' ">
+				#{updateName},
+			</if>
+
+		</trim>
+		)
+	</insert>
+
+	<delete id="deleteDataPurviewById" parameterType="java.lang.Long">
+		DELETE FROM
+		t_sys_data_purview WHERE ID=#{id}
+	</delete>
+	<delete id="deleteDataPurviewBySecId" parameterType="java.lang.String">
+		DELETE FROM
+		t_sys_data_purview WHERE SEC_ID=#{secId}
+	</delete>
+	<update id="updateDataPurview" parameterType="com.mes.system.dto.DataPurviewDTO">
+		UPDATE t_sys_data_purview
+		<trim prefix="set" suffixOverrides=",">
+			<if test=" title!=null and title!='' ">
+				TITLE= #{title},
+			</if>
+			<if test=" secId!=null and secId!='' ">
+				SEC_ID= #{secId},
+			</if>
+			<if test=" secName!=null and secName!='' ">
+				SEC_NAME= #{secName},
+			</if>
+			<if test=" menuId!=null ">
+				MENU_ID= #{menuId},
+			</if>
+			<if test=" functionId!=null ">
+				FUNCTION_ID= #{functionId},
+			</if>
+			<if test=" functionCode!=null and functionCode!='' ">
+				FUNCTION_CODE= #{functionCode},
+			</if>
+			<if test=" rangeSecId!=null and rangeSecId!='' ">
+				RANGE_SEC_ID= #{rangeSecId},
+			</if>
+			<if test=" rangeSecName!=null and rangeSecName!='' ">
+				RANGE_SEC_NAME= #{rangeSecName},
+			</if>
+			<if test=" sort!=null ">
+				SORT= #{sort},
+			</if>
+			<if test=" isDel!=null ">
+				IS_DEL= #{isDel},
+			</if>
+			<if test=" createTime!=null ">
+				CREATE_TIME= #{createTime},
+			</if>
+			<if test=" createBy!=null ">
+				CREATE_BY= #{createBy},
+			</if>
+			<if test=" createName!=null and createName!='' ">
+				CREATE_NAME= #{createName},
+			</if>
+			<if test=" updateTime!=null ">
+				UPDATE_TIME= #{updateTime},
+			</if>
+			<if test=" updateBy!=null ">
+				UPDATE_BY= #{updateBy},
+			</if>
+			<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME= #{updateName},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+	<select id="getDataPurviewById" resultMap="dataPurviewDTO" parameterType="java.lang.Long">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_sys_data_purview
+		WHERE ID = #{id}
+	</select>
+	<insert id="batchSaveDataPurview" useGeneratedKeys="true" parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO t_sys_data_purview (
+		<trim suffixOverrides=",">
+			TITLE,
+			SEC_ID,
+			SEC_NAME,
+			MENU_ID,
+			FUNCTION_ID,
+			FUNCTION_CODE,
+			RANGE_SEC_ID,
+			RANGE_SEC_NAME,
+			SORT,
+			IS_DEL,
+			CREATE_TIME,
+			CREATE_BY,
+			CREATE_NAME,
+			UPDATE_TIME,
+			UPDATE_BY,
+			UPDATE_NAME,
+		</trim>
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			<trim suffixOverrides=",">
+				#{item.title},
+				#{item.secId},
+				#{item.secName},
+				#{item.menuId},
+				#{item.functionId},
+				#{item.functionCode},
+				#{item.rangeSecId},
+				#{item.rangeSecName},
+				#{item.sort},
+				#{item.isDel},
+				#{item.createTime},
+				#{item.createBy},
+				#{item.createName},
+				#{item.updateTime},
+				#{item.updateBy},
+				#{item.updateName},
+			</trim>
+			)
+		</foreach>
+	</insert>
+
+</mapper>

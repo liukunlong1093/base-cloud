@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mes.system.dao.DomainUserRelMapper">
+
+	<!-- 查询字段与DTO映射 -->
+	<resultMap id="domainUserRelDTO" type="com.mes.system.dto.DomainUserRelDTO">
+		<result column="ID" property="id" javaType="java.lang.Long" />
+		<result column="DOMAIN_ID" property="domainId" javaType="java.lang.Long" />
+		<result column="USER_ID" property="userId" javaType="java.lang.Long" />
+		<result column="SORT" property="sort" javaType="java.lang.Long" />
+		<result column="IS_DEL" property="isDel" javaType="java.lang.Long" />
+		<result column="CREATE_TIME" property="createTime" javaType="java.util.Date" />
+		<result column="CREATE_BY" property="createBy" javaType="java.lang.Long" />
+		<result column="CREATE_NAME" property="createName" javaType="java.lang.String" />
+		<result column="UPDATE_TIME" property="updateTime" javaType="java.util.Date" />
+		<result column="UPDATE_BY" property="updateBy" javaType="java.lang.Long" />
+		<result column="UPDATE_NAME" property="updateName" javaType="java.lang.String" />
+		<result column="NAME" property="name" javaType="java.lang.String" />
+		<result column="PWD" property="pwd" javaType="java.lang.String" />
+		<result column="FULLNAME" property="fullname" javaType="java.lang.String" />
+		<result column="SEX" property="sex" javaType="java.lang.Long" />
+		<result column="STATUS" property="status" javaType="java.lang.Long" />
+		<result column="BIRTHDAY" property="birthday" javaType="java.util.Date" />
+	</resultMap>
+	<!-- 通用查询列 -->
+	<sql id="search_column_common">
+		a.ID,a.DOMAIN_ID,a.USER_ID,a.SORT,a.IS_DEL,a.CREATE_TIME,a.CREATE_BY,a.CREATE_NAME,a.UPDATE_TIME,a.UPDATE_BY,a.UPDATE_NAME,b.`NAME`,b.FULLNAME,b.SEX,b.`STATUS`,b.BIRTHDAY
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="search_conditon_common">
+			AND a.USER_ID=b.ID
+		<if test=" id!=null ">
+			AND a.ID=#{id}
+		</if>
+
+		<if test=" domainId!=null ">
+			AND a.DOMAIN_ID=#{domainId}
+		</if>
+
+		<if test=" userId!=null ">
+			AND a.USER_ID=#{userId}
+		</if>
+
+		<if test=" sort!=null ">
+			AND a.SORT=#{sort}
+		</if>
+
+		<if test=" isDel!=null ">
+			AND a.IS_DEL=#{isDel}
+		</if>
+
+		<if test=" createTime!=null ">
+			AND a.CREATE_TIME=#{createTime}
+		</if>
+
+		<if test=" createBy!=null ">
+			AND a.CREATE_BY=#{createBy}
+		</if>
+
+		<if test=" createName!=null and createName!='' ">
+			AND a.CREATE_NAME=#{createName}
+		</if>
+
+		<if test=" updateTime!=null ">
+			AND a.UPDATE_TIME=#{updateTime}
+		</if>
+
+		<if test=" updateBy!=null ">
+			AND a.UPDATE_BY=#{updateBy}
+		</if>
+
+		<if test=" updateName!=null and updateName!='' ">
+			AND a.UPDATE_NAME=#{updateName}
+		</if>
+		<if test=" name!=null and name!='' ">
+			AND b.NAME=#{name}
+		</if>
+
+		<if test=" pwd!=null and pwd!='' ">
+			AND b.PWD=#{pwd}
+		</if>
+
+		<if test=" fullname!=null and fullname!='' ">
+			AND b.FULLNAME=#{fullname}
+		</if>
+
+		<if test=" sex!=null ">
+			AND b.SEX=#{sex}
+		</if>
+
+		<if test=" status!=null ">
+			AND b.STATUS=#{status}
+		</if>
+
+		<if test=" birthday!=null ">
+			AND b.BIRTHDAY=#{birthday}
+		</if>
+	</sql>
+
+
+	<select id="getDomainUserRelList" resultMap="domainUserRelDTO" parameterType="java.util.Map">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_sys_domain_user_rel a,t_sys_user b
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+		<choose>
+			<when test="sortField !=null and sortField != '' and sortOrder!=null and sortOrder != '' ">
+				ORDER BY ${sortField} ${sortOrder}
+			</when>
+			<otherwise>
+				ORDER BY ID DESC
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getDomainUserRelCount" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM t_sys_domain_user_rel a,t_sys_user b
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+	</select>
+	<insert id="saveDomainUserRel" parameterType="com.mes.system.dto.DomainUserRelDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_sys_domain_user_rel(
+		<trim suffixOverrides=",">
+			<if test=" domainId!=null">
+				DOMAIN_ID,
+			</if>
+
+			<if test=" userId!=null">
+				USER_ID,
+			</if>
+
+			<if test=" sort!=null">
+				SORT,
+			</if>
+
+			<if test=" isDel!=null">
+				IS_DEL,
+			</if>
+
+			<if test=" createTime!=null">
+				CREATE_TIME,
+			</if>
+
+			<if test=" createBy!=null">
+				CREATE_BY,
+			</if>
+
+			<if test=" createName!=null and createName!='' ">
+				CREATE_NAME,
+			</if>
+
+			<if test=" updateTime!=null">
+				UPDATE_TIME,
+			</if>
+
+			<if test=" updateBy!=null">
+				UPDATE_BY,
+			</if>
+
+			<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME,
+			</if>
+
+		</trim>
+		)
+		VALUES
+		(
+		<trim suffixOverrides=",">
+			<if test=" domainId!=null ">
+				#{domainId},
+			</if>
+
+			<if test=" userId!=null ">
+				#{userId},
+			</if>
+
+			<if test=" sort!=null ">
+				#{sort},
+			</if>
+
+			<if test=" isDel!=null ">
+				#{isDel},
+			</if>
+
+			<if test=" createTime!=null ">
+				#{createTime},
+			</if>
+
+			<if test=" createBy!=null ">
+				#{createBy},
+			</if>
+
+			<if test=" createName!=null and createName!='' ">
+				#{createName},
+			</if>
+
+			<if test=" updateTime!=null ">
+				#{updateTime},
+			</if>
+
+			<if test=" updateBy!=null ">
+				#{updateBy},
+			</if>
+
+			<if test=" updateName!=null and updateName!='' ">
+				#{updateName},
+			</if>
+
+		</trim>
+		)
+	</insert>
+
+	<delete id="deleteDomainUserRelById" parameterType="java.lang.Long">
+		DELETE FROM
+		t_sys_domain_user_rel WHERE ID=#{id}
+	</delete>
+	<update id="updateDomainUserRel" parameterType="com.mes.system.dto.DomainUserRelDTO">
+		UPDATE t_sys_domain_user_rel
+		<trim prefix="set" suffixOverrides=",">
+			<if test=" domainId!=null ">
+				DOMAIN_ID= #{domainId},
+			</if>
+			<if test=" userId!=null ">
+				USER_ID= #{userId},
+			</if>
+			<if test=" sort!=null ">
+				SORT= #{sort},
+			</if>
+			<if test=" isDel!=null ">
+				IS_DEL= #{isDel},
+			</if>
+			<if test=" createTime!=null ">
+				CREATE_TIME= #{createTime},
+			</if>
+			<if test=" createBy!=null ">
+				CREATE_BY= #{createBy},
+			</if>
+			<if test=" createName!=null and createName!='' ">
+				CREATE_NAME= #{createName},
+			</if>
+			<if test=" updateTime!=null ">
+				UPDATE_TIME= #{updateTime},
+			</if>
+			<if test=" updateBy!=null ">
+				UPDATE_BY= #{updateBy},
+			</if>
+			<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME= #{updateName},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+	<select id="getDomainUserRelById" resultMap="domainUserRelDTO" parameterType="java.lang.Long">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_sys_domain_user_rel a,t_sys_user b
+		WHERE 1=1 AND a.USER_ID=b.ID AND a.ID = #{id}
+	</select>
+	<insert id="batchSaveDomainUserRel" useGeneratedKeys="true" parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO t_sys_domain_user_rel (
+		<trim suffixOverrides=",">
+			DOMAIN_ID,
+			USER_ID,
+			SORT,
+			IS_DEL,
+			CREATE_TIME,
+			CREATE_BY,
+			CREATE_NAME,
+			UPDATE_TIME,
+			UPDATE_BY,
+			UPDATE_NAME,
+		</trim>
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			<trim suffixOverrides=",">
+				#{item.domainId},
+				#{item.userId},
+				#{item.sort},
+				#{item.isDel},
+				#{item.createTime},
+				#{item.createBy},
+				#{item.createName},
+				#{item.updateTime},
+				#{item.updateBy},
+				#{item.updateName},
+			</trim>
+			)
+		</foreach>
+	</insert>
+
+</mapper>

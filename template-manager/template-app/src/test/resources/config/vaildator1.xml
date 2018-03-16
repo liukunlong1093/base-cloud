@@ -1,0 +1,21 @@
+<!-- 不允许为空：required="true" -->
+<!-- 必须是邮箱地址：vtype="email" -->
+<!-- 字符串或数字长度（<= 6）：vtype="maxLength:6" -->
+<!-- 字符串或数字长度（>= 2）：vtype="minLength:2" -->
+<!-- 多重校验：vtype="xxx;xxx" -->
+<validators>
+	<validator op="com.mes.product.web.UnitController.saveUnit">
+		<param name="code"  describe="单位编码" type="String" required="true" vtype="maxLength:2"></param>
+		<param name="value" describe="单位值"  type="String" required="true" vtype="maxLength:2"></param>
+	</validator>
+	<validator op="com.mes.product.web.UnitController.updateUnitTest">
+		<Args>
+			<arg name="id" type="Long" required="true" vtype="maxLength:2"/>
+			<arg name="unitDTO" type="DTO">
+				<param name="code"  describe="单位编码" type="String" required="true" vtype="maxLength:2"></param>
+				<param name="value" describe="单位值"  type="String" required="true" vtype="maxLength:2"></param>
+			</arg>
+		</Args>
+		
+	</validator>
+</validators>

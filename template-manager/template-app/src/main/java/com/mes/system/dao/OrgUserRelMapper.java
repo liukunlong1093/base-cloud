@@ -1,0 +1,64 @@
+package com.mes.system.dao;
+
+import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Mapper;
+import com.mes.system.dto.OrgUserRelDTO;
+
+/**
+  * 项目名称:	[info-app]
+  * 包:	        [com.mes.system.dao]    
+  * 类名称:		[UserMapper]  
+  * 类描述:		[组织用户数据映射接口]
+  * 创建人:		[刘坤龙]   
+  * 创建时间:	[2017年8月18日 上午11:45:34]   
+  * 修改人:		[刘坤龙]   
+  * 修改时间:	[2017年8月18日 上午11:45:34]   
+  * 修改备注:	[说明本次修改内容]  
+  * 版本:		[v1.0]
+ */
+@Mapper
+public interface OrgUserRelMapper {
+	/**
+	 * 根据组织用户标识获取组织用户
+	 * @param id 组织用户标识
+	 * @return 组织用户对象
+	 */
+	OrgUserRelDTO getOrgUserRelById(Long id);
+
+	/**
+	 * 根据条件获取组织用户列表
+	 * @param condition 查询条件
+	 * @return 组织用户列表
+	 */
+	List<OrgUserRelDTO> getOrgUserRelList(Map<String, Object> condition);
+
+	/**
+	 * 保存组织用户
+	 * @param orgUserRelDTO 组织用户对象
+	 * @return 新增成功条数
+	 */
+	long saveOrgUserRel(OrgUserRelDTO orgUserRelDTO);
+
+	/**
+	 * 更新组织用户
+	 * @param orgUserRelDTO 组织用户对象
+	 * @return 更新成功条数
+	 */
+	long updateOrgUserRel(OrgUserRelDTO orgUserRelDTO);
+
+	/**
+	 * 根据组织用户标识删除组织用户
+	 * @param id 组织用户标识
+	 * @return 删除成功条数
+	 */
+	long deleteOrgUserRelById(Long id);
+
+	/**
+	 * 批量保存组织用户
+	 * @param  orgUserRelList 组织用户数据集合
+	 * @return 新增成功条数
+	 */
+	long batchSaveOrgUserRel(List<OrgUserRelDTO> orgUserRelList);
+
+}

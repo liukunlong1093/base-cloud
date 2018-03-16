@@ -1,0 +1,39 @@
+server:  
+  port: 8888
+
+eureka:
+  instance:
+    hostname: registry
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
+  client:
+    service-url:
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@registry:8761/eureka/
+
+spring:
+  cloud:  
+    config:  
+      enabled: true  
+      server:  
+        svn:  
+          uri: svn://39.108.57.32/code/cloud-config/  
+          username: liukl  
+          password: liukl  
+        #git:  
+        #uri: https://github.com/pcf-guides/configuration-server-config-repo
+        #可以指定默认文件配置目录,不指定默认trunk下面
+        #default-label: config  
+  profiles:  
+    active: subversion
+  rabbitmq:
+      host: 39.108.57.32
+      username: admin
+      password: admin
+      port: 5672
+
+security:
+  user:
+    name: user
+    password: ${CONFIG_SERVER_PASSWORD:password}

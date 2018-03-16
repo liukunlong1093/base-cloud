@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mes.common.dao.SensitivityMapper">
+
+	<!-- 查询字段与DTO映射 -->
+	<resultMap id="sensitivityDTO" type="com.mes.common.dto.SensitivityDTO">
+						<result column="ID" property="id"
+			javaType="java.lang.Long" />
+								<result column="CONTENT" property="content"
+			javaType="java.lang.String" />
+								<result column="REPLACEMENT" property="replacement"
+			javaType="java.lang.String" />
+								<result column="SORT" property="sort"
+			javaType="java.lang.Long" />
+								<result column="IS_DEL" property="isDel"
+			javaType="java.lang.Long" />
+								<result column="CREATE_TIME" property="createTime"
+			javaType="java.util.Date" />
+								<result column="CREATE_BY" property="createBy"
+			javaType="java.lang.Long" />
+								<result column="CREATE_NAME" property="createName"
+			javaType="java.lang.String" />
+								<result column="UPDATE_TIME" property="updateTime"
+			javaType="java.util.Date" />
+								<result column="UPDATE_BY" property="updateBy"
+			javaType="java.lang.Long" />
+								<result column="UPDATE_NAME" property="updateName"
+			javaType="java.lang.String" />
+					</resultMap>
+	<!-- 通用查询列 -->
+	<sql id="search_column_common">
+		ID,CONTENT,REPLACEMENT,SORT,IS_DEL,CREATE_TIME,CREATE_BY,CREATE_NAME,UPDATE_TIME,UPDATE_BY,UPDATE_NAME		
+	</sql>
+
+	<!-- 通用查询条件 -->
+	<sql id="search_conditon_common">
+						<if test=" id!=null ">
+			AND ID=#{id}
+		</if>
+		
+						<if test=" content!=null and content!='' ">
+			AND CONTENT=#{content}
+		</if>
+		
+						<if test=" replacement!=null and replacement!='' ">
+			AND REPLACEMENT=#{replacement}
+		</if>
+		
+						<if test=" sort!=null ">
+			AND SORT=#{sort}
+		</if>
+		
+						<if test=" isDel!=null ">
+			AND IS_DEL=#{isDel}
+		</if>
+		
+						<if test=" createTime!=null ">
+			AND CREATE_TIME=#{createTime}
+		</if>
+		
+						<if test=" createBy!=null ">
+			AND CREATE_BY=#{createBy}
+		</if>
+		
+						<if test=" createName!=null and createName!='' ">
+			AND CREATE_NAME=#{createName}
+		</if>
+		
+						<if test=" updateTime!=null ">
+			AND UPDATE_TIME=#{updateTime}
+		</if>
+		
+						<if test=" updateBy!=null ">
+			AND UPDATE_BY=#{updateBy}
+		</if>
+		
+						<if test=" updateName!=null and updateName!='' ">
+			AND UPDATE_NAME=#{updateName}
+		</if>
+		
+			</sql>
+
+
+	<select id="getSensitivityList" resultMap="sensitivityDTO"
+		parameterType="java.util.Map">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_com_sensitivity
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+		<choose>
+	        <when test="sortField !=null and sortField != '' and sortOrder!=null and sortOrder != '' ">
+	           ORDER BY ${sortField}  ${sortOrder}
+	        </when>
+	        <otherwise>
+	           ORDER BY ID DESC
+	        </otherwise>
+   		 </choose>
+	</select>
+	<select id="getSensitivityCount" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT COUNT(1) FROM t_com_sensitivity
+		<where>
+			<include refid="search_conditon_common" />
+		</where>
+	</select>
+	<insert id="saveSensitivity" parameterType="com.mes.common.dto.SensitivityDTO"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_com_sensitivity(
+		<trim suffixOverrides=",">
+																		<if test=" content!=null and content!='' ">
+				CONTENT,
+			</if>
+			
+															<if test=" replacement!=null and replacement!='' ">
+				REPLACEMENT,
+			</if>
+			
+															<if test=" sort!=null">
+				SORT,
+			</if>
+			
+															<if test=" isDel!=null">
+				IS_DEL,
+			</if>
+			
+															<if test=" createTime!=null">
+				CREATE_TIME,
+			</if>
+			
+															<if test=" createBy!=null">
+				CREATE_BY,
+			</if>
+			
+															<if test=" createName!=null and createName!='' ">
+				CREATE_NAME,
+			</if>
+			
+															<if test=" updateTime!=null">
+				UPDATE_TIME,
+			</if>
+			
+															<if test=" updateBy!=null">
+				UPDATE_BY,
+			</if>
+			
+															<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME,
+			</if>
+			
+								</trim>
+		)
+		VALUES
+		(
+		<trim suffixOverrides=",">
+																		<if test=" content!=null and content!='' ">
+				#{content},
+			</if>
+			
+															<if test=" replacement!=null and replacement!='' ">
+				#{replacement},
+			</if>
+			
+															<if test=" sort!=null ">
+				#{sort},
+			</if>
+			
+															<if test=" isDel!=null ">
+				#{isDel},
+			</if>
+			
+															<if test=" createTime!=null ">
+				#{createTime},
+			</if>
+			
+															<if test=" createBy!=null ">
+				#{createBy},
+			</if>
+			
+															<if test=" createName!=null and createName!='' ">
+				#{createName},
+			</if>
+			
+															<if test=" updateTime!=null ">
+				#{updateTime},
+			</if>
+			
+															<if test=" updateBy!=null ">
+				#{updateBy},
+			</if>
+			
+															<if test=" updateName!=null and updateName!='' ">
+				#{updateName},
+			</if>
+			
+								</trim>
+		)
+	</insert>
+
+	<delete id="deleteSensitivityById" parameterType="java.lang.Long">
+		DELETE FROM
+		t_com_sensitivity WHERE ID=#{id}
+	</delete>
+	<update id="updateSensitivity" parameterType="com.mes.common.dto.SensitivityDTO">
+		UPDATE t_com_sensitivity
+		<trim prefix="set" suffixOverrides=",">
+																		<if test=" content!=null and content!='' ">
+				CONTENT= #{content},
+			</if>
+																		<if test=" replacement!=null and replacement!='' ">
+				REPLACEMENT= #{replacement},
+			</if>
+																		<if test=" sort!=null ">
+				SORT= #{sort},
+			</if>
+																		<if test=" isDel!=null ">
+				IS_DEL= #{isDel},
+			</if>
+																		<if test=" createTime!=null ">
+				CREATE_TIME= #{createTime},
+			</if>
+																		<if test=" createBy!=null ">
+				CREATE_BY= #{createBy},
+			</if>
+																		<if test=" createName!=null and createName!='' ">
+				CREATE_NAME= #{createName},
+			</if>
+																		<if test=" updateTime!=null ">
+				UPDATE_TIME= #{updateTime},
+			</if>
+																		<if test=" updateBy!=null ">
+				UPDATE_BY= #{updateBy},
+			</if>
+																		<if test=" updateName!=null and updateName!='' ">
+				UPDATE_NAME= #{updateName},
+			</if>
+											</trim>
+		WHERE ID = #{id}
+	</update>
+	<select id="getSensitivityById" resultMap="sensitivityDTO"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="search_column_common" />
+		FROM t_com_sensitivity
+		WHERE ID = #{id}
+	</select>
+	<insert id="batchSaveSensitivity" useGeneratedKeys="true"
+		parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO t_com_sensitivity (
+		<trim suffixOverrides=",">
+																CONTENT,
+													REPLACEMENT,
+													SORT,
+													IS_DEL,
+													CREATE_TIME,
+													CREATE_BY,
+													CREATE_NAME,
+													UPDATE_TIME,
+													UPDATE_BY,
+													UPDATE_NAME,
+								</trim>
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			<trim suffixOverrides=",">
+																					#{item.content},
+																	#{item.replacement},
+																	#{item.sort},
+																	#{item.isDel},
+																	#{item.createTime},
+																	#{item.createBy},
+																	#{item.createName},
+																	#{item.updateTime},
+																	#{item.updateBy},
+																	#{item.updateName},
+											</trim>
+			)
+		</foreach>
+	</insert>
+
+</mapper>

@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * 一句话描述这个类的作用
+ * 服务监控应用
  *
  * @author liukl
  * @date 2018/3/14

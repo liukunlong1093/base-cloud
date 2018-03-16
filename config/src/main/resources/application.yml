@@ -3,12 +3,16 @@ server:
 
 eureka:
   instance:
+    # host名称,单机版需要修改host 127.0.0.1  registry
     hostname: registry
+    # 将IP注册到Eureka Server上
     prefer-ip-address: true
     metadata-map:
+      # 设置用户名密码
       user.name: ${security.user.name}
       user.password: ${security.user.password}
   client:
+    # Eureka服务的地址(注意:地址最后面的/eureka/是固定值)
     service-url:
       defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@registry:8761/eureka/
 

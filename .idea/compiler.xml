@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common-core" />
+        <module name="common-utils" />
         <module name="config" />
         <module name="monitor" />
         <module name="registry" />
@@ -16,18 +17,5 @@
         <module name="zipkin" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="common-core" target="1.8" />
-      <module name="common-parent" target="1.8" />
-      <module name="common-utils" target="1.8" />
-      <module name="config" target="1.8" />
-      <module name="monitor" target="1.8" />
-      <module name="registry" target="1.8" />
-      <module name="template-app" target="1.8" />
-      <module name="template-gateway" target="1.8" />
-      <module name="template-manager" target="1.8" />
-      <module name="template-web" target="1.8" />
-      <module name="zipkin" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

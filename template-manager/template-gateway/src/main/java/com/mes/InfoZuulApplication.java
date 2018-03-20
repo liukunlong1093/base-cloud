@@ -19,8 +19,8 @@ public class InfoZuulApplication {
 		SpringApplication.run(InfoZuulApplication.class, args);
 	}
 
-	//@Bean
-	//public AccessFilter accessFilter() {
+//	@Bean
+//	public AccessFilter accessFilter() {
 //		return new AccessFilter();
 //	}
 

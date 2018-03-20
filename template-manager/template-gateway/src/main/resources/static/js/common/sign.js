@@ -53,7 +53,7 @@ $(document).ready(function() {
                         delete params.format;
                         delete params.callback;
                         //处理特殊字符编码（待完善考虑直接传入JSON）-------------
-                        params.action="api-a/system/getUserById";
+                        params.action="app/system/getUserById";
                         var sign = signTopRequestNew(params, secret);
                         xhr.setRequestHeader("token",token);
                         xhr.setRequestHeader("timestamp",timestamp);

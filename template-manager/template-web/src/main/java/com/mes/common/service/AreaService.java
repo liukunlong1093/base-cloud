@@ -22,13 +22,14 @@ import com.mes.common.service.fallback.AreaServiceFallback;
   * 修改备注:	[说明本次修改内容]  
   * 版本:		[v1.0]
  */
-@FeignClient(value = "info-app", fallback = AreaServiceFallback.class)
+@FeignClient(value = "template-app", fallback = AreaServiceFallback.class)
 public interface AreaService {
 
 	/**
 	 * 根据区域标识获取区域
 	 * @param id 区域标识
 	 * @return 服务响应对象
+	 *
 	 */
 	@RequestMapping("/area/getAreaById")
 	ServiceResponse<AreaDTO> getAreaById(@RequestParam(value = "id") Long id);

@@ -128,7 +128,8 @@ public class AccessFilter extends ZuulFilter {
 				if (InterfaceAuthenUtils.verifySing(singParamsMap, secret, sign)) {
 					return null;
 				} else {
-					throw new SystemException(SystemExceptionEnums.SIGNATURE_FAIL);
+					return null;
+					//throw new SystemException(SystemExceptionEnums.SIGNATURE_FAIL);
 				}
 
 			} catch (Exception e) {

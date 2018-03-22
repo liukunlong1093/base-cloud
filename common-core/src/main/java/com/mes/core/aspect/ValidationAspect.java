@@ -13,6 +13,7 @@ import com.mes.core.utils.RequestCheckUtils;
 
 /**
  * 数据校验
+ * @author liukl
  */
 @Aspect
 @Order(6)
@@ -25,11 +26,11 @@ public class ValidationAspect {
 	}
 
 	@Before("validation()")
-	public void doBefore(JoinPoint joinPoint) throws Throwable {
+	public void doBefore(JoinPoint joinPoint){
 		logger.info("校验参数开始 ");
 		// 接收到请求，记录请求内容
 		String methodName = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
-		Object args[] = joinPoint.getArgs();
+		Object[] args = joinPoint.getArgs();
 		if (RequestCheckUtils.isContainsConfig(methodName)) {
 			RequestCheckUtils.vaildator(methodName, args);
 		}

@@ -21,9 +21,12 @@ public class ServiceResponse<T> implements Serializable {
 	private static final long serialVersionUID = 4032538292214320228L;
 
 	/** 200-成功 */
-	public final static String CODE_SUCCESS = "200";
+	private final static String CODE_SUCCESS = "200";
 
-	/** 500-业务逻辑错误 */
+	/** 成功消息*/
+	private static final String CODE_SUCCESS_MSG="success";
+
+	/** 500-业务逻辑错误*/
 	public final static String CODE_ERROR_SERVICE = "500";
 
 	/** 返回码*/
@@ -77,8 +80,8 @@ public class ServiceResponse<T> implements Serializable {
 	 * @param data 数据对象
 	 * @return 服务响应对象
 	 */
-	public static <T> ServiceResponse<T> handleSussess(T data) {
-		return new ServiceResponse<T>(CODE_SUCCESS, "sussess", data);
+	public static <T> ServiceResponse<T> handleSuccess(T data) {
+		return new ServiceResponse<>(CODE_SUCCESS,CODE_SUCCESS_MSG, data);
 	}
 
 	/**
@@ -86,17 +89,16 @@ public class ServiceResponse<T> implements Serializable {
 	 * @param data 数据对象
 	 * @return 服务响应对象
 	 */
-	public static <T> ServiceResponse<T> handleSussess(T data, Long total) {
-		return new ServiceResponse<T>(CODE_SUCCESS, "sussess", data, total);
+	public static <T> ServiceResponse<T> handleSuccess(T data, Long total) {
+		return new ServiceResponse<>(CODE_SUCCESS,CODE_SUCCESS_MSG, data, total);
 	}
 
 	/**
 	 * 操作成功
-	 * @param data 数据对象
 	 * @return 服务响应对象
 	 */
-	public static <T> ServiceResponse<T> handleSussess() {
-		return new ServiceResponse<T>(CODE_SUCCESS, "sussess");
+	public static <T> ServiceResponse<T> handleSuccess() {
+		return new ServiceResponse<>(CODE_SUCCESS,CODE_SUCCESS_MSG);
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class ServiceResponse<T> implements Serializable {
 	 * @return 服务响应对象
 	 */
 	public static <T> ServiceResponse<T> handleFail(String code, String msg) {
-		return new ServiceResponse<T>(code, msg);
+		return new ServiceResponse<>(code, msg);
 	}
 
 	public T getData() {

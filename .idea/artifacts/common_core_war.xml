@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="common-core:war">
+    <output-path>$PROJECT_DIR$/common-core/target</output-path>
+    <root id="archive" name="common-core-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="common-core:war exploded" />
+    </root>
+  </artifact>
+</component>

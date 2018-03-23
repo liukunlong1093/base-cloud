@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mes.core.cache.RediseCacheManager;
+import com.mes.core.cache.RedisCacheManager;
 import com.mes.core.controller.BaseController;
 import com.mes.core.pojos.ServiceResponse;
 import com.mes.core.utils.InterfaceAuthenUtils;
@@ -45,7 +45,7 @@ public class MainController extends BaseController {
 	private MainService mainService;
 
 	@Autowired
-	RediseCacheManager rediseCacheManager;
+    RedisCacheManager rediseCacheManager;
 
 	/**
 	 * 系统用户登录

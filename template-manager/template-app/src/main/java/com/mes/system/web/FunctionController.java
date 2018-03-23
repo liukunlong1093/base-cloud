@@ -54,7 +54,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/getFunctionById")
 	public ServiceResponse<FunctionDTO> getFunctionById(@RequestParam(value = "id") Long id) {
 		FunctionDTO functionDTO = functionService.getFunctionById(id);
-		return ServiceResponse.handleSussess(functionDTO);
+		return ServiceResponse.handleSuccess(functionDTO);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class FunctionController extends BaseController {
 	public ServiceResponse<List<FunctionDTO>> getFunctionList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<FunctionDTO> functionList = functionService.getFunctionList(condition);
 		PageInfo<FunctionDTO> pageInfo = new PageInfo<FunctionDTO>(functionList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/saveFunction")
 	public ServiceResponse<?> saveFunction(@RequestBody FunctionDTO functionDTO) {
 		functionService.saveFunction(functionDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/updateFunction")
 	public ServiceResponse<?> updateFunction(@RequestBody FunctionDTO functionDTO) {
 		functionService.updateFunction(functionDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/deleteFunctionById")
 	public ServiceResponse<?> deleteFunctionById(@RequestParam(value = "id") String id) {
 		functionService.deleteFunctionById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/batchSaveFunction")
 	public ServiceResponse<?> batchSaveFunction(@RequestBody List<FunctionDTO> functionList) {
 		functionService.batchSaveFunction(functionList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/getFunctionApiRelById")
 	public ServiceResponse<FunctionApiRelDTO> getFunctionApiRelById(@RequestParam(value = "id") Long id) {
 		FunctionApiRelDTO functionApiRelDTO = functionService.getFunctionApiRelById(id);
-		return ServiceResponse.handleSussess(functionApiRelDTO);
+		return ServiceResponse.handleSuccess(functionApiRelDTO);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class FunctionController extends BaseController {
 	public ServiceResponse<List<FunctionApiRelDTO>> getFunctionApiRelList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<FunctionApiRelDTO> functionApiRelList = functionService.getFunctionApiRelList(condition);
 		PageInfo<FunctionApiRelDTO> pageInfo = new PageInfo<FunctionApiRelDTO>(functionApiRelList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/saveFunctionApiRel")
 	public ServiceResponse<?> saveFunctionApiRel(@RequestBody FunctionApiRelDTO functionApiRelDTO) {
 		functionService.saveFunctionApiRel(functionApiRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/updateFunctionApiRel")
 	public ServiceResponse<?> updateFunctionApiRel(@RequestBody FunctionApiRelDTO functionApiRelDTO) {
 		functionService.updateFunctionApiRel(functionApiRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/deleteFunctionApiRelById")
 	public ServiceResponse<?> deleteFunctionApiRelById(@RequestParam(value = "id") String id) {
 		functionService.deleteFunctionApiRelById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -208,6 +208,6 @@ public class FunctionController extends BaseController {
 	@RequestMapping("/batchSaveFunctionApiRel")
 	public ServiceResponse<?> batchSaveFunctionApiRel(@RequestBody List<FunctionApiRelDTO> functionApiRelList) {
 		functionService.batchSaveFunctionApiRel(functionApiRelList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

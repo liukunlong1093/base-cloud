@@ -51,7 +51,7 @@ public class MsgTemplateController extends BaseController {
 	@RequestMapping("/getMsgTemplateById")
 	public ServiceResponse<MsgTemplateDTO> getMsgTemplateById(@RequestParam(value="id") Long id) {
 		MsgTemplateDTO msgTemplateDTO = msgTemplateService.getMsgTemplateById(id);
-		return ServiceResponse.handleSussess(msgTemplateDTO);
+		return ServiceResponse.handleSuccess(msgTemplateDTO);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class MsgTemplateController extends BaseController {
 	public ServiceResponse<List<MsgTemplateDTO>> getMsgTemplateList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<MsgTemplateDTO> msgTemplateList = msgTemplateService.getMsgTemplateList(condition);
 		PageInfo<MsgTemplateDTO> pageInfo = new PageInfo<MsgTemplateDTO>(msgTemplateList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class MsgTemplateController extends BaseController {
 	@RequestMapping("/saveMsgTemplate")
 	public ServiceResponse<?> saveMsgTemplate(@RequestBody MsgTemplateDTO msgTemplateDTO) {
 		msgTemplateService.saveMsgTemplate(msgTemplateDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class MsgTemplateController extends BaseController {
 	@RequestMapping("/updateMsgTemplate")
 	public ServiceResponse<?> updateMsgTemplate(@RequestBody MsgTemplateDTO msgTemplateDTO) {
 		msgTemplateService.updateMsgTemplate(msgTemplateDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class MsgTemplateController extends BaseController {
 	@RequestMapping("/deleteMsgTemplateById")
 	public ServiceResponse<?> deleteMsgTemplateById(@RequestParam(value="id") String id) {
 		msgTemplateService.deleteMsgTemplateById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -132,6 +132,6 @@ public class MsgTemplateController extends BaseController {
 	@RequestMapping("/batchSaveMsgTemplate")
 	public ServiceResponse<?> batchSaveMsgTemplate(@RequestBody List<MsgTemplateDTO> msgTemplateList) {
 		msgTemplateService.batchSaveMsgTemplate(msgTemplateList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

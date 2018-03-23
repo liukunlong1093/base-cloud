@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.mes.core.cache.RediseCacheManager;
+import com.mes.core.cache.RedisCacheManager;
 
 /**
  * 
@@ -23,9 +23,9 @@ import com.mes.core.cache.RediseCacheManager;
   * 修改备注:	[说明本次修改内容]  
   * 版本:		[v1.0]
  */
-@Service("rediseCacheManager")
-public class RediseCacheManagerImpl implements RediseCacheManager {
-	private static final Logger logger = LoggerFactory.getLogger(RediseCacheManagerImpl.class);
+@Service("redisCacheManager")
+public class RedisCacheManagerImpl implements RedisCacheManager {
+	private static final Logger logger = LoggerFactory.getLogger(RedisCacheManagerImpl.class);
 
 	@Autowired
 	RedisTemplate<String, Object> redisTemplate;
@@ -34,6 +34,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * 获取Redise模板对象
 	 * @return Redise模板对象
 	 */
+	@Override
 	public RedisTemplate<String, Object> getRedisTemplate() {
 		return redisTemplate;
 	}
@@ -44,6 +45,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * @param value	字符串值
 	 * @return <code>true</code>成功 <code>false</code>失败
 	 */
+	@Override
 	public boolean set(String key, String value) {
 		boolean flag = false;
 		try {
@@ -63,6 +65,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * @param expiry 失效时间单位毫秒 当<code>expiry</code>大于等于1000毫秒启用失效时间否者永不过期
 	 * @return <code>true</code>成功 <code>false</code>失败
 	 */
+	@Override
 	public boolean set(String key, String value, long expiry) {
 		boolean flag = false;
 		try {
@@ -79,6 +82,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * @param key 字符串键
 	 * @return 返回缓存字符串信息
 	 */
+	@Override
 	public String get(String key) {
 		return (String) redisTemplate.opsForValue().get(key);
 	}
@@ -89,6 +93,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * @param object 对象
 	 * @return <code>true</code>成功 <code>false</code>失败
 	 */
+	@Override
 	public boolean setObject(String key, Object object) {
 		boolean flag = false;
 		try {
@@ -108,6 +113,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * @param expiry 失效时间单位毫秒 当<code>expiry</code>大于等于1000毫秒启用失效时间否者永不过期
 	 * @return <code>true</code>成功 <code>false</code>失败
 	 */
+	@Override
 	public boolean setObject(String key, Object object, long expiry) {
 		boolean flag = false;
 		try {
@@ -124,6 +130,7 @@ public class RediseCacheManagerImpl implements RediseCacheManager {
 	 * @param key 字符串键
 	 * @return 返回缓存对象信息
 	 */
+	@Override
 	public Object getObject(String key) {
 		return redisTemplate.opsForValue().get(key);
 	}

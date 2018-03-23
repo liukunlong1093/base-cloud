@@ -51,7 +51,7 @@ public class DataDictionaryController extends BaseController {
 	@RequestMapping("/getDataDictionaryById")
 	public ServiceResponse<DataDictionaryDTO> getDataDictionaryById(@RequestParam(value="id") Long id) {
 		DataDictionaryDTO dataDictionaryDTO = dataDictionaryService.getDataDictionaryById(id);
-		return ServiceResponse.handleSussess(dataDictionaryDTO);
+		return ServiceResponse.handleSuccess(dataDictionaryDTO);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class DataDictionaryController extends BaseController {
 	public ServiceResponse<List<DataDictionaryDTO>> getDataDictionaryList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<DataDictionaryDTO> dataDictionaryList = dataDictionaryService.getDataDictionaryList(condition);
 		PageInfo<DataDictionaryDTO> pageInfo = new PageInfo<DataDictionaryDTO>(dataDictionaryList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class DataDictionaryController extends BaseController {
 	@RequestMapping("/saveDataDictionary")
 	public ServiceResponse<?> saveDataDictionary(@RequestBody DataDictionaryDTO dataDictionaryDTO) {
 		dataDictionaryService.saveDataDictionary(dataDictionaryDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class DataDictionaryController extends BaseController {
 	@RequestMapping("/updateDataDictionary")
 	public ServiceResponse<?> updateDataDictionary(@RequestBody DataDictionaryDTO dataDictionaryDTO) {
 		dataDictionaryService.updateDataDictionary(dataDictionaryDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class DataDictionaryController extends BaseController {
 	@RequestMapping("/deleteDataDictionaryById")
 	public ServiceResponse<?> deleteDataDictionaryById(@RequestParam(value="id") String id) {
 		dataDictionaryService.deleteDataDictionaryById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class DataDictionaryController extends BaseController {
 	@RequestMapping("/batchSaveDataDictionary")
 	public ServiceResponse<?> batchSaveDataDictionary(@RequestBody List<DataDictionaryDTO> dataDictionaryList) {
 		dataDictionaryService.batchSaveDataDictionary(dataDictionaryList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 	
 	/**
@@ -147,6 +147,6 @@ public class DataDictionaryController extends BaseController {
 	@RequestMapping("/batchUpdateDataDictionary")
 	public ServiceResponse<?> batchUpdateDataDictionary(@RequestBody List<DataDictionaryDTO> dataDictionaryList) {
 		dataDictionaryService.batchUpdateDataDictionary(dataDictionaryList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

@@ -54,7 +54,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/getPostById")
 	public ServiceResponse<PostDTO> getPostById(@RequestParam(value = "id") Long id) {
 		PostDTO postDTO = postService.getPostById(id);
-		return ServiceResponse.handleSussess(postDTO);
+		return ServiceResponse.handleSuccess(postDTO);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class PostController extends BaseController {
 	public ServiceResponse<List<PostDTO>> getPostList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<PostDTO> postList = postService.getPostList(condition);
 		PageInfo<PostDTO> pageInfo = new PageInfo<PostDTO>(postList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/savePost")
 	public ServiceResponse<?> savePost(@RequestBody PostDTO postDTO) {
 		postService.savePost(postDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/updatePost")
 	public ServiceResponse<?> updatePost(@RequestBody PostDTO postDTO) {
 		postService.updatePost(postDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/deletePostById")
 	public ServiceResponse<?> deletePostById(@RequestParam(value = "id") String id) {
 		postService.deletePostById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/batchSavePost")
 	public ServiceResponse<?> batchSavePost(@RequestBody List<PostDTO> postList) {
 		postService.batchSavePost(postList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/getPostUserRelById")
 	public ServiceResponse<PostUserRelDTO> getPostUserRelById(@RequestParam(value = "id") Long id) {
 		PostUserRelDTO postUserRelDTO = postService.getPostUserRelById(id);
-		return ServiceResponse.handleSussess(postUserRelDTO);
+		return ServiceResponse.handleSuccess(postUserRelDTO);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class PostController extends BaseController {
 		processWhereIn(condition,"postIds");
 		List<PostUserRelDTO> postUserRelList = postService.getPostUserRelList(condition);
 		PageInfo<PostUserRelDTO> pageInfo = new PageInfo<PostUserRelDTO>(postUserRelList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/savePostUserRel")
 	public ServiceResponse<?> savePostUserRel(@RequestBody PostUserRelDTO postUserRelDTO) {
 		postService.savePostUserRel(postUserRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/updatePostUserRel")
 	public ServiceResponse<?> updatePostUserRel(@RequestBody PostUserRelDTO postUserRelDTO) {
 		postService.updatePostUserRel(postUserRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class PostController extends BaseController {
 	@RequestMapping("/deletePostUserRelById")
 	public ServiceResponse<?> deletePostUserRelById(@RequestParam(value = "id") String id) {
 		postService.deletePostUserRelById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -209,6 +209,6 @@ public class PostController extends BaseController {
 	@RequestMapping("/batchSavePostUserRel")
 	public ServiceResponse<?> batchSavePostUserRel(@RequestBody List<PostUserRelDTO> postUserRelList) {
 		postService.batchSavePostUserRel(postUserRelList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

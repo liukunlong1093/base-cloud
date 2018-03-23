@@ -3,11 +3,11 @@ package com.mes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mes.core.cache.impl.RediseCacheManagerImpl;
+import com.mes.core.cache.impl.RedisCacheManagerImpl;
 import com.mes.core.utils.RequestCheckUtils;
 
 public class Test {
-	private static final Logger logger = LoggerFactory.getLogger(RediseCacheManagerImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(RedisCacheManagerImpl.class);
 	public static void main(String[] args) {
 		xxx();
 	}

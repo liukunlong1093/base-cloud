@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
   * 修改备注:	[说明本次修改内容]  
   * 版本:		[v1.0]
  */
-public interface RediseCacheManager {
+public interface RedisCacheManager {
 	/**
 	 * 获取Redise模板对象
 	 * @return Redise模板对象

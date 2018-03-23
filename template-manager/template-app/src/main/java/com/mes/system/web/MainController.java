@@ -47,6 +47,6 @@ public class MainController extends BaseController {
 	@RequestMapping("/login")
 	public ServiceResponse<SessionUser> login(@RequestParam(value = "name") String name, @RequestParam(value = "pwd") String pwd) {
 		SessionUser sessionUser = mainService.login(name, pwd);
-		return ServiceResponse.handleSussess(sessionUser);
+		return ServiceResponse.handleSuccess(sessionUser);
 	}
 }

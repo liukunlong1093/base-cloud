@@ -52,7 +52,7 @@ public class PostTypeController extends BaseController {
 	@RequestMapping("/getPostTypeById")
 	public ServiceResponse<PostTypeDTO> getPostTypeById(@RequestParam(value = "id") Long id) {
 		PostTypeDTO postTypeDTO = postTypeService.getPostTypeById(id);
-		return ServiceResponse.handleSussess(postTypeDTO);
+		return ServiceResponse.handleSuccess(postTypeDTO);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class PostTypeController extends BaseController {
 	public ServiceResponse<List<PostTypeDTO>> getPostTypeList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<PostTypeDTO> postTypeList = postTypeService.getPostTypeList(condition);
 		PageInfo<PostTypeDTO> pageInfo = new PageInfo<PostTypeDTO>(postTypeList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class PostTypeController extends BaseController {
 	@RequestMapping("/savePostType")
 	public ServiceResponse<?> savePostType(@RequestBody PostTypeDTO postTypeDTO) {
 		postTypeService.savePostType(postTypeDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class PostTypeController extends BaseController {
 	@RequestMapping("/updatePostType")
 	public ServiceResponse<?> updatePostType(@RequestBody PostTypeDTO postTypeDTO) {
 		postTypeService.updatePostType(postTypeDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class PostTypeController extends BaseController {
 	@RequestMapping("/deletePostTypeById")
 	public ServiceResponse<?> deletePostTypeById(@RequestParam(value = "id") String id) {
 		postTypeService.deletePostTypeById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -122,6 +122,6 @@ public class PostTypeController extends BaseController {
 	@RequestMapping("/batchSavePostType")
 	public ServiceResponse<?> batchSavePostType(@RequestBody List<PostTypeDTO> postTypeList) {
 		postTypeService.batchSavePostType(postTypeList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

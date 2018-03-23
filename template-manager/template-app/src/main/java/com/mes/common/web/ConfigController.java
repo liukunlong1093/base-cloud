@@ -51,7 +51,7 @@ public class ConfigController extends BaseController {
 	@RequestMapping("/getConfigById")
 	public ServiceResponse<ConfigDTO> getConfigById(@RequestParam(value="id") Long id) {
 		ConfigDTO configDTO = configService.getConfigById(id);
-		return ServiceResponse.handleSussess(configDTO);
+		return ServiceResponse.handleSuccess(configDTO);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class ConfigController extends BaseController {
 	public ServiceResponse<List<ConfigDTO>> getConfigList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<ConfigDTO> configList = configService.getConfigList(condition);
 		PageInfo<ConfigDTO> pageInfo = new PageInfo<ConfigDTO>(configList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class ConfigController extends BaseController {
 	@RequestMapping("/saveConfig")
 	public ServiceResponse<?> saveConfig(@RequestBody ConfigDTO configDTO) {
 		configService.saveConfig(configDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class ConfigController extends BaseController {
 	@RequestMapping("/updateConfig")
 	public ServiceResponse<?> updateConfig(@RequestBody ConfigDTO configDTO) {
 		configService.updateConfig(configDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class ConfigController extends BaseController {
 	@RequestMapping("/deleteConfigById")
 	public ServiceResponse<?> deleteConfigById(@RequestParam(value="id") String id) {
 		configService.deleteConfigById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -131,6 +131,6 @@ public class ConfigController extends BaseController {
 	@RequestMapping("/batchSaveConfig")
 	public ServiceResponse<?> batchSaveConfig(@RequestBody List<ConfigDTO> configList) {
 		configService.batchSaveConfig(configList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

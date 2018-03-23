@@ -57,7 +57,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/getMenuPurviewById")
 	public ServiceResponse<MenuPurviewDTO> getMenuPurviewById(@RequestParam(value = "id") Long id) {
 		MenuPurviewDTO menuPurviewDTO = purviewService.getMenuPurviewById(id);
-		return ServiceResponse.handleSussess(menuPurviewDTO);
+		return ServiceResponse.handleSuccess(menuPurviewDTO);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class PurviewController extends BaseController {
 	public ServiceResponse<List<MenuPurviewDTO>> getMenuPurviewList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<MenuPurviewDTO> menuPurviewList = purviewService.getMenuPurviewList(condition);
 		PageInfo<MenuPurviewDTO> pageInfo = new PageInfo<MenuPurviewDTO>(menuPurviewList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/saveMenuPurview")
 	public ServiceResponse<?> saveMenuPurview(@RequestBody MenuPurviewDTO menuPurviewDTO) {
 		purviewService.saveMenuPurview(menuPurviewDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/updateMenuPurview")
 	public ServiceResponse<?> updateMenuPurview(@RequestBody MenuPurviewDTO menuPurviewDTO) {
 		purviewService.updateMenuPurview(menuPurviewDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/deleteMenuPurviewById")
 	public ServiceResponse<?> deleteMenuPurviewById(@RequestParam(value = "id") String id) {
 		purviewService.deleteMenuPurviewById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/batchSaveMenuPurview")
 	public ServiceResponse<?> batchSaveMenuPurview(@RequestBody List<MenuPurviewDTO> menuPurviewList) {
 		purviewService.batchSaveMenuPurview(menuPurviewList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/getFunctionPurviewById")
 	public ServiceResponse<FunctionPurviewDTO> getFunctionPurviewById(@RequestParam(value = "id") Long id) {
 		FunctionPurviewDTO functionPurviewDTO = purviewService.getFunctionPurviewById(id);
-		return ServiceResponse.handleSussess(functionPurviewDTO);
+		return ServiceResponse.handleSuccess(functionPurviewDTO);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class PurviewController extends BaseController {
 	public ServiceResponse<List<FunctionPurviewDTO>> getFunctionPurviewList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<FunctionPurviewDTO> functionPurviewList = purviewService.getFunctionPurviewList(condition);
 		PageInfo<FunctionPurviewDTO> pageInfo = new PageInfo<FunctionPurviewDTO>(functionPurviewList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/saveFunctionPurview")
 	public ServiceResponse<?> saveFunctionPurview(@RequestBody FunctionPurviewDTO functionPurviewDTO) {
 		purviewService.saveFunctionPurview(functionPurviewDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/updateFunctionPurview")
 	public ServiceResponse<?> updateFunctionPurview(@RequestBody FunctionPurviewDTO functionPurviewDTO) {
 		purviewService.updateFunctionPurview(functionPurviewDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/deleteFunctionPurviewById")
 	public ServiceResponse<?> deleteFunctionPurviewById(@RequestParam(value = "id") String id) {
 		purviewService.deleteFunctionPurviewById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/batchSaveFunctionPurview")
 	public ServiceResponse<?> batchSaveFunctionPurview(@RequestBody List<FunctionPurviewDTO> functionPurviewList) {
 		purviewService.batchSaveFunctionPurview(functionPurviewList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -225,7 +225,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/getDataPurviewById")
 	public ServiceResponse<DataPurviewDTO> getDataPurviewById(@RequestParam(value = "id") Long id) {
 		DataPurviewDTO dataPurviewDTO = purviewService.getDataPurviewById(id);
-		return ServiceResponse.handleSussess(dataPurviewDTO);
+		return ServiceResponse.handleSuccess(dataPurviewDTO);
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class PurviewController extends BaseController {
 	public ServiceResponse<List<DataPurviewDTO>> getDataPurviewList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<DataPurviewDTO> dataPurviewList = purviewService.getDataPurviewList(condition);
 		PageInfo<DataPurviewDTO> pageInfo = new PageInfo<DataPurviewDTO>(dataPurviewList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/saveDataPurview")
 	public ServiceResponse<?> saveDataPurview(@RequestBody DataPurviewDTO dataPurviewDTO) {
 		purviewService.saveDataPurview(dataPurviewDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/updateDataPurview")
 	public ServiceResponse<?> updateDataPurview(@RequestBody DataPurviewDTO dataPurviewDTO) {
 		purviewService.updateDataPurview(dataPurviewDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -282,7 +282,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/deleteDataPurviewById")
 	public ServiceResponse<?> deleteDataPurviewById(@RequestParam(value = "id") String id) {
 		purviewService.deleteDataPurviewById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -295,7 +295,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/batchSaveDataPurview")
 	public ServiceResponse<?> batchSaveDataPurview(@RequestBody List<DataPurviewDTO> dataPurviewList) {
 		purviewService.batchSaveDataPurview(dataPurviewList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class PurviewController extends BaseController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "token", value = "令牌", required = true, dataType = "String", paramType = "header"), @ApiImplicitParam(name = "timestamp", value = "时间戳", required = true, dataType = "String", paramType = "header"), @ApiImplicitParam(name = "sign", value = "签名", required = true, dataType = "String", paramType = "header"), @ApiImplicitParam(name = "userDTO", value = "数据权限数据传输对象", required = true, dataType = "List", paramType = "body") })
 	@RequestMapping("/batchSavePurview")
 	public ServiceResponse<?> batchSavePurview(@RequestParam(value = "userId") Long userId, @RequestParam(value = "secDataJson") String secDataJson, @RequestParam(value = "prviewFucntionDataJson") String prviewFucntionDataJson, @RequestParam(value = "rangeSecDataJson") String rangeSecDataJson) {
-		return ServiceResponse.handleSussess(purviewService.batchSavePurview(userId, secDataJson, prviewFucntionDataJson, rangeSecDataJson));
+		return ServiceResponse.handleSuccess(purviewService.batchSavePurview(userId, secDataJson, prviewFucntionDataJson, rangeSecDataJson));
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class PurviewController extends BaseController {
 	@RequestMapping("/getPurviewSecTree")
 	public ServiceResponse<List<PurviewSecTreeDTO>> getPurviewSecTree(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pvSql") String pvSql) {
 		List<PurviewSecTreeDTO> list = purviewService.getPurviewSecTree(userId, pvSql);
-		return ServiceResponse.handleSussess(list);
+		return ServiceResponse.handleSuccess(list);
 	}
 
 	/**
@@ -332,7 +332,7 @@ public class PurviewController extends BaseController {
 	 */
 	@RequestMapping("/getPurviewFucntionTree")
 	public ServiceResponse<List<PurviewFunctionTreeDTO>> getPurviewFucntionTree(@RequestParam(value = "userId") Long userId, @RequestParam(value = "secId", required = false) String secId) {
-		return ServiceResponse.handleSussess(purviewService.getPurviewFucntionTree(userId, secId));
+		return ServiceResponse.handleSuccess(purviewService.getPurviewFucntionTree(userId, secId));
 	}
 
 	/**
@@ -344,7 +344,7 @@ public class PurviewController extends BaseController {
 	 */
 	@RequestMapping("/getPurviewRangeSecTree")
 	public ServiceResponse<List<PurviewSecTreeDTO>> getPurviewRangeSecTree(@RequestParam(value = "userId") Long userId, @RequestParam(value = "secId", required = false) String secId, @RequestParam(value = "pvSql") String pvSql) {
-		return ServiceResponse.handleSussess(purviewService.getPurviewRangeSecTree(userId, secId, pvSql));
+		return ServiceResponse.handleSuccess(purviewService.getPurviewRangeSecTree(userId, secId, pvSql));
 	}
 
 	/***
@@ -358,7 +358,7 @@ public class PurviewController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "服务端错误", response = Void.class) })
 	@RequestMapping("/checkPurview")
 	public ServiceResponse<Boolean> checkPurview(@RequestParam(value = "userId") Long userId, @RequestParam(value = "apiUrl", required = false) String apiUrl) {
-		return ServiceResponse.handleSussess(purviewService.checkPurview(userId, apiUrl));
+		return ServiceResponse.handleSuccess(purviewService.checkPurview(userId, apiUrl));
 	}
 
 	/***
@@ -372,6 +372,6 @@ public class PurviewController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "服务端错误", response = Void.class) })
 	@RequestMapping("/checkFunctionPurview")
 	public ServiceResponse<Boolean> checkFunctionPurview(@RequestParam(value = "userId") Long userId, @RequestParam(value = "functionCode", required = false) String functionCode) {
-		return ServiceResponse.handleSussess(purviewService.checkFunctionPurview(userId, functionCode));
+		return ServiceResponse.handleSuccess(purviewService.checkFunctionPurview(userId, functionCode));
 	}
 }

@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/getMenuById")
 	public ServiceResponse<MenuDTO> getMenuById(@RequestParam(value = "id") Long id) {
 		MenuDTO menuDTO = menuService.getMenuById(id);
-		return ServiceResponse.handleSussess(menuDTO);
+		return ServiceResponse.handleSuccess(menuDTO);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class MenuController extends BaseController {
 	public ServiceResponse<List<MenuDTO>> getMenuList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<MenuDTO> menuList = menuService.getMenuList(condition);
 		PageInfo<MenuDTO> pageInfo = new PageInfo<MenuDTO>(menuList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/saveMenu")
 	public ServiceResponse<?> saveMenu(@RequestBody MenuDTO menuDTO) {
 		menuService.saveMenu(menuDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/updateMenu")
 	public ServiceResponse<?> updateMenu(@RequestBody MenuDTO menuDTO) {
 		menuService.updateMenu(menuDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/deleteMenuById")
 	public ServiceResponse<?> deleteMenuById(@RequestParam(value = "id") String id) {
 		menuService.deleteMenuById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/batchSaveMenu")
 	public ServiceResponse<?> batchSaveMenu(@RequestBody List<MenuDTO> menuList) {
 		menuService.batchSaveMenu(menuList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class MenuController extends BaseController {
 	@RequestMapping("/getMainTopMenuList")
 	public ServiceResponse<List<MenuDTO>> getMainTopMenuList(@RequestParam(value = "userId") Long userId) {
 		List<MenuDTO> menuList = menuService.getMainTopMenuList(userId);
-		return ServiceResponse.handleSussess(menuList);
+		return ServiceResponse.handleSuccess(menuList);
 	}
 
 	/**
@@ -150,6 +150,6 @@ public class MenuController extends BaseController {
 	@RequestMapping("/getMainLeftMenuTree")
 	public ServiceResponse<List<MenuDTO>> getMainLeftMenuTree(@RequestParam(value = "userId") Long userId, @RequestParam(value = "parentId") Long parentId) {
 		List<MenuDTO> menuList = menuService.getMainLeftMenuTree(userId, parentId);
-		return ServiceResponse.handleSussess(menuList);
+		return ServiceResponse.handleSuccess(menuList);
 	}
 }

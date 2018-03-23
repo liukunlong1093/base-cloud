@@ -51,7 +51,7 @@ public class PaymentTypeController extends BaseController {
 	@RequestMapping("/getPaymentTypeById")
 	public ServiceResponse<PaymentTypeDTO> getPaymentTypeById(@RequestParam(value="id") Long id) {
 		PaymentTypeDTO paymentTypeDTO = paymentTypeService.getPaymentTypeById(id);
-		return ServiceResponse.handleSussess(paymentTypeDTO);
+		return ServiceResponse.handleSuccess(paymentTypeDTO);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class PaymentTypeController extends BaseController {
 	public ServiceResponse<List<PaymentTypeDTO>> getPaymentTypeList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<PaymentTypeDTO> paymentTypeList = paymentTypeService.getPaymentTypeList(condition);
 		PageInfo<PaymentTypeDTO> pageInfo = new PageInfo<PaymentTypeDTO>(paymentTypeList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class PaymentTypeController extends BaseController {
 	@RequestMapping("/savePaymentType")
 	public ServiceResponse<?> savePaymentType(@RequestBody PaymentTypeDTO paymentTypeDTO) {
 		paymentTypeService.savePaymentType(paymentTypeDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class PaymentTypeController extends BaseController {
 	@RequestMapping("/updatePaymentType")
 	public ServiceResponse<?> updatePaymentType(@RequestBody PaymentTypeDTO paymentTypeDTO) {
 		paymentTypeService.updatePaymentType(paymentTypeDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class PaymentTypeController extends BaseController {
 	@RequestMapping("/deletePaymentTypeById")
 	public ServiceResponse<?> deletePaymentTypeById(@RequestParam(value="id") String id) {
 		paymentTypeService.deletePaymentTypeById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -131,6 +131,6 @@ public class PaymentTypeController extends BaseController {
 	@RequestMapping("/batchSavePaymentType")
 	public ServiceResponse<?> batchSavePaymentType(@RequestBody List<PaymentTypeDTO> paymentTypeList) {
 		paymentTypeService.batchSavePaymentType(paymentTypeList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

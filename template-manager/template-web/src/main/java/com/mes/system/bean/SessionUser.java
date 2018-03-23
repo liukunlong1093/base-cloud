@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mes.core.cache.RediseCacheManager;
+import com.mes.core.cache.RedisCacheManager;
 import com.mes.core.utils.StringUtils;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -73,7 +73,7 @@ public class SessionUser {
 	private String secret;
 
 	@Autowired
-	static RediseCacheManager rediseCacheManager;
+	static RedisCacheManager rediseCacheManager;
 
 	public Long getId() {
 		return id;

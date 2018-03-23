@@ -51,7 +51,7 @@ public class SensitivityController extends BaseController {
 	@RequestMapping("/getSensitivityById")
 	public ServiceResponse<SensitivityDTO> getSensitivityById(@RequestParam(value="id") Long id) {
 		SensitivityDTO sensitivityDTO = sensitivityService.getSensitivityById(id);
-		return ServiceResponse.handleSussess(sensitivityDTO);
+		return ServiceResponse.handleSuccess(sensitivityDTO);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class SensitivityController extends BaseController {
 	public ServiceResponse<List<SensitivityDTO>> getSensitivityList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<SensitivityDTO> sensitivityList = sensitivityService.getSensitivityList(condition);
 		PageInfo<SensitivityDTO> pageInfo = new PageInfo<SensitivityDTO>(sensitivityList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class SensitivityController extends BaseController {
 	@RequestMapping("/saveSensitivity")
 	public ServiceResponse<?> saveSensitivity(@RequestBody SensitivityDTO sensitivityDTO) {
 		sensitivityService.saveSensitivity(sensitivityDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class SensitivityController extends BaseController {
 	@RequestMapping("/updateSensitivity")
 	public ServiceResponse<?> updateSensitivity(@RequestBody SensitivityDTO sensitivityDTO) {
 		sensitivityService.updateSensitivity(sensitivityDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class SensitivityController extends BaseController {
 	@RequestMapping("/deleteSensitivityById")
 	public ServiceResponse<?> deleteSensitivityById(@RequestParam(value="id") String id) {
 		sensitivityService.deleteSensitivityById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -129,6 +129,6 @@ public class SensitivityController extends BaseController {
 	@RequestMapping("/batchSaveSensitivity")
 	public ServiceResponse<?> batchSaveSensitivity(@RequestBody List<SensitivityDTO> sensitivityList) {
 		sensitivityService.batchSaveSensitivity(sensitivityList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

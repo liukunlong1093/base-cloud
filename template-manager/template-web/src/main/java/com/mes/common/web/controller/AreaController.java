@@ -3,6 +3,8 @@ package com.mes.common.web.controller;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import com.mes.common.utils.Send;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +43,13 @@ public class AreaController {
 	private HttpServletRequest request;
 
 	@Autowired
-	AreaService areaService;
+	private AreaService areaService;
+
+	private Send send;
+	@Autowired
+	public void setSend(Send send) {
+		this.send = send;
+	}
 
 	/**
 	 * 根据区域标识获取区域
@@ -54,6 +62,7 @@ public class AreaController {
 	@RequestMapping("/getAreaById")
 	public ServiceResponse<AreaDTO> getAreaById(@RequestParam(value = "id") Long id) {
 		System.out.println(request.getHeader("token"));
+		send.sendMsg("我爱你.");
 		return areaService.getAreaById(id);
 	}
 
@@ -111,7 +120,7 @@ public class AreaController {
 
 	/**
 	 * 批量保存区域
-	 * @param areaDAOList 区域数据传输对象集合
+	 * @param areaList 区域数据传输对象集合
 	 * @return 服务响应对象
 	 */
 	@ApiOperation(value = "批量保存区域", httpMethod = "POST", notes = "批量保存区域")

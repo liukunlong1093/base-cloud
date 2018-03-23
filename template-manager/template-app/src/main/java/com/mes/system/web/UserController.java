@@ -51,7 +51,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/getUserById")
 	public ServiceResponse<UserDTO> getUserById(@RequestParam(value = "id") Long id) {
 		UserDTO userDTO = userService.getUserById(id);
-		return ServiceResponse.handleSussess(userDTO);
+		return ServiceResponse.handleSuccess(userDTO);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class UserController extends BaseController {
 	public ServiceResponse<List<UserDTO>> getUserList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<UserDTO> userList = userService.getUserList(condition);
 		PageInfo<UserDTO> pageInfo = new PageInfo<UserDTO>(userList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/saveUser")
 	public ServiceResponse<?> saveUser(@RequestBody UserDTO userDTO) {
 		userService.saveUser(userDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/updateUser")
 	public ServiceResponse<?> updateUser(@RequestBody UserDTO userDTO) {
 		userService.updateUser(userDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/deleteUserById")
 	public ServiceResponse<?> deleteUserById(@RequestParam(value = "id") String id) {
 		userService.deleteUserById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -121,6 +121,6 @@ public class UserController extends BaseController {
 	@RequestMapping("/batchSaveUser")
 	public ServiceResponse<?> batchSaveUser(@RequestBody List<UserDTO> userList) {
 		userService.batchSaveUser(userList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

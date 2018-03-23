@@ -53,7 +53,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/getDomainById")
 	public ServiceResponse<DomainDTO> getDomainById(@RequestParam(value="id") Long id) {
 		DomainDTO domainDTO = domainService.getDomainById(id);
-		return ServiceResponse.handleSussess(domainDTO);
+		return ServiceResponse.handleSuccess(domainDTO);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class DomainController extends BaseController {
 	public ServiceResponse<List<DomainDTO>> getDomainList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<DomainDTO> domainList = domainService.getDomainList(condition);
 		PageInfo<DomainDTO> pageInfo = new PageInfo<DomainDTO>(domainList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class DomainController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "服务端错误", response = Void.class) })
 	@RequestMapping("/saveDomain")
 	public ServiceResponse<DomainDTO> saveDomain(@RequestBody DomainDTO domainDTO) {
-		return ServiceResponse.handleSussess(domainService.saveDomain(domainDTO));
+		return ServiceResponse.handleSuccess(domainService.saveDomain(domainDTO));
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/updateDomain")
 	public ServiceResponse<?> updateDomain(@RequestBody DomainDTO domainDTO) {
 		domainService.updateDomain(domainDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/deleteDomainById")
 	public ServiceResponse<?> deleteDomainById(@RequestParam(value="id") String id) {
 		domainService.deleteDomainById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/batchSaveDomain")
 	public ServiceResponse<?> batchSaveDomain(@RequestBody List<DomainDTO> domainList) {
 		domainService.batchSaveDomain(domainList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/getDomainUserRelById")
 	public ServiceResponse<DomainUserRelDTO> getDomainUserRelById(@RequestParam(value="id") Long id) {
 		DomainUserRelDTO domainUserRelDTO = domainService.getDomainUserRelById(id);
-		return ServiceResponse.handleSussess(domainUserRelDTO);
+		return ServiceResponse.handleSuccess(domainUserRelDTO);
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class DomainController extends BaseController {
 	public ServiceResponse<List<DomainUserRelDTO>> getDomainUserRelList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<DomainUserRelDTO> domainUserRelList = domainService.getDomainUserRelList(condition);
 		PageInfo<DomainUserRelDTO> pageInfo = new PageInfo<DomainUserRelDTO>(domainUserRelList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/saveDomainUserRel")
 	public ServiceResponse<?> saveDomainUserRel(@RequestBody DomainUserRelDTO domainUserRelDTO) {
 		domainService.saveDomainUserRel(domainUserRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/updateDomainUserRel")
 	public ServiceResponse<?> updateDomainUserRel(@RequestBody DomainUserRelDTO domainUserRelDTO) {
 		domainService.updateDomainUserRel(domainUserRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class DomainController extends BaseController {
 	@RequestMapping("/deleteDomainUserRelById")
 	public ServiceResponse<?> deleteDomainUserRelById(@RequestParam(value="id") String id) {
 		domainService.deleteDomainUserRelById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -224,6 +224,6 @@ public class DomainController extends BaseController {
 	@RequestMapping("/batchSaveDomainUserRel")
 	public ServiceResponse<?> batchSaveDomainUserRel(@RequestBody List<DomainUserRelDTO> domainUserRelList) {
 		domainService.batchSaveDomainUserRel(domainUserRelList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

@@ -54,7 +54,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/getOrgById")
 	public ServiceResponse<OrgDTO> getOrgById(@RequestParam(value = "id") Long id) {
 		OrgDTO orgDTO = orgService.getOrgById(id);
-		return ServiceResponse.handleSussess(orgDTO);
+		return ServiceResponse.handleSuccess(orgDTO);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class OrgController extends BaseController {
 	public ServiceResponse<List<OrgDTO>> getOrgList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<OrgDTO> orgList = orgService.getOrgList(condition);
 		PageInfo<OrgDTO> pageInfo = new PageInfo<OrgDTO>(orgList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/saveOrg")
 	public ServiceResponse<?> saveOrg(@RequestBody OrgDTO orgDTO) {
 		orgService.saveOrg(orgDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/updateOrg")
 	public ServiceResponse<?> updateOrg(@RequestBody OrgDTO orgDTO) {
 		orgService.updateOrg(orgDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/deleteOrgById")
 	public ServiceResponse<?> deleteOrgById(@RequestParam(value = "id") String id) {
 		orgService.deleteOrgById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/batchSaveOrg")
 	public ServiceResponse<?> batchSaveOrg(@RequestBody List<OrgDTO> orgList) {
 		orgService.batchSaveOrg(orgList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/getOrgUserRelById")
 	public ServiceResponse<OrgUserRelDTO> getOrgUserRelById(@RequestParam(value = "id") Long id) {
 		OrgUserRelDTO orgUserRelDTO = orgService.getOrgUserRelById(id);
-		return ServiceResponse.handleSussess(orgUserRelDTO);
+		return ServiceResponse.handleSuccess(orgUserRelDTO);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class OrgController extends BaseController {
 	public ServiceResponse<List<OrgUserRelDTO>> getOrgUserRelList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<OrgUserRelDTO> orgUserRelList = orgService.getOrgUserRelList(condition);
 		PageInfo<OrgUserRelDTO> pageInfo = new PageInfo<OrgUserRelDTO>(orgUserRelList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/saveOrgUserRel")
 	public ServiceResponse<?> saveOrgUserRel(@RequestBody OrgUserRelDTO orgUserRelDTO) {
 		orgService.saveOrgUserRel(orgUserRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/updateOrgUserRel")
 	public ServiceResponse<?> updateOrgUserRel(@RequestBody OrgUserRelDTO orgUserRelDTO) {
 		orgService.updateOrgUserRel(orgUserRelDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/deleteOrgUserRelById")
 	public ServiceResponse<?> deleteOrgUserRelById(@RequestParam(value = "id") String id) {
 		orgService.deleteOrgUserRelById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class OrgController extends BaseController {
 	@RequestMapping("/batchSaveOrgUserRel")
 	public ServiceResponse<?> batchSaveOrgUserRel(@RequestBody List<OrgUserRelDTO> orgUserRelList) {
 		orgService.batchSaveOrgUserRel(orgUserRelList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 	
 	/**
@@ -223,6 +223,6 @@ public class OrgController extends BaseController {
 	@RequestMapping("/getOrgTree")
 	public ServiceResponse<List<OrgDTO>> getOrgTree(@RequestParam(value = "userId") Long userId, @RequestParam(value = "parentId") Long parentId) {
 		List<OrgDTO> orgList = orgService.getOrgTree(userId, parentId);
-		return ServiceResponse.handleSussess(orgList);
+		return ServiceResponse.handleSuccess(orgList);
 	}
 }

@@ -51,7 +51,7 @@ public class AreaController extends BaseController {
 	@RequestMapping("/getAreaById")
 	public ServiceResponse<AreaDTO> getAreaById(@RequestParam(value="id") Long id) {
 		AreaDTO areaDTO = areaService.getAreaById(id);
-		return ServiceResponse.handleSussess(areaDTO);
+		return ServiceResponse.handleSuccess(areaDTO);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class AreaController extends BaseController {
 	public ServiceResponse<List<AreaDTO>> getAreaList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<AreaDTO> areaList = areaService.getAreaList(condition);
 		PageInfo<AreaDTO> pageInfo = new PageInfo<AreaDTO>(areaList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class AreaController extends BaseController {
 	@RequestMapping("/saveArea")
 	public ServiceResponse<?> saveArea(@RequestBody AreaDTO areaDTO) {
 		areaService.saveArea(areaDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class AreaController extends BaseController {
 	@RequestMapping("/updateArea")
 	public ServiceResponse<?> updateArea(@RequestBody AreaDTO areaDTO) {
 		areaService.updateArea(areaDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -117,12 +117,12 @@ public class AreaController extends BaseController {
 	@RequestMapping("/deleteAreaById")
 	public ServiceResponse<?> deleteAreaById(@RequestParam(value="id") String id) {
 		areaService.deleteAreaById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
 	 * 批量保存区域
-	 * @param areaDAOList 区域对象集合
+	 * @param areaList 区域对象集合
 	 * @return 服务响应对象
 	 */
 	@ApiOperation(value = "批量保存区域", httpMethod = "POST", notes = "批量保存区域信息")
@@ -130,6 +130,6 @@ public class AreaController extends BaseController {
 	@RequestMapping("/batchSaveArea")
 	public ServiceResponse<?> batchSaveArea(@RequestBody List<AreaDTO> areaList) {
 		areaService.batchSaveArea(areaList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

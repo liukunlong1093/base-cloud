@@ -51,7 +51,7 @@ public class ApiController extends BaseController {
 	@RequestMapping("/getApiById")
 	public ServiceResponse<ApiDTO> getApiById(@RequestParam(value="id") Long id) {
 		ApiDTO apiDTO = apiService.getApiById(id);
-		return ServiceResponse.handleSussess(apiDTO);
+		return ServiceResponse.handleSuccess(apiDTO);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class ApiController extends BaseController {
 	public ServiceResponse<List<ApiDTO>> getApiList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<ApiDTO> apiList = apiService.getApiList(condition);
 		PageInfo<ApiDTO> pageInfo = new PageInfo<ApiDTO>(apiList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class ApiController extends BaseController {
 	@RequestMapping("/saveApi")
 	public ServiceResponse<?> saveApi(@RequestBody ApiDTO apiDTO) {
 		apiService.saveApi(apiDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class ApiController extends BaseController {
 	@RequestMapping("/updateApi")
 	public ServiceResponse<?> updateApi(@RequestBody ApiDTO apiDTO) {
 		apiService.updateApi(apiDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class ApiController extends BaseController {
 	@RequestMapping("/deleteApiById")
 	public ServiceResponse<?> deleteApiById(@RequestParam(value="id") String id) {
 		apiService.deleteApiById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -134,6 +134,6 @@ public class ApiController extends BaseController {
 	@RequestMapping("/batchSaveApi")
 	public ServiceResponse<?> batchSaveApi(@RequestBody List<ApiDTO> apiList) {
 		apiService.batchSaveApi(apiList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

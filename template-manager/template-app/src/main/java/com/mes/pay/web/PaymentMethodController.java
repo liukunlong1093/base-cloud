@@ -51,7 +51,7 @@ public class PaymentMethodController extends BaseController {
 	@RequestMapping("/getPaymentMethodById")
 	public ServiceResponse<PaymentMethodDTO> getPaymentMethodById(@RequestParam(value="id") Long id) {
 		PaymentMethodDTO paymentMethodDTO = paymentMethodService.getPaymentMethodById(id);
-		return ServiceResponse.handleSussess(paymentMethodDTO);
+		return ServiceResponse.handleSuccess(paymentMethodDTO);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class PaymentMethodController extends BaseController {
 	public ServiceResponse<List<PaymentMethodDTO>> getPaymentMethodList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<PaymentMethodDTO> paymentMethodList = paymentMethodService.getPaymentMethodList(condition);
 		PageInfo<PaymentMethodDTO> pageInfo = new PageInfo<PaymentMethodDTO>(paymentMethodList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class PaymentMethodController extends BaseController {
 	@RequestMapping("/savePaymentMethod")
 	public ServiceResponse<?> savePaymentMethod(@RequestBody PaymentMethodDTO paymentMethodDTO) {
 		paymentMethodService.savePaymentMethod(paymentMethodDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class PaymentMethodController extends BaseController {
 	@RequestMapping("/updatePaymentMethod")
 	public ServiceResponse<?> updatePaymentMethod(@RequestBody PaymentMethodDTO paymentMethodDTO) {
 		paymentMethodService.updatePaymentMethod(paymentMethodDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class PaymentMethodController extends BaseController {
 	@RequestMapping("/deletePaymentMethodById")
 	public ServiceResponse<?> deletePaymentMethodById(@RequestParam(value="id") String id) {
 		paymentMethodService.deletePaymentMethodById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -136,6 +136,6 @@ public class PaymentMethodController extends BaseController {
 	@RequestMapping("/batchSavePaymentMethod")
 	public ServiceResponse<?> batchSavePaymentMethod(@RequestBody List<PaymentMethodDTO> paymentMethodList) {
 		paymentMethodService.batchSavePaymentMethod(paymentMethodList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

@@ -3,7 +3,7 @@ package test.com.mes.model;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mes.core.cache.RediseCacheManager;
+import com.mes.core.cache.RedisCacheManager;
 
 import test.BaseTester;
 /**
@@ -20,7 +20,7 @@ import test.BaseTester;
  */
 public class RedisTest extends BaseTester {
 	@Autowired
-	RediseCacheManager rediseCacheManager;
+    RedisCacheManager rediseCacheManager;
 	@Test
 	public void test() throws Exception {
 		// 保存字符串

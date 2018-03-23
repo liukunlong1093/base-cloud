@@ -51,7 +51,7 @@ public class UnitController extends BaseController {
 	@RequestMapping("/getUnitById")
 	public ServiceResponse<UnitDTO> getUnitById(@RequestParam Long id) {
 		UnitDTO  unitDTO = unitService.getUnitById(id);
-		return ServiceResponse.handleSussess(unitDTO);
+		return ServiceResponse.handleSuccess(unitDTO);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class UnitController extends BaseController {
 	public ServiceResponse<List<UnitDTO>> getUnitList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<UnitDTO> unitList = unitService.getUnitList(condition);
 		PageInfo<UnitDTO> pageInfo = new PageInfo<UnitDTO>(unitList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class UnitController extends BaseController {
 	@RequestMapping("/saveUnit")
 	public ServiceResponse<?> saveUnit(@RequestBody UnitDTO unitDTO) {
 		unitService.saveUnit(unitDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class UnitController extends BaseController {
 	@RequestMapping("/updateUnit")
 	public ServiceResponse<?> updateUnit(@RequestBody UnitDTO unitDTO) {
 		unitService.updateUnit(unitDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class UnitController extends BaseController {
 	@RequestMapping("/deleteUnitById")
 	public ServiceResponse<?> deleteUnitById(@RequestParam(value = "id") Long id) {
 		unitService.deleteUnitById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class UnitController extends BaseController {
 	@RequestMapping("/batchSaveUnit")
 	public ServiceResponse<?> batchSaveUnit(@RequestBody List<UnitDTO> unitList) {
 		unitService.batchSaveUnit(unitList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -135,6 +135,6 @@ public class UnitController extends BaseController {
 	@RequestMapping("/updateUnitTest")
 	public ServiceResponse<?> updateUnit(@RequestParam(value = "id") Long id, @RequestBody UnitDTO unitDTO) {
 		unitService.updateUnit(unitDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

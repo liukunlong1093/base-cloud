@@ -51,7 +51,7 @@ public class OperateTypeController extends BaseController {
 	@RequestMapping("/getOperateTypeById")
 	public ServiceResponse<OperateTypeDTO> getOperateTypeById(@RequestParam(value="id") Long id) {
 		OperateTypeDTO operateTypeDTO = operateTypeService.getOperateTypeById(id);
-		return ServiceResponse.handleSussess(operateTypeDTO);
+		return ServiceResponse.handleSuccess(operateTypeDTO);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class OperateTypeController extends BaseController {
 	public ServiceResponse<List<OperateTypeDTO>> getOperateTypeList(@ApiIgnore @RequestParam Map<String, Object> condition) {
 		List<OperateTypeDTO> operateTypeList = operateTypeService.getOperateTypeList(condition);
 		PageInfo<OperateTypeDTO> pageInfo = new PageInfo<OperateTypeDTO>(operateTypeList);
-		return ServiceResponse.handleSussess(pageInfo.getList(), pageInfo.getTotal());
+		return ServiceResponse.handleSuccess(pageInfo.getList(), pageInfo.getTotal());
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class OperateTypeController extends BaseController {
 	@RequestMapping("/saveOperateType")
 	public ServiceResponse<?> saveOperateType(@RequestBody OperateTypeDTO operateTypeDTO) {
 		operateTypeService.saveOperateType(operateTypeDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class OperateTypeController extends BaseController {
 	@RequestMapping("/updateOperateType")
 	public ServiceResponse<?> updateOperateType(@RequestBody OperateTypeDTO operateTypeDTO) {
 		operateTypeService.updateOperateType(operateTypeDTO);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class OperateTypeController extends BaseController {
 	@RequestMapping("/deleteOperateTypeById")
 	public ServiceResponse<?> deleteOperateTypeById(@RequestParam(value="id") String id) {
 		operateTypeService.deleteOperateTypeById(id);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 
 	/**
@@ -130,6 +130,6 @@ public class OperateTypeController extends BaseController {
 	@RequestMapping("/batchSaveOperateType")
 	public ServiceResponse<?> batchSaveOperateType(@RequestBody List<OperateTypeDTO> operateTypeList) {
 		operateTypeService.batchSaveOperateType(operateTypeList);
-		return ServiceResponse.handleSussess();
+		return ServiceResponse.handleSuccess();
 	}
 }

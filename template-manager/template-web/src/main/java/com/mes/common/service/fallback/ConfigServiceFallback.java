@@ -6,7 +6,7 @@ import com.mes.core.pojos.ServiceResponse;
 import com.mes.common.dto.ConfigDTO;
 import com.mes.common.service.ConfigService;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service.fallback]    
   * 类名称:		[ConfigServiceFallback]  
   * 类描述:		[配置业务降级处理接口]

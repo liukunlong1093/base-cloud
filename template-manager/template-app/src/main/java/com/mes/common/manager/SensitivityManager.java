@@ -2,7 +2,7 @@ package com.mes.common.manager;
 import java.util.*;
 import com.mes.common.dto.SensitivityDTO;
  /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager]    
   * 类名称:		[SensitivityManager]  
   * 类描述:		[敏感词管理处理接口]

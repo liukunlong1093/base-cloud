@@ -25,7 +25,7 @@ import com.mes.core.exception.enums.ApiRuleExceptionEnums;
 import com.mes.core.pojos.BaseDTO;
 
 /**
-  * 项目名称:	[mes-core]
+  * 项目名称:	[common-core]
   * 包:	        [com.mes.core.utils]    
   * 类名称:		[RequestCheckUtils]  
   * 类描述:		[请求校验参数工具类]

@@ -21,7 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import test.BaseTester;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.web]    
   * 类名称:		[MsgTemplateController]  
   * 类描述:		[消息模板控制器测试类]

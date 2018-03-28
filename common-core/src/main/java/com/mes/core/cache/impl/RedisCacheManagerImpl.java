@@ -12,7 +12,7 @@ import com.mes.core.cache.RedisCacheManager;
 
 /**
  * 
-  * 项目名称:	[mes-core]
+  * 项目名称:	[common-core]
   * 包:	        [com.mes.core.cache]    
   * 类名称:		[RediseCacheManager]  
   * 类描述:		[一句话描述该类的功能]

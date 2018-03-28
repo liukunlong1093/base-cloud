@@ -9,7 +9,7 @@ import com.mes.common.service.DataDictionaryService;
 import com.mes.core.utils.StringUtils;
 
 /**
- * 项目名称:	[common-app]
+ * 项目名称:	[template-app]
  * 包:	        [com.mes.common.service.impl]    
  * 类名称:		[DataDictionaryServiceImpl]  
  * 类描述:		[数据字典业务处理类]

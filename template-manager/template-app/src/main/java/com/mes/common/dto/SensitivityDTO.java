@@ -4,7 +4,7 @@ import com.mes.core.pojos.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.dto]    
   * 类名称:		[SensitivityDTO]  
   * 类描述:		[敏感词数据传输对象]

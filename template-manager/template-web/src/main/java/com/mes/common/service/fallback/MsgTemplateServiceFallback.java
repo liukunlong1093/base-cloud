@@ -6,7 +6,7 @@ import com.mes.core.pojos.ServiceResponse;
 import com.mes.common.dto.MsgTemplateDTO;
 import com.mes.common.service.MsgTemplateService;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service.fallback]    
   * 类名称:		[MsgTemplateServiceFallback]  
   * 类描述:		[消息模板业务降级处理接口]

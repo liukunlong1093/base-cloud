@@ -4,7 +4,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import com.mes.common.dto.DataDictionaryDTO;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.dao]    
   * 类名称:		[UserMapper]  
   * 类描述:		[数据字典数据映射接口]

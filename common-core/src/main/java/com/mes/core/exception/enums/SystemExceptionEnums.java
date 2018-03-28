@@ -3,7 +3,7 @@ package com.mes.core.exception.enums;
 import com.mes.core.exception.ExceptionEnums;
 
 /**
-  * 项目名称:	[mes-core]
+  * 项目名称:	[common-core]
   * 包:	        [com.mes.core.exception]    
   * 类名称:		[ApiRuleExceptionEnums]  
   * 类描述:		[系统异常错误信息定义]

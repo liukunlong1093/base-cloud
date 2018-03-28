@@ -7,7 +7,7 @@ import com.mes.common.manager.DataDictionaryManager;
 import com.mes.common.dao.DataDictionaryMapper;
 import com.mes.common.dto.DataDictionaryDTO;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager.impl]    
   * 类名称:		[DataDictionaryManagerImpl]  
   * 类描述:		[数据字典管理处理类]

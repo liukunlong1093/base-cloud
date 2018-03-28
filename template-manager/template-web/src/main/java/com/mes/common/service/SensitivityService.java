@@ -11,7 +11,7 @@ import com.mes.common.dto.SensitivityDTO;
 import com.mes.common.service.fallback.SensitivityServiceFallback;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service]    
   * 类名称:		[SensitivityService]  
   * 类描述:		[敏感词业务处理接口]

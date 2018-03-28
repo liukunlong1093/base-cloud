@@ -7,7 +7,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 /**
  * 
-  * 项目名称:	[mes-core]
+  * 项目名称:	[common-core]
   * 包:	        [com.mes.core.config]    
   * 类名称:		[RedisObjectSerializer]  
   * 类描述:		[Redis对象序列化]

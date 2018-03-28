@@ -3,7 +3,7 @@ package com.mes.common.service;
 import java.util.*;
 import com.mes.common.dto.MsgTemplateDTO;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service]    
   * 类名称:		[MsgTemplateService]  
   * 类描述:		[消息模板业务处理接口]

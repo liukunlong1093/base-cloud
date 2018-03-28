@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.web.controller]    
   * 类名称:		[AreaController]  
   * 类描述:		[区域控制器]

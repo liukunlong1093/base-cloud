@@ -2,7 +2,7 @@ package com.mes.common.manager;
 import java.util.*;
 import com.mes.common.dto.MsgTemplateDTO;
  /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager]    
   * 类名称:		[MsgTemplateManager]  
   * 类描述:		[消息模板管理处理接口]

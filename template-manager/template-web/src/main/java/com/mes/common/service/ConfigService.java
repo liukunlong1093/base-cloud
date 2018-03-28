@@ -11,7 +11,7 @@ import com.mes.common.dto.ConfigDTO;
 import com.mes.common.service.fallback.ConfigServiceFallback;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service]    
   * 类名称:		[ConfigService]  
   * 类描述:		[配置业务处理接口]

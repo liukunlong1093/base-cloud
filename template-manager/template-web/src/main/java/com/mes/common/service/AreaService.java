@@ -11,7 +11,7 @@ import com.mes.common.dto.AreaDTO;
 import com.mes.common.service.fallback.AreaServiceFallback;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service]    
   * 类名称:		[AreaService]  
   * 类描述:		[区域业务处理接口]

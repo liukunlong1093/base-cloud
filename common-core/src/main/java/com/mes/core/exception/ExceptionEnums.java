@@ -1,6 +1,6 @@
 package com.mes.core.exception;
 /**
-  * 项目名称:	[mes-core]
+  * 项目名称:	[common-core]
   * 包:	        [com.mes.core.exception]    
   * 类名称:		[ExceptionEnums]  
   * 类描述:		[统一获取异常接口]

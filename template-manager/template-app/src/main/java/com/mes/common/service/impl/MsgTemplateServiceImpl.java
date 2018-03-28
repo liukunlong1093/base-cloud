@@ -7,7 +7,7 @@ import com.mes.common.manager.MsgTemplateManager;
 import com.mes.common.service.MsgTemplateService;
 import com.mes.core.utils.StringUtils;
  /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service.impl]    
   * 类名称:		[MsgTemplateServiceImpl]  
   * 类描述:		[消息模板业务处理类]

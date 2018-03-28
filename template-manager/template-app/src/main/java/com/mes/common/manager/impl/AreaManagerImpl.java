@@ -10,7 +10,7 @@ import com.mes.common.dao.AreaMapper;
 import com.mes.common.dto.AreaDTO;
 import com.mes.common.manager.AreaManager;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager.impl]    
   * 类名称:		[AreaManagerImpl]  
   * 类描述:		[区域管理处理类]

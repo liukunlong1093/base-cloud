@@ -10,7 +10,7 @@ import com.mes.common.dao.ConfigMapper;
 import com.mes.common.dto.ConfigDTO;
 import com.mes.common.manager.ConfigManager;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager.impl]    
   * 类名称:		[ConfigManagerImpl]  
   * 类描述:		[配置管理处理类]

@@ -7,7 +7,7 @@ import com.mes.common.manager.MsgTemplateManager;
 import com.mes.common.dao.MsgTemplateMapper;
 import com.mes.common.dto.MsgTemplateDTO;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager.impl]    
   * 类名称:		[MsgTemplateManagerImpl]  
   * 类描述:		[消息模板管理处理类]

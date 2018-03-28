@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.web.controller]    
   * 类名称:		[SensitivityController]  
   * 类描述:		[敏感词控制器]

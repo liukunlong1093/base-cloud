@@ -1,7 +1,7 @@
 package com.mes.core.exception;
 
 /**
-  * 项目名称:	[mes-core]
+  * 项目名称:	[common-core]
   * 包:	        [com.mes.core.exception]    
   * 类名称:		[ApiRuleException]  
   * 类描述:		[系统级异常]

@@ -7,7 +7,7 @@ import com.mes.common.manager.SensitivityManager;
 import com.mes.common.dao.SensitivityMapper;
 import com.mes.common.dto.SensitivityDTO;
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.manager.impl]    
   * 类名称:		[SensitivityManagerImpl]  
   * 类描述:		[敏感词管理处理类]

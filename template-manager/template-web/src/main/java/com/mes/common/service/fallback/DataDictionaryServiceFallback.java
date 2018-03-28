@@ -7,7 +7,7 @@ import com.mes.common.dto.DataDictionaryDTO;
 import com.mes.common.service.DataDictionaryService;
 
 /**
-  * 项目名称:	[common-app]
+  * 项目名称:	[template-app]
   * 包:	        [com.mes.common.service.fallback]    
   * 类名称:		[DataDictionaryServiceFallback]  
   * 类描述:		[数据字典业务降级处理接口]

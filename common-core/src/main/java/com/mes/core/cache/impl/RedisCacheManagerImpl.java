@@ -11,32 +11,20 @@ import org.springframework.stereotype.Service;
 import com.mes.core.cache.RedisCacheManager;
 
 /**
- * 
-  * 项目名称:	[common-core]
-  * 包:	        [com.mes.core.cache]    
-  * 类名称:		[RediseCacheManager]  
-  * 类描述:		[一句话描述该类的功能]
-  * 创建人:		[liukl]   
-  * 创建时间:	[2017年8月10日 上午11:50:48]   
-  * 修改人:		[liukl]   
-  * 修改时间:	[2017年8月10日 上午11:50:48]   
-  * 修改备注:	[说明本次修改内容]  
-  * 版本:		[v1.0]
+ * Redis缓存管理类
+ *
+ * @author Administrator
+ * @date 2018/4/28
  */
 @Service("redisCacheManager")
 public class RedisCacheManagerImpl implements RedisCacheManager {
 	private static final Logger logger = LoggerFactory.getLogger(RedisCacheManagerImpl.class);
+	/** Redis模板对象*/
+	private RedisTemplate<String, Object> redisTemplate;
 
 	@Autowired
-	RedisTemplate<String, Object> redisTemplate;
-
-	/**
-	 * 获取Redise模板对象
-	 * @return Redise模板对象
-	 */
-	@Override
-	public RedisTemplate<String, Object> getRedisTemplate() {
-		return redisTemplate;
+	public RedisCacheManagerImpl(RedisTemplate<String,Object> redisTemplate){
+		this.redisTemplate=redisTemplate;
 	}
 
 	/**

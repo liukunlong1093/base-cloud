@@ -1,44 +1,95 @@
 package com.mes.core.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.*;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * 项目名称:	[common-core]
- * 包:	        [com.mes.core.config]
- * 类名称:		[RedisConfig]
- * 类描述:		[Redis相关配置]
- * 创建人:		[liukl]
- * 创建时间:	[2017年8月10日 上午11:48:53]
- * 修改人:		[liukl]
- * 修改时间:	[2017年8月10日 上午11:48:53]
- * 修改备注:	[说明本次修改内容]
- * 版本:		[v1.0]
+ * Redis自定义配置
+ *
+ * @author Administrator
+ * @date 2018/4/28
  */
 @Configuration
-public class RedisConfig {
-    @Value("${spring.redis.password}")
-    private String password;
+@EnableCaching
+public class RedisConfig extends CachingConfigurerSupport {
+    private final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
+
+    /**
+     * 注册时缓存管理对象
+     * @param redisTemplate
+     * @return 缓存管理对象
+     */
     @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-
-        jedisConnectionFactory.setPassword(password);
-        return jedisConnectionFactory;
+    public CacheManager cacheManager(RedisTemplate redisTemplate) {
+        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+        // 设置缓存过期时间，秒
+        cacheManager.setDefaultExpiration(60 * 10);
+        return cacheManager;
     }
 
+    /**
+     * 缓存Key构造规则
+     * @return 缓存Key构造对象
+     */
+    @Override
     @Bean
-    public RedisTemplate <String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate <String, Object> template = new RedisTemplate <String, Object>();
-        template.setConnectionFactory(jedisConnectionFactory());
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new RedisObjectSerializer());
-        return template;
+    public KeyGenerator keyGenerator() {
+        return (target, method, params) -> {
+            StringBuilder sb = new StringBuilder();
+            String[] value = new String[1];
+            Cacheable cacheable = method.getAnnotation(Cacheable.class);
+            if (cacheable != null) {
+                value = cacheable.value();
+            }
+            CachePut cachePut = method.getAnnotation(CachePut.class);
+            if (cachePut != null) {
+                value = cachePut.value();
+            }
+            CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
+            if (cacheEvict != null) {
+                value = cacheEvict.value();
+            }
+            sb.append(value[0]);
+            for (Object obj : params) {
+                sb.append(":")
+                        .append(obj.toString());
+            }
+            return sb.toString();
+        };
     }
+
+
+    /**
+     * Redis模板，存储关键字是字符串，值是Jdk序列化
+     * @param factory Redis连接工厂
+     * @return Redis模板对象
+     */
+    @Bean
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory factory) {
+        logger.info("Redis模板注册成功.");
+        RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(factory);
+        RedisSerializer<String> redisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(redisSerializer);
+        redisTemplate.setHashKeySerializer(redisSerializer);
+        //JdkSerializationRedisSerializer序列化方式;
+        JdkSerializationRedisSerializer jdkRedisSerializer=new JdkSerializationRedisSerializer();
+        redisTemplate.setValueSerializer(jdkRedisSerializer);
+        redisTemplate.setHashValueSerializer(jdkRedisSerializer);
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
+
 }

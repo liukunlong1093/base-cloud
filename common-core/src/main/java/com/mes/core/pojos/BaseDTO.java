@@ -2,10 +2,9 @@ package com.mes.core.pojos;
 /**
  * 基本DTO对象用于封装每个DTO必要属性
  * @author Administrator
- *
+ * @date 2018/4/28
  */
-@SuppressWarnings("serial")
-public class BaseDTO extends PrintableAndSerializeableDTO{
+public class BaseDTO extends PrintableAndSerializableDTO {
 	
 	/**
 	 * 是否发送事物消息

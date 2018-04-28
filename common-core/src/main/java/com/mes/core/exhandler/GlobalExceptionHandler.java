@@ -23,11 +23,11 @@ import com.mes.core.exception.RemoteServiceException;
 import com.mes.core.exception.ServiceException;
 import com.mes.core.pojos.ServiceResponse;
 import com.netflix.hystrix.exception.HystrixBadRequestException;
-
 /**
  * 全局异常回调
- * @author Administrator
  *
+ * @author Administrator
+ * @date 2018/4/28
  */
 @RestController
 @ControllerAdvice
@@ -74,7 +74,6 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	public Object RemoteServiceErrorHandler(HttpServletRequest req, HttpServletResponse res, RemoteServiceException e) throws Exception {
 		logger.error("---ServerException Handler---Host {} invokes url {} ERROR: {}", req.getRemoteHost(), req.getRequestURL(), e.getMessage());
-		//logger.error("ServerException" + e.getMessage(), e);
 		ServiceResponse<Map<String, String>> response = ServiceResponse.handleFail(String.valueOf(e.getCode()), e.getMessage());
 		res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		return response;

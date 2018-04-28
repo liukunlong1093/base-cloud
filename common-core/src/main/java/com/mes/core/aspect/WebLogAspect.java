@@ -57,8 +57,8 @@ public class WebLogAspect {
 	public void doAfterReturning(Object ret){
 		// 处理完请求，返回内容
 		logger.info("RESPONSE : {}", ret);
-		logger.info("SPEND TIME : {}", (System.currentTimeMillis() - startTime.get()));
-		startTime.remove();
+			logger.info("SPEND TIME : {}", (System.currentTimeMillis() - startTime.get()));
+			startTime.remove();
 	}
 
 }

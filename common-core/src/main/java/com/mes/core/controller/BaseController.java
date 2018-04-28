@@ -17,7 +17,7 @@ public class BaseController {
 	 */
 	public void processWhereIn(Map<String, Object> condition, String fieldName) {
 		String str = StringUtils.trim(condition.get(fieldName));
-		if (StringUtils.hasText(str)) {// 根据
+		if (StringUtils.hasText(str)) {
 			condition.put(fieldName, str.split(","));
 		}
 	}

@@ -11,8 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * 服务响应对象
  * @author Administrator
- *
- * @param <T>
+ * @date 2018/4/28
  */
 @JsonInclude(Include.NON_NULL)
 @ApiModel

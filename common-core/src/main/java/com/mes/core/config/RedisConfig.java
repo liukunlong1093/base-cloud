@@ -28,7 +28,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 注册时缓存管理对象
-     * @param redisTemplate
+     * @param redisTemplate Redis模板模板对象
      * @return 缓存管理对象
      */
     @Bean

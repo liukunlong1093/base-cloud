@@ -1,6 +1,9 @@
 package com.mes.common.service.impl;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.mes.common.dto.AreaDTO;
 import com.mes.common.manager.AreaManager;
@@ -22,18 +25,19 @@ import com.mes.core.utils.StringUtils;
 public class AreaServiceImpl implements AreaService {
 	@Autowired
 	private AreaManager areaManager;
-	
-	/**
-	 * 根据区域标识获取区域
-	 * @param id 区域标识
-	 * @return 区域对象
-	 */
-	@Override
-	public AreaDTO getAreaById(Long id){
-		AreaDTO areaDTO = areaManager.getAreaById(id);
-		return areaDTO;
-	}
-	
+
+
+	 /**
+	  * 根据区域标识获取区域
+	  * @param id 区域标识
+	  * @return 区域对象
+	  */
+	 @Override
+	 @Cacheable(value = "areaDTO")
+	 public AreaDTO getAreaById(Long id){
+		 AreaDTO areaDTO = areaManager.getAreaById(id);
+		 return areaDTO;
+	 }
 
 	/**
 	 * 根据条件获取区域列表
@@ -52,6 +56,7 @@ public class AreaServiceImpl implements AreaService {
 	 * @return 新增后的区域对象
 	 */
 	@Override
+	@CachePut(value = "areaDTO", key = "#root.caches[0].name + ':' + #areaDTO.id")
 	public AreaDTO saveArea(AreaDTO areaDTO){
 	    areaDTO.setCreateTime(new Date());
 		areaManager.saveArea(areaDTO);
@@ -64,6 +69,7 @@ public class AreaServiceImpl implements AreaService {
 	 * @return 更新后的区域对象
 	 */
 	@Override
+	@CachePut(value = "areaDTO", key = "#root.caches[0].name + ':' + #areaDTO.id")
 	public AreaDTO updateArea(AreaDTO areaDTO){
 		areaDTO.setUpdateTime(new Date());
 		areaManager.updateArea(areaDTO);
@@ -77,6 +83,7 @@ public class AreaServiceImpl implements AreaService {
 	 * @return <code>0</code>删除成功
 	 */
 	@Override
+	@CacheEvict(value = "areaDTO")
 	public  long  deleteAreaById(String id){
 		long result = 0;
 		String[] ids=id.split(",");

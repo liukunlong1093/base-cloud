@@ -3,6 +3,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +44,9 @@ public class AreaController extends BaseController {
 	@Autowired
 	private AreaService areaService;
 
+	@Autowired
+	private RedisTemplate<String,Object> redisTemplate;
+
 	/**
 	 * 根据区域标识获取区域
 	 * @param id 区域标识
@@ -50,6 +57,11 @@ public class AreaController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "服务端错误", response = Void.class) })
 	@RequestMapping("/getAreaById")
 	public ServiceResponse<AreaDTO> getAreaById(@RequestParam(value="id") Long id) {
+	     /*	AreaDTO areaDTO=(AreaDTO)redisTemplate.opsForValue().get("areaDTO");
+		    if(areaDTO==null){
+			areaDTO = areaService.getAreaById(id);
+			redisTemplate.opsForValue().set("areaDTO",areaDTO);
+		}*/
 		AreaDTO areaDTO = areaService.getAreaById(id);
 		return ServiceResponse.handleSuccess(areaDTO);
 	}

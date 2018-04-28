@@ -306,7 +306,11 @@ public class PurviewController extends BaseController {
 	 * @return 服务响应对象
 	 */
 	@ApiOperation(value = "批量保存权限", httpMethod = "POST", notes = "批量保存权限")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "token", value = "令牌", required = true, dataType = "String", paramType = "header"), @ApiImplicitParam(name = "timestamp", value = "时间戳", required = true, dataType = "String", paramType = "header"), @ApiImplicitParam(name = "sign", value = "签名", required = true, dataType = "String", paramType = "header"), @ApiImplicitParam(name = "userDTO", value = "数据权限数据传输对象", required = true, dataType = "List", paramType = "body") })
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", value = "用户标识", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "secDataJson", value = "时间戳", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "prviewFucntionDataJson", value = "签名", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "rangeSecDataJson", value = "数据权限数据传输对象", required = true, dataType = "String", paramType = "query") })
 	@RequestMapping("/batchSavePurview")
 	public ServiceResponse<?> batchSavePurview(@RequestParam(value = "userId") Long userId, @RequestParam(value = "secDataJson") String secDataJson, @RequestParam(value = "prviewFucntionDataJson") String prviewFucntionDataJson, @RequestParam(value = "rangeSecDataJson") String rangeSecDataJson) {
 		return ServiceResponse.handleSuccess(purviewService.batchSavePurview(userId, secDataJson, prviewFucntionDataJson, rangeSecDataJson));
